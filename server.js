@@ -2,9 +2,9 @@ const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const { createClient } = require('redis');
-const fs      = require('fs');
-const path    = require('path');
-const os      = require('os');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,22 +23,25 @@ const ENCUESTAS_FILE = path.join(__dirname, 'encuestas_log.json');
 const redisClient = createClient({ url: process.env.REDIS_URL });
 redisClient.connect().catch(console.error);
 
+// Determinar entorno
+const isProd = process.env.NODE_ENV === 'production';
+
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1); // necesario en Render para HTTPS
 
-// Configuración de sesión usando Redis
+// Configuración de sesión
 app.use(session({
   store: new RedisStore({ client: redisClient }),
   secret: 'amin-intranet-2026-secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 8 * 60 * 60 * 1000,       // 8 horas
+    maxAge: 8 * 60 * 60 * 1000,        // 8 horas
     httpOnly: true,
-    sameSite: 'none',                  // requerido para HTTPS
-    secure: true                       // requerido para HTTPS
+    sameSite: isProd ? 'none' : 'lax', // none para Render, lax local
+    secure: isProd                       // true en Render, false local
   }
 }));
 
@@ -78,7 +81,7 @@ app.get('/admin.html', authRedirect, (req, res) => {
 });
 app.get('/encuesta.html', authRedirect, (req, res) => res.sendFile(path.join(__dirname, 'public', 'encuesta.html')));
 
-// API: Login/Logout
+// API: Auth
 app.post('/api/login', (req, res) => {
   try {
     const { usuario, clave } = req.body;
@@ -102,8 +105,7 @@ app.get('/api/sesion', (req, res) => {
   else res.json({ ok: false });
 });
 
-// Aquí agregas todas tus demás APIs como productos, precios, badges, ventas, etc.
-// No cambian, solo actualizamos la sesión para persistencia en Render
+// Aquí agregas tus demás APIs (productos, precios, badges, ventas, etc.) sin cambios
 
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
