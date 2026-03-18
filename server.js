@@ -24,7 +24,11 @@ app.use(session({
   secret: 'amin-intranet-2026-secret',
   resave: true,
   saveUninitialized: false,
-  cookie: { maxAge: 8 * 60 * 60 * 1000, httpOnly: true, sameSite: 'lax' }
+  cookie: { maxAge: 8 * 60 * 60 * 1000,   // 8 horas
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production'   // obligatorio en HTTPS
+ }
 }));
 
 // ── Helpers ───────────────────────────────────────────────
