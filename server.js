@@ -1,11 +1,13 @@
 const express = require('express');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
 const fs      = require('fs');
 const path    = require('path');
 const os      = require('os');
 
-const app  = express();
-const PORT = process.env.PORT || 3000;  // Puerto dinámico para Render
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Archivos JSON
 const USUARIOS_FILE  = path.join(__dirname, 'usuarios.json');
@@ -13,24 +15,30 @@ const BADGES_FILE    = path.join(__dirname, 'badges.json');
 const PRECIOS_FILE   = path.join(__dirname, 'precios.json');
 const PRODUCTOS_FILE = path.join(__dirname, 'productos.json');
 const OUTLET_FILE    = path.join(__dirname, 'outlet.json');
-const VENTAS_FILE      = path.join(__dirname, 'ventas.json');
-const DESCUENTOS_FILE  = path.join(__dirname, 'descuentos.json');
-const ENCUESTAS_FILE   = path.join(__dirname, 'encuestas_log.json');
+const VENTAS_FILE    = path.join(__dirname, 'ventas.json');
+const DESCUENTOS_FILE = path.join(__dirname, 'descuentos.json');
+const ENCUESTAS_FILE = path.join(__dirname, 'encuestas_log.json');
+
+// Crear cliente Redis
+const redisClient = createClient({ url: process.env.REDIS_URL });
+redisClient.connect().catch(console.error);
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.set('trust proxy', 1); // necesario para Render con HTTPS
+app.set('trust proxy', 1); // necesario en Render para HTTPS
 
+// Configuración de sesión usando Redis
 app.use(session({
+  store: new RedisStore({ client: redisClient }),
   secret: 'amin-intranet-2026-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { 
-    maxAge: 8 * 60 * 60 * 1000,           // 8 horas
+  cookie: {
+    maxAge: 8 * 60 * 60 * 1000,       // 8 horas
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    sameSite: 'none',                  // requerido para HTTPS
+    secure: true                       // requerido para HTTPS
   }
 }));
 
@@ -70,7 +78,7 @@ app.get('/admin.html', authRedirect, (req, res) => {
 });
 app.get('/encuesta.html', authRedirect, (req, res) => res.sendFile(path.join(__dirname, 'public', 'encuesta.html')));
 
-// API: Auth
+// API: Login/Logout
 app.post('/api/login', (req, res) => {
   try {
     const { usuario, clave } = req.body;
@@ -87,14 +95,15 @@ app.post('/api/login', (req, res) => {
     }
   } catch { res.status(500).json({ ok: false, mensaje: 'Error interno' }); }
 });
+
 app.post('/api/logout', (req, res) => { req.session.destroy(); res.json({ ok: true }); });
 app.get('/api/sesion', (req, res) => {
   if (req.session && req.session.user) res.json({ ok: true, ...req.session.user });
   else res.json({ ok: false });
 });
 
-// Aquí van todas las demás APIs (productos, precios, badges, ventas, etc.)
-// Mantén el código como estaba, sin cambios, solo actualiza el bloque de session
+// Aquí agregas todas tus demás APIs como productos, precios, badges, ventas, etc.
+// No cambian, solo actualizamos la sesión para persistencia en Render
 
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
