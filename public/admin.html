@@ -173,6 +173,24 @@
 
     .site-footer{text-align:center;padding:18px;font-size:.66rem;color:#aaa}
 
+    /* CLIENTES TAB */
+    .cli-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:18px}
+    .cli-card{background:var(--verde-c);border:1.5px solid var(--borde);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .18s}
+    .cli-card:hover{border-color:var(--verde-m);background:#E0F0E8}
+    .cli-card.selected{border-color:var(--verde-o);background:#D0EAE0;box-shadow:0 0 0 3px rgba(27,77,62,.15)}
+    .cli-card__nombre{font-weight:800;font-size:.85rem;color:var(--verde-o)}
+    .cli-card__cat{font-size:.68rem;color:#888;margin-top:2px}
+    .cli-form{background:var(--verde-c);border:1.5px solid var(--borde);border-radius:12px;padding:18px;margin-bottom:18px}
+    .cli-form h4{font-family:var(--head);font-size:.88rem;font-weight:800;color:var(--verde-o);margin-bottom:14px}
+    .cli-form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+    .cli-form-grid .field{margin-bottom:0}
+    .cli-periodo{font-size:.78rem;font-weight:700;color:var(--verde-o);margin-bottom:10px}
+    .cli-historial{margin-top:16px}
+    .cli-historial table{font-size:.76rem}
+    .cli-historial th{font-size:.62rem}
+    .cli-historial td{padding:7px 0}
+    .btn-link{background:none;border:none;color:var(--verde-m);font-size:.74rem;cursor:pointer;font-family:var(--font);text-decoration:underline;padding:0}
+
     /* DESCUENTOS TAB */
     .desc-input{border:1.5px solid var(--borde);border-radius:7px;padding:7px 10px;
       font-size:.8rem;font-family:var(--font);background:var(--verde-c);outline:none;
@@ -234,6 +252,7 @@
   <button class="tab-btn"        onclick="showTab('productos',this)">📦 Productos</button>
   <button class="tab-btn"        onclick="showTab('outlet',this)">🏷 Outlet</button>
   <button class="tab-btn"        onclick="showTab('usuarios',this)">👥 Usuarios</button>
+  <button class="tab-btn"        onclick="showTab('clientes',this)">🏢 Clientes</button>
   <button class="tab-btn"        onclick="showTab('descuentos',this)">🏷 Descuentos</button>
   <button class="tab-btn"        onclick="showTab('encuestas',this)">📋 Encuestas</button>
 </nav>
@@ -374,6 +393,80 @@
           <th>Usuario</th><th>Nombre</th><th>Rol</th><th>Acciones</th>
         </tr></thead>
         <tbody id="usuariosTbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: CLIENTES ════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-clientes">
+
+    <!-- Gestión de clientes -->
+    <div class="section-card" style="margin-bottom:20px">
+      <div class="section-card__head">
+        <div style="flex:1"><h2>🏢 Clientes Principales</h2>
+          <p>Gestiona los clientes y carga cifras mensuales.</p></div>
+        <button class="btn-new" onclick="nuevoCliente()">+ Nuevo cliente</button>
+        <a class="btn-new" href="/clientes.html" target="_blank" style="margin-left:8px;text-decoration:none;background:#2E7D5A">📊 Ver Dashboard</a>
+      </div>
+      <div class="section-card__body">
+        <div class="cli-grid" id="cliGrid"></div>
+
+        <!-- Formulario carga de datos -->
+        <div class="cli-form" id="cliDataForm" style="display:none">
+          <h4 id="cliFormTitle">Cargar datos mensuales</h4>
+          <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+            <div class="field" style="margin:0">
+              <label>Año</label>
+              <select id="cliAnio" class="sel" style="min-width:100px"></select>
+            </div>
+            <div class="field" style="margin:0">
+              <label>Mes</label>
+              <select id="cliMes" class="sel" style="min-width:130px">
+                <option value="01">Enero</option><option value="02">Febrero</option>
+                <option value="03">Marzo</option><option value="04">Abril</option>
+                <option value="05">Mayo</option><option value="06">Junio</option>
+                <option value="07">Julio</option><option value="08">Agosto</option>
+                <option value="09">Septiembre</option><option value="10">Octubre</option>
+                <option value="11">Noviembre</option><option value="12">Diciembre</option>
+              </select>
+            </div>
+          </div>
+          <div class="cli-form-grid">
+            <div class="field"><label>Pedidos (# órdenes)</label>
+              <input class="desc-input" id="cliPedidos" type="number" min="0" placeholder="0"/></div>
+            <div class="field"><label>Ventas ($)</label>
+              <input class="desc-input" id="cliVentas" type="number" min="0" placeholder="0"/></div>
+            <div class="field"><label>Unidades</label>
+              <input class="desc-input" id="cliUnidades" type="number" min="0" placeholder="0"/></div>
+            <div class="field"><label>Devoluciones ($)</label>
+              <input class="desc-input" id="cliDevoluciones" type="number" min="0" placeholder="0"/></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn-save" onclick="guardarDatoCliente()">💾 Guardar mes</button>
+            <span class="save-st" id="st-cli-data"></span>
+          </div>
+
+          <!-- Acceso al portal -->
+          <div id="cliAccesoPanel" style="margin-top:20px;padding:14px;background:#F4F9F6;border-radius:10px;border:1px solid #C8E6D8">
+            <h5 style="margin:0 0 10px;font-size:.8rem;color:#1B4D3E">🔑 Acceso al portal del cliente</h5>
+            <div id="cliAccesoStatus"></div>
+          </div>
+
+          <!-- Historial -->
+          <div class="cli-historial" id="cliHistorial"></div>
+        </div>
+
+        <!-- Importar Excel -->
+        <div style="margin-top:16px">
+          <label class="btn-new" style="cursor:pointer;background:#2E7D5A;position:relative;display:inline-block">
+            📊 Importar Excel
+            <input type="file" id="cliExcelFile" accept=".xlsx,.xls,.csv"
+                   style="position:absolute;inset:0;opacity:0;cursor:pointer"
+                   onchange="importarExcelClientes(this)"/>
+          </label>
+          <span style="font-size:.7rem;color:#888;margin-left:10px">Columnas: Cliente | Periodo (AAAA-MM) | Pedidos | Ventas | Unidades | Devoluciones</span>
+          <div id="cliImportStatus" style="display:none;margin-top:8px;font-size:.78rem;font-weight:600"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -566,6 +659,7 @@ let modalEditId = null;
   await cargarOutlet();
   await cargarDescuentos();
   await cargarEncuestas();
+  await cargarClientes();
 })();
 
 /* ── Tabs ─────────────────────────────────────────────── */
@@ -992,6 +1086,270 @@ async function importarExcel(input) {
   reader.readAsArrayBuffer(file);
 }
 
+
+
+/* ══ CLIENTES ════════════════════════════════════════════= */
+let CLIENTES_LIST = [];
+let CLIENTES_DATA = {};
+let cliSeleccionado = null;
+let USUARIOS_CLI   = [];  // usuarios con rol 'cliente'
+
+async function cargarClientes() {
+  const [rC, rD, rU] = await Promise.all([fetch('/api/clientes'), fetch('/api/clientes-data'), fetch('/api/usuarios')]);
+  const cData = await rC.json();
+  const dData = await rD.json();
+  const uData = await rU.json();
+  if (cData.ok) CLIENTES_LIST = cData.clientes || [];
+  if (dData.ok) CLIENTES_DATA = dData.data || {};
+  if (uData.ok) USUARIOS_CLI  = (uData.usuarios || []).filter(u => u.rol === 'cliente');
+  renderCliGrid();
+  // Precargar año actual en selector
+  const anio = document.getElementById('cliAnio');
+  const now = new Date();
+  for (let y = now.getFullYear(); y >= now.getFullYear()-3; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    anio.appendChild(o);
+  }
+  const mm = String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('cliMes').value = mm;
+}
+
+function renderCliGrid() {
+  const grid = document.getElementById('cliGrid');
+  if (!CLIENTES_LIST.length) {
+    grid.innerHTML = '<p style="color:#aaa;font-size:.8rem">No hay clientes. Agrega el primero con "+ Nuevo cliente".</p>';
+    return;
+  }
+  grid.innerHTML = CLIENTES_LIST.filter(c => c.activo !== false).map(c => `
+    <div class="cli-card${cliSeleccionado===c.id?' selected':''}" onclick="seleccionarCliente('${c.id}')">
+      <div class="cli-card__nombre">${c.nombre}</div>
+      <div class="cli-card__cat">${c.categoria||'—'}</div>
+      <div style="font-size:.66rem;color:#aaa;margin-top:6px">${Object.keys(CLIENTES_DATA[c.id]||{}).length} meses cargados</div>
+      ${USUARIOS_CLI.find(u=>u.clienteId===c.id) ? '<span style="font-size:.62rem;background:#D0EAE0;color:#1B4D3E;padding:2px 7px;border-radius:8px;margin-top:4px;display:inline-block">🔑 Acceso activo</span>' : '<span style="font-size:.62rem;background:#FFF0DC;color:#9A5700;padding:2px 7px;border-radius:8px;margin-top:4px;display:inline-block">Sin acceso</span>'}
+      <button class="btn-link" onclick="event.stopPropagation();editarCliente('${c.id}')">✏ editar</button>
+    </div>`).join('');
+}
+
+function seleccionarCliente(id) {
+  cliSeleccionado = id;
+  renderCliGrid();
+  const cli = CLIENTES_LIST.find(c => c.id === id);
+  document.getElementById('cliFormTitle').textContent = `Datos mensuales — ${cli.nombre}`;
+  document.getElementById('cliDataForm').style.display = 'block';
+  document.getElementById('cliPedidos').value = '';
+  document.getElementById('cliVentas').value = '';
+  document.getElementById('cliUnidades').value = '';
+  document.getElementById('cliDevoluciones').value = '';
+  renderHistorial(id);
+  renderAccesoPanel(id);
+}
+
+function renderHistorial(id) {
+  const meses = CLIENTES_DATA[id] || {};
+  const periodos = Object.keys(meses).sort().reverse();
+  const el = document.getElementById('cliHistorial');
+  if (!periodos.length) { el.innerHTML = '<p style="color:#aaa;font-size:.76rem;margin-top:12px">Sin datos cargados aún.</p>'; return; }
+  const fmt = n => n > 0 ? '$'+Math.round(n).toLocaleString('es-CO') : '—';
+  el.innerHTML = `<h4 style="font-family:var(--head);font-size:.8rem;font-weight:800;color:var(--verde-o);margin:14px 0 8px">Historial cargado</h4>
+    <table class="cli-historial"><thead><tr>
+      <th>Periodo</th><th>Pedidos</th><th>Ventas</th><th>Unidades</th><th>Devoluciones</th><th></th>
+    </tr></thead><tbody>
+    ${periodos.map(p => `<tr>
+      <td><strong>${p}</strong></td>
+      <td>${meses[p].pedidos||0}</td>
+      <td>${fmt(meses[p].ventas)}</td>
+      <td>${meses[p].unidades||0}</td>
+      <td>${fmt(meses[p].devoluciones)}</td>
+      <td><button class="btn-link" style="color:#C00" onclick="eliminarPeriodo('${id}','${p}')">✕</button></td>
+    </tr>`).join('')}
+    </tbody></table>`;
+}
+
+async function guardarDatoCliente() {
+  if (!cliSeleccionado) return;
+  const anio = document.getElementById('cliAnio').value;
+  const mes  = document.getElementById('cliMes').value;
+  const periodo = `${anio}-${mes}`;
+  const payload = {
+    clienteId:    cliSeleccionado,
+    periodo,
+    pedidos:      document.getElementById('cliPedidos').value,
+    ventas:       document.getElementById('cliVentas').value,
+    unidades:     document.getElementById('cliUnidades').value,
+    devoluciones: document.getElementById('cliDevoluciones').value,
+  };
+  const st = document.getElementById('st-cli-data');
+  st.textContent = 'Guardando…'; st.className = 'save-st';
+  try {
+    const r = await fetch('/api/clientes-data', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    const d = await r.json();
+    if (d.ok) {
+      CLIENTES_DATA = d.data;
+      renderHistorial(cliSeleccionado);
+      renderCliGrid();
+      st.textContent = `✓ ${periodo} guardado`; st.className = 'save-st ok';
+      toast('✓ Datos guardados');
+    } else { st.textContent = '✗ '+d.mensaje; st.className = 'save-st err'; }
+  } catch { st.textContent = '✗ Error de conexión'; st.className = 'save-st err'; }
+  setTimeout(() => st.textContent = '', 3500);
+}
+
+async function eliminarPeriodo(id, periodo) {
+  if (!confirm(`¿Eliminar datos de ${periodo}?`)) return;
+  const r = await fetch('/api/clientes-data', { method:'DELETE', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ clienteId:id, periodo }) });
+  const d = await r.json();
+  if (d.ok) { if (!CLIENTES_DATA[id]) CLIENTES_DATA[id]={}; delete CLIENTES_DATA[id][periodo]; renderHistorial(id); renderCliGrid(); toast('✓ Periodo eliminado'); }
+}
+
+function nuevoCliente() {
+  const nombre = prompt('Nombre del cliente:');
+  if (!nombre?.trim()) return;
+  const categoria = prompt('Categoría (ej: Distribuidores, Referidos, Directo):', 'Distribuidores') || 'Distribuidores';
+  const contacto  = prompt('Contacto (opcional):', '') || '';
+  CLIENTES_LIST.push({ id:'cli-'+Date.now(), nombre:nombre.trim(), categoria, contacto, activo:true });
+  guardarClientes();
+}
+
+function editarCliente(id) {
+  const cli = CLIENTES_LIST.find(c => c.id === id);
+  if (!cli) return;
+  const nombre    = prompt('Nombre:', cli.nombre);
+  if (nombre === null) return;
+  const categoria = prompt('Categoría:', cli.categoria);
+  if (categoria === null) return;
+  const contacto  = prompt('Contacto:', cli.contacto || '');
+  cli.nombre = nombre.trim() || cli.nombre;
+  cli.categoria = categoria.trim() || cli.categoria;
+  cli.contacto  = contacto?.trim() || '';
+  guardarClientes();
+}
+
+async function guardarClientes() {
+  const r = await fetch('/api/clientes', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(CLIENTES_LIST) });
+  const d = await r.json();
+  if (d.ok) { CLIENTES_LIST = d.clientes; renderCliGrid(); toast('✓ Clientes guardados'); }
+}
+
+function renderAccesoPanel(cliId) {
+  const panel = document.getElementById('cliAccesoStatus');
+  if (!panel) return;
+  const usuario = USUARIOS_CLI.find(u => u.clienteId === cliId);
+  if (usuario) {
+    panel.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span style="font-size:.8rem">Usuario: <strong>${usuario.usuario}</strong></span>
+        <span style="font-size:.75rem;color:#555">Nombre: ${usuario.nombre}</span>
+        <button class="btn-link" style="color:#C00;font-size:.75rem" onclick="eliminarAccesoCliente('${cliId}')">🗑 Eliminar acceso</button>
+      </div>`;
+  } else {
+    panel.innerHTML = `
+      <div id="cliAccesoCreate">
+        <p style="font-size:.75rem;color:#666;margin:0 0 10px">Este cliente no tiene acceso al portal. Crea un usuario para que pueda ver sus cifras.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+          <div class="field" style="margin:0">
+            <label style="font-size:.7rem">Usuario</label>
+            <input class="desc-input" id="newCliUser" placeholder="ej: cliente01" style="width:140px"/>
+          </div>
+          <div class="field" style="margin:0">
+            <label style="font-size:.7rem">Contraseña</label>
+            <input class="desc-input" id="newCliPass" type="password" placeholder="Clave segura" style="width:140px"/>
+          </div>
+          <button class="btn-save" style="height:34px;font-size:.75rem" onclick="crearAccesoCliente('${cliId}')">➕ Crear acceso</button>
+          <span id="st-acceso" style="font-size:.72rem"></span>
+        </div>
+      </div>`;
+  }
+}
+
+async function crearAccesoCliente(cliId) {
+  const cli   = CLIENTES_LIST.find(c => c.id === cliId);
+  const user  = document.getElementById('newCliUser').value.trim();
+  const pass  = document.getElementById('newCliPass').value.trim();
+  const st    = document.getElementById('st-acceso');
+  if (!user || !pass) { st.textContent = '⚠ Completa usuario y contraseña'; st.style.color='#C00'; return; }
+  if (pass.length < 4) { st.textContent = '⚠ La contraseña debe tener al menos 4 caracteres'; st.style.color='#C00'; return; }
+  st.textContent = 'Creando...'; st.style.color='#888';
+  const r = await fetch('/api/usuarios', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ usuario: user, nombre: cli ? cli.nombre : user, clave: pass, rol: 'cliente', clienteId: cliId })
+  });
+  const d = await r.json();
+  if (d.ok) {
+    USUARIOS_CLI = USUARIOS_CLI.filter(u => u.clienteId !== cliId);
+    USUARIOS_CLI.push({ usuario: user, nombre: cli ? cli.nombre : user, rol: 'cliente', clienteId: cliId });
+    renderAccesoPanel(cliId);
+    renderCliGrid();
+    toast('✓ Acceso creado para ' + (cli ? cli.nombre : user));
+  } else {
+    st.textContent = '⚠ ' + (d.mensaje || 'Error'); st.style.color='#C00';
+  }
+}
+
+async function eliminarAccesoCliente(cliId) {
+  if (!confirm('¿Eliminar el acceso de este cliente al portal?')) return;
+  const r = await fetch('/api/usuarios/by-cliente/' + cliId, { method: 'DELETE' });
+  const d = await r.json();
+  if (d.ok) {
+    USUARIOS_CLI = USUARIOS_CLI.filter(u => u.clienteId !== cliId);
+    renderAccesoPanel(cliId);
+    renderCliGrid();
+    toast('✓ Acceso eliminado');
+  } else {
+    toast('⚠ ' + (d.mensaje || 'Error al eliminar'));
+  }
+}
+
+
+async function importarExcelClientes(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('cliImportStatus');
+  statusEl.style.display = 'block'; statusEl.style.color = '#888'; statusEl.textContent = '⏳ Leyendo…';
+  if (!window.XLSX) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload = res; s.onerror = rej; document.head.appendChild(s);
+    });
+  }
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const wb   = XLSX.read(e.target.result, { type:'array' });
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'' });
+      const isHeader = r => r.join(' ').toLowerCase().includes('cliente') || r.join(' ').toLowerCase().includes('periodo');
+      const data = rows.length > 0 && isHeader(rows[0]) ? rows.slice(1) : rows;
+      const rows2 = data.filter(r => String(r[0]).trim() && String(r[1]).trim());
+      const payload = rows2.map(r => {
+        // buscar o crear cliente por nombre
+        const nombreCli = String(r[0]).trim();
+        let cli = CLIENTES_LIST.find(c => c.nombre.toLowerCase() === nombreCli.toLowerCase());
+        if (!cli) {
+          cli = { id:'cli-'+Date.now()+'-'+Math.random().toString(36).slice(2,5), nombre:nombreCli, categoria:'Importado', contacto:'', activo:true };
+          CLIENTES_LIST.push(cli);
+        }
+        return { clienteId:cli.id, periodo:String(r[1]).trim(), pedidos:r[2], ventas:r[3], unidades:r[4], devoluciones:r[5]||0 };
+      });
+      // Guardar clientes primero
+      await fetch('/api/clientes', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(CLIENTES_LIST) });
+      const r2 = await fetch('/api/clientes-importar', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      const d  = await r2.json();
+      if (d.ok) {
+        CLIENTES_DATA = d.data;
+        renderCliGrid();
+        statusEl.style.color = 'var(--verde-m)';
+        statusEl.textContent = `✅ ${d.importados} registros importados correctamente.`;
+        toast('✓ Excel importado');
+      } else { statusEl.style.color='#C00'; statusEl.textContent='✗ '+d.mensaje; }
+    } catch(err) { statusEl.style.color='#C00'; statusEl.textContent='✗ Error: '+err.message; }
+    input.value = '';
+    setTimeout(() => { statusEl.style.display='none'; }, 5000);
+  };
+  reader.readAsArrayBuffer(file);
+}
 
 /* ══ DESCUENTOS ══════════════════════════════════════════= */
 let DESCUENTOS_DATA = [];

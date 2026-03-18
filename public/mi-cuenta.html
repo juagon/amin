@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Cuenta — AMIN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root{
+      --verde-o:#1B4D3E; --verde-m:#2E7D5A; --verde-c:#EBF5F0;
+      --verde-b:#5BA87A; --negro:#0F0C0C; --blanco:#FFFFFF;
+      --borde:#C2DED3; --borde-c:#D4EDE5; --texto:#222;
+      --sombra:rgba(27,77,62,.10);
+      --font:'Poppins',sans-serif; --head:'Raleway',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:14px;scroll-behavior:smooth}
+    body{font-family:var(--font);background:#F0F4F2;color:var(--texto);min-height:100vh}
+
+    /* HEADER */
+    .site-header{background:linear-gradient(135deg,var(--verde-o),#1f5e4a);
+      padding:0 28px;height:60px;display:flex;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+    .header__logo{height:30px}
+    .header__title{font-family:var(--head);font-size:.88rem;font-weight:800;color:rgba(255,255,255,.9);flex:1}
+    .header__user{font-size:.72rem;color:rgba(255,255,255,.6)}
+    .header__user strong{color:#A8E063}
+    .btn-nav{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
+      color:#fff;border-radius:100px;padding:6px 16px;cursor:pointer;font-size:.74rem;
+      font-weight:600;text-decoration:none;font-family:var(--font);transition:background .15s}
+    .btn-nav:hover{background:rgba(255,255,255,.22)}
+
+    /* BIENVENIDA */
+    .welcome{background:linear-gradient(135deg,var(--verde-o),var(--verde-m));
+      color:#fff;padding:28px 32px;margin-bottom:0}
+    .welcome h1{font-family:var(--head);font-size:1.4rem;font-weight:900;margin-bottom:4px}
+    .welcome p{font-size:.8rem;opacity:.8}
+
+    /* MAIN */
+    .main{max-width:1000px;margin:0 auto;padding:24px 20px}
+
+    /* KPI */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+    .kpi{background:var(--blanco);border-radius:14px;padding:18px 20px;
+      border:1.5px solid var(--borde-c);box-shadow:0 2px 12px var(--sombra)}
+    .kpi__ico{font-size:1.4rem;margin-bottom:6px}
+    .kpi__label{font-size:.66rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+    .kpi__value{font-family:var(--head);font-size:1.4rem;font-weight:900;color:var(--verde-o)}
+    .kpi__delta{font-size:.68rem;margin-top:4px;font-weight:600}
+    .kpi__delta.up  {color:#2E7D3E}
+    .kpi__delta.down{color:#C0392B}
+    .kpi__delta.flat{color:#aaa}
+
+    /* CARD */
+    .card{background:var(--blanco);border-radius:16px;border:1.5px solid var(--borde-c);
+      box-shadow:0 2px 16px var(--sombra);overflow:hidden;margin-bottom:20px}
+    .card__head{background:var(--verde-o);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:10px}
+    .card__head h2{font-family:var(--head);font-size:.94rem;font-weight:800;flex:1}
+    .card__head p{font-size:.7rem;opacity:.72}
+    .card__body{padding:20px}
+
+    /* TABLA HISTORIAL */
+    .hist-table{width:100%;border-collapse:collapse;font-size:.82rem}
+    .hist-table th{font-size:.64rem;font-weight:700;color:#999;text-transform:uppercase;
+      letter-spacing:.06em;padding:0 12px 10px 0;text-align:left;border-bottom:2px solid var(--borde)}
+    .hist-table td{padding:10px 12px 10px 0;border-bottom:1px solid var(--borde-c);vertical-align:middle}
+    .hist-table tr:last-child td{border-bottom:none}
+    .trend-pill{display:inline-flex;padding:2px 9px;border-radius:100px;font-size:.66rem;font-weight:800}
+    .trend-pill.up  {background:#E8F5E9;color:#2E7D3E}
+    .trend-pill.down{background:#FFF5F5;color:#C0392B}
+    .trend-pill.flat{background:#F5F5F5;color:#aaa}
+
+    /* PROYECCION */
+    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:4px}
+    .proj-item{background:var(--verde-c);border:1.5px solid var(--borde);border-radius:12px;padding:16px;text-align:center}
+    .proj-item__mes{font-size:.7rem;font-weight:700;color:#888;margin-bottom:6px}
+    .proj-item__val{font-family:var(--head);font-size:1.1rem;font-weight:900;color:var(--verde-o)}
+    .proj-item__ico{font-size:1rem;margin-bottom:4px}
+
+    /* INSIGHTS */
+    .insight-list{list-style:none;padding:0}
+    .insight-list li{padding:10px 14px;border-radius:10px;background:var(--verde-c);
+      border-left:4px solid var(--verde-m);margin-bottom:8px;font-size:.8rem;line-height:1.5}
+    .insight-list li.warn  {background:#FFFDE7;border-left-color:#E67E22}
+    .insight-list li.good  {background:#E8F5E9;border-left-color:#2E7D3E}
+    .insight-list li.danger{background:#FFF5F5;border-left-color:#C0392B}
+
+    /* MÉTRICA TABS */
+    .metric-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+    .metric-tab{padding:5px 14px;border-radius:100px;border:1.5px solid var(--borde);
+      background:var(--verde-c);color:#666;font-size:.72rem;font-weight:700;
+      cursor:pointer;font-family:var(--font);transition:all .18s}
+    .metric-tab.active{background:var(--verde-o);color:#fff;border-color:var(--verde-o)}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:680px){.grid-2{grid-template-columns:1fr}.proj-grid{grid-template-columns:1fr}}
+
+    .empty{text-align:center;color:#ccc;padding:32px;font-size:.84rem;line-height:1.7}
+    .site-footer{text-align:center;padding:16px;font-size:.64rem;color:#aaa;margin-top:8px}
+
+    /* LOADING */
+    .loading{display:flex;align-items:center;justify-content:center;min-height:200px;
+      font-size:.84rem;color:#aaa}
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img class="header__logo" src="https://amin.com.co/wp-content/uploads/2024/03/logo2.png" alt="AMIN" onerror="this.style.display='none'"/>
+  <div style="width:1px;height:22px;background:rgba(255,255,255,.2);margin:0 6px"></div>
+  <span class="header__title">Mi Cuenta — AMIN</span>
+  <span class="header__user">Hola, <strong id="nomUser">…</strong></span>
+  <button class="btn-nav" onclick="logout()">Salir ↗</button>
+</header>
+
+<main class="main">
+
+  <div id="appContent" class="loading">Cargando tu información…</div>
+
+</main>
+
+<footer class="site-footer">
+  <strong style="color:var(--verde-b)">AMIN</strong> · Portal de Cliente · 2026
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   Mi Cuenta — Portal cliente AMIN
+   ═══════════════════════════════════════════════════════ */
+
+const MESES_ES = ['Enero','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MESES_C  = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const fmt  = n => '$' + Math.round(n||0).toLocaleString('es-CO');
+const fmtN = n => Math.round(n||0).toLocaleString('es-CO');
+
+let CLIENTE = null;
+let DATA    = {};
+let chartInst = null;
+let metricActual = 'ventas';
+
+/* ── Init ─────────────────────────────────────────────── */
+(async () => {
+  const r = await fetch('/api/mi-data');
+  if (r.status === 401) { window.location.href = '/login.html'; return; }
+  if (r.status === 403) {
+    document.getElementById('appContent').innerHTML =
+      '<div class="empty">⚠️ Tu cuenta no tiene un cliente asignado.<br>Contacta al administrador de AMIN.</div>';
+    return;
+  }
+  const d = await r.json();
+  if (!d.ok) { window.location.href = '/login.html'; return; }
+
+  CLIENTE = d.cliente;
+  DATA    = d.data || {};
+  document.getElementById('nomUser').textContent = d.nombre;
+  document.getElementById('appContent').innerHTML = buildUI();
+  renderKPIs();
+  renderHistorial();
+  renderProyecciones();
+  renderInsights();
+  renderChart();
+})();
+
+/* ── Construir UI ─────────────────────────────────────── */
+function buildUI() {
+  return `
+  <!-- Bienvenida -->
+  <div style="background:linear-gradient(135deg,var(--verde-o),var(--verde-m));border-radius:16px;
+    color:#fff;padding:24px 28px;margin-bottom:24px;box-shadow:0 4px 20px rgba(27,77,62,.3)">
+    <div style="font-family:var(--head);font-size:1.3rem;font-weight:900;margin-bottom:4px">
+      🏢 ${CLIENTE?.nombre || 'Mi empresa'}
+    </div>
+    <div style="font-size:.78rem;opacity:.8">${CLIENTE?.categoria || ''} · Portal de seguimiento comercial AMIN</div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="grid-2">
+    <!-- Historial -->
+    <div class="card">
+      <div class="card__head"><div><h2>📋 Historial mensual</h2><p>Cifras de tu relación comercial con AMIN</p></div></div>
+      <div class="card__body"><div id="historialEl"></div></div>
+    </div>
+
+    <!-- Insights -->
+    <div class="card">
+      <div class="card__head"><div><h2>💡 Análisis de tu cuenta</h2><p>Resumen automático de tu comportamiento</p></div></div>
+      <div class="card__body"><ul class="insight-list" id="insightsList"></ul></div>
+    </div>
+  </div>
+
+  <!-- Gráfica -->
+  <div class="card">
+    <div class="card__head"><div><h2>📈 Evolución mensual</h2><p>Tendencia histórica de tus compras</p></div></div>
+    <div class="card__body">
+      <div class="metric-tabs">
+        <span class="metric-tab active" onclick="setMetric('ventas',this)">$ Ventas</span>
+        <span class="metric-tab" onclick="setMetric('unidades',this)">📦 Unidades</span>
+        <span class="metric-tab" onclick="setMetric('pedidos',this)">🛒 Pedidos</span>
+        <span class="metric-tab" onclick="setMetric('devoluciones',this)">↩ Devoluciones</span>
+      </div>
+      <canvas id="trendChart" height="90"></canvas>
+    </div>
+  </div>
+
+  <!-- Proyecciones -->
+  <div class="card">
+    <div class="card__head"><div><h2>🔮 Proyección próximos 3 meses</h2><p>Estimación basada en tu tendencia histórica de ventas</p></div></div>
+    <div class="card__body">
+      <div class="proj-grid" id="projGrid"></div>
+    </div>
+  </div>`;
+}
+
+/* ── KPIs ─────────────────────────────────────────────── */
+function periodos() { return Object.keys(DATA).sort(); }
+function val(periodo, metrica) { return DATA[periodo]?.[metrica] || 0; }
+
+function renderKPIs() {
+  const ps  = periodos();
+  const ult = ps.at(-1);
+  const pen = ps.length >= 2 ? ps.at(-2) : null;
+
+  const kpis = [
+    { ico:'💰', label:'Ventas último mes',    m:'ventas',     fmt: v => fmt(v)   },
+    { ico:'📦', label:'Unidades último mes',  m:'unidades',   fmt: v => fmtN(v)  },
+    { ico:'🛒', label:'Pedidos último mes',   m:'pedidos',    fmt: v => fmtN(v)  },
+    { ico:'📅', label:'Meses con historial',  m:null,         fmt: () => ps.length+' meses' },
+  ];
+
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => {
+    const v  = k.m ? val(ult, k.m) : null;
+    const vp = (k.m && pen) ? val(pen, k.m) : null;
+    let deltaHTML = '';
+    if (v !== null && vp !== null && vp > 0) {
+      const pct = ((v-vp)/vp*100);
+      const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+      const ico = pct > 0 ? '▲' : pct < 0 ? '▼' : '➡';
+      deltaHTML = `<div class="kpi__delta ${cls}">${ico} ${Math.abs(pct).toFixed(1)}% vs mes anterior</div>`;
+    } else if (!ult) {
+      deltaHTML = `<div class="kpi__delta flat">Sin datos aún</div>`;
+    }
+    return `<div class="kpi">
+      <div class="kpi__ico">${k.ico}</div>
+      <div class="kpi__label">${k.label}</div>
+      <div class="kpi__value">${ult ? k.fmt(v) : '—'}</div>
+      ${deltaHTML}
+    </div>`;
+  }).join('');
+}
+
+/* ── Historial ────────────────────────────────────────── */
+function renderHistorial() {
+  const ps = periodos().reverse();
+  const el = document.getElementById('historialEl');
+  if (!ps.length) {
+    el.innerHTML = '<div class="empty">Aún no hay datos cargados.<br>Tu ejecutivo AMIN los irá registrando mes a mes.</div>';
+    return;
+  }
+  el.innerHTML = `<table class="hist-table"><thead><tr>
+    <th>Período</th><th>Ventas</th><th>Unidades</th><th>Pedidos</th><th>Tendencia</th>
+  </tr></thead><tbody>
+  ${ps.map((p, i) => {
+    const prev = ps[i+1];
+    let trendCls='flat', trendTxt='—';
+    if (prev) {
+      const chg = val(p,'ventas') - val(prev,'ventas');
+      if (val(prev,'ventas') > 0) {
+        const pct = chg/val(prev,'ventas')*100;
+        trendCls = pct > 0 ? 'up' : pct < 0 ? 'down' : 'flat';
+        trendTxt = `${pct>0?'▲':'▼'} ${Math.abs(pct).toFixed(1)}%`;
+      }
+    }
+    const [y,m] = p.split('-');
+    return `<tr>
+      <td style="font-weight:700">${MESES_ES[parseInt(m)-1]} ${y}</td>
+      <td style="color:var(--verde-o);font-weight:700">${fmt(val(p,'ventas'))}</td>
+      <td>${fmtN(val(p,'unidades'))}</td>
+      <td>${fmtN(val(p,'pedidos'))}</td>
+      <td><span class="trend-pill ${trendCls}">${trendTxt}</span></td>
+    </tr>`;
+  }).join('')}
+  </tbody></table>`;
+}
+
+/* ── Proyección ───────────────────────────────────────── */
+function proyectar(mesesAdelante) {
+  const ps = periodos();
+  const datos = ps.slice(-6).map(p => val(p, 'ventas'));
+  if (datos.length < 2) return datos.at(-1) || 0;
+  const n=datos.length, x=datos.map((_,i)=>i);
+  const sumX=x.reduce((a,b)=>a+b,0), sumY=datos.reduce((a,b)=>a+b,0);
+  const sumXY=x.reduce((s,xi,i)=>s+xi*datos[i],0), sumX2=x.reduce((s,xi)=>s+xi*xi,0);
+  const m=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX), b=(sumY-m*sumX)/n;
+  return Math.max(0, Math.round(m*(n-1+mesesAdelante)+b));
+}
+
+function siguientePeriodo(offset) {
+  const ps = periodos();
+  let y, m;
+  if (ps.length) { [y,m] = ps.at(-1).split('-').map(Number); }
+  else { const now=new Date(); y=now.getFullYear(); m=now.getMonth()+1; }
+  m += offset; while(m>12){m-=12;y++;}
+  return { label: MESES_ES[m-1]+' '+y, val: proyectar(offset) };
+}
+
+function renderProyecciones() {
+  const ps = periodos();
+  if (!ps.length) {
+    document.getElementById('projGrid').innerHTML = '<div class="empty" style="grid-column:1/-1">Sin historial suficiente para proyectar.</div>';
+    return;
+  }
+  const ult = val(ps.at(-1), 'ventas');
+  document.getElementById('projGrid').innerHTML = [1,2,3].map(i => {
+    const next = siguientePeriodo(i);
+    const diff = next.val - ult;
+    const ico  = diff > ult*0.05 ? '📈' : diff < -ult*0.05 ? '📉' : '➡';
+    return `<div class="proj-item">
+      <div class="proj-item__ico">${ico}</div>
+      <div class="proj-item__mes">Mes +${i} · ${next.label}</div>
+      <div class="proj-item__val">${fmt(next.val)}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Insights ─────────────────────────────────────────── */
+function renderInsights() {
+  const ps  = periodos();
+  const el  = document.getElementById('insightsList');
+  const insights = [];
+
+  if (!ps.length) {
+    el.innerHTML = '<li>Cuando tu ejecutivo AMIN cargue los datos de tus compras, aquí verás un análisis personalizado de tu cuenta.</li>';
+    return;
+  }
+
+  const totalVentas   = ps.reduce((s,p) => s+val(p,'ventas'),0);
+  const totalUnidades = ps.reduce((s,p) => s+val(p,'unidades'),0);
+  const ult = ps.at(-1);
+  const pen = ps.length>=2 ? ps.at(-2) : null;
+
+  // Resumen general
+  insights.push({ tipo:'good', txt:`📊 En los últimos <strong>${ps.length} meses</strong> has acumulado <strong>${fmt(totalVentas)}</strong> en compras y <strong>${fmtN(totalUnidades)} unidades</strong>.` });
+
+  // Mejor mes
+  const mejorMes = ps.reduce((a,b) => val(a,'ventas')>=val(b,'ventas')?a:b);
+  const [my,mm] = mejorMes.split('-');
+  insights.push({ tipo:'good', txt:`🏆 Tu mejor mes fue <strong>${MESES_ES[parseInt(mm)-1]} ${my}</strong> con <strong>${fmt(val(mejorMes,'ventas'))}</strong> en ventas.` });
+
+  // Tendencia último mes
+  if (pen) {
+    const chg = val(ult,'ventas') - val(pen,'ventas');
+    const pct = pen && val(pen,'ventas')>0 ? (chg/val(pen,'ventas')*100).toFixed(1) : null;
+    if (pct !== null) {
+      if (parseFloat(pct) > 5)
+        insights.push({ tipo:'good', txt:`📈 Tus compras crecieron un <strong>${pct}%</strong> este mes respecto al anterior. ¡Excelente ritmo!` });
+      else if (parseFloat(pct) < -5)
+        insights.push({ tipo:'warn', txt:`📉 Tus compras bajaron un <strong>${Math.abs(pct)}%</strong> este mes. Tu ejecutivo AMIN puede ayudarte a encontrar oportunidades.` });
+      else
+        insights.push({ tipo:'', txt:`➡ Tus compras se mantienen estables respecto al mes anterior.` });
+    }
+  }
+
+  // Proyección
+  const p1 = proyectar(1);
+  if (p1 > 0) {
+    const [ny,nm] = (() => { let y,m; [y,m]=ult.split('-').map(Number); m++; if(m>12){m=1;y++;} return [y,m]; })();
+    insights.push({ tipo: p1 >= val(ult,'ventas') ? 'good' : 'warn',
+      txt:`🔮 Para <strong>${MESES_ES[nm-1]} ${ny}</strong> la proyección estima <strong>${fmt(p1)}</strong> en compras.` });
+  }
+
+  // Devoluciones
+  const totalDev = ps.reduce((s,p)=>s+val(p,'devoluciones'),0);
+  if (totalDev > 0) {
+    const pctDev = (totalDev/totalVentas*100).toFixed(1);
+    insights.push({ tipo: parseFloat(pctDev)>10?'danger':'', txt:`↩ Devoluciones acumuladas: <strong>${fmt(totalDev)}</strong> (${pctDev}% de las ventas totales).` });
+  }
+
+  el.innerHTML = insights.map(i => `<li class="${i.tipo}">${i.txt}</li>`).join('');
+}
+
+/* ── Gráfica ──────────────────────────────────────────── */
+function setMetric(m, el) {
+  metricActual = m;
+  document.querySelectorAll('.metric-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderChart();
+}
+
+function renderChart() {
+  const ps = periodos();
+  if (!ps.length) return;
+  const labels = ps.map(p => { const [y,m]=p.split('-'); return MESES_C[parseInt(m)-1]+'\''+y.slice(2); });
+  const vals   = ps.map(p => val(p, metricActual));
+
+  // Proyección 3 meses
+  const projLabels=[], projVals=[];
+  let [ly,lm] = ps.at(-1).split('-').map(Number);
+  for(let i=1;i<=3;i++){
+    lm++; if(lm>12){lm=1;ly++;}
+    projLabels.push(MESES_C[lm-1]+'\''+String(ly).slice(2)+' ▸');
+    projVals.push(metricActual==='ventas' ? proyectar(i) : null);
+  }
+
+  const allLabels = [...labels, ...projLabels];
+  const dataReal  = [...vals, null, null, null];
+  const dataProy  = [...Array(ps.length).fill(null), ...projVals];
+
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  if (chartInst) chartInst.destroy();
+  chartInst = new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: allLabels,
+      datasets:[
+        { label:'Real', data:dataReal,
+          borderColor:'#2E7D5A', backgroundColor:'rgba(46,125,90,.1)',
+          borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#2E7D5A', tension:.3, fill:true },
+        { label:'Proyección', data:dataProy,
+          borderColor:'#E67E22', backgroundColor:'rgba(230,126,34,.06)',
+          borderWidth:2, borderDash:[6,4], pointRadius:5, pointBackgroundColor:'#E67E22', tension:.3 },
+      ]
+    },
+    options:{
+      responsive:true, interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{labels:{font:{family:'Poppins',size:11}}},
+        tooltip:{callbacks:{label:ctx=>{
+          const v=ctx.raw; if(v===null) return null;
+          return metricActual==='ventas'?fmt(v):fmtN(v)+' '+(metricActual==='unidades'?'und':'ped');
+        }}}
+      },
+      scales:{
+        y:{ticks:{callback:v=>metricActual==='ventas'?fmt(v):fmtN(v),font:{family:'Poppins',size:10}},grid:{color:'#eee'}},
+        x:{ticks:{font:{family:'Poppins',size:10}},grid:{display:false}}
+      }
+    }
+  });
+}
+
+async function logout() {
+  await fetch('/api/logout',{method:'POST'});
+  window.location.href='/login.html';
+}
+</script>
+</body>
+</html>

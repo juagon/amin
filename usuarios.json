@@ -6,21 +6,16 @@
     "rol": "admin"
   },
   {
-    "usuario": "asesor1",
-    "clave": "Asesor1",
-    "nombre": "Asesor Comercial 1",
-    "rol": "asesor"
+    "usuario": "Directora Comercial",
+    "nombre": "Luz Adriana Girlado",
+    "clave": "Directora1",
+    "rol": "admin"
   },
   {
-    "usuario": "asesor2",
-    "clave": "Asesor2",
-    "nombre": "Asesor Comercial 2",
-    "rol": "asesor"
-  },
-  {
-    "usuario": "asesor3",
-    "clave": "Asesor3",
-    "nombre": "Asesor Comercial 3",
-    "rol": "asesor"
+    "usuario": "directora comercial",
+    "nombre": "Cliente1",
+    "clave": "Cliente1",
+    "rol": "asesor",
+    "clienteId": "cli-1"
   }
 ]

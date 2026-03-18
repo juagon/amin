@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Clientes — AMIN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root{
+      --verde-o:#1B4D3E; --verde-m:#2E7D5A; --verde-c:#EBF5F0;
+      --verde-b:#5BA87A; --negro:#0F0C0C; --blanco:#FFFFFF;
+      --borde:#C2DED3; --borde-c:#D4EDE5; --texto:#222;
+      --rojo:#C0392B; --amarillo:#E67E22; --azul:#2980B9;
+      --sombra:rgba(27,77,62,.10);
+      --font:'Poppins',sans-serif; --head:'Raleway',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:14px;scroll-behavior:smooth}
+    body{font-family:var(--font);background:#F0F4F2;color:var(--texto);min-height:100vh}
+
+    /* HEADER */
+    .site-header{background:linear-gradient(135deg,var(--verde-o),#1f5e4a);
+      padding:0 28px;height:60px;display:flex;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+    .header__title{font-family:var(--head);font-size:.9rem;font-weight:800;color:rgba(255,255,255,.9);flex:1}
+    .header__user{font-size:.72rem;color:rgba(255,255,255,.6)}
+    .header__user strong{color:#A8E063}
+    .btn-nav{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
+      color:#fff;border-radius:100px;padding:6px 16px;cursor:pointer;font-size:.74rem;
+      font-weight:600;text-decoration:none;font-family:var(--font);transition:background .15s}
+    .btn-nav:hover{background:rgba(255,255,255,.22)}
+
+    /* LAYOUT */
+    .main{max-width:1200px;margin:0 auto;padding:24px 20px}
+
+    /* KPI CARDS */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+    .kpi{background:var(--blanco);border-radius:14px;padding:18px 20px;
+      border:1.5px solid var(--borde-c);box-shadow:0 2px 12px var(--sombra)}
+    .kpi__label{font-size:.68rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+    .kpi__value{font-family:var(--head);font-size:1.5rem;font-weight:900;color:var(--verde-o)}
+    .kpi__sub{font-size:.68rem;color:#aaa;margin-top:4px}
+    .kpi.alert .kpi__value{color:var(--rojo)}
+    .kpi.warn  .kpi__value{color:var(--amarillo)}
+
+    /* SECCIÓN */
+    .card{background:var(--blanco);border-radius:16px;border:1.5px solid var(--borde-c);
+      box-shadow:0 2px 16px var(--sombra);overflow:hidden;margin-bottom:20px}
+    .card__head{background:var(--verde-o);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:10px}
+    .card__head h2{font-family:var(--head);font-size:.94rem;font-weight:800;flex:1}
+    .card__head p{font-size:.7rem;opacity:.72}
+    .card__body{padding:20px}
+
+    /* RANKING */
+    .rank-table{width:100%;border-collapse:collapse;font-size:.82rem}
+    .rank-table th{font-size:.62rem;font-weight:700;color:#999;text-transform:uppercase;
+      letter-spacing:.06em;padding:0 0 10px;text-align:left;border-bottom:2px solid var(--borde)}
+    .rank-table td{padding:10px 0;border-bottom:1px solid var(--borde-c);vertical-align:middle}
+    .rank-table tr:last-child td{border-bottom:none}
+    .rank-table tr:hover td{background:#F8FFFC}
+    .rank-pos{font-family:var(--head);font-size:1rem;font-weight:900;color:var(--borde);width:32px}
+    .rank-pos.top1{color:#FFD700} .rank-pos.top2{color:#C0C0C0} .rank-pos.top3{color:#CD7F32}
+    .trend{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:100px}
+    .trend.up  {background:#E8F5E9;color:#2E7D3E}
+    .trend.down{background:#FFF5F5;color:var(--rojo)}
+    .trend.flat{background:#F5F5F5;color:#999}
+    .bar-wrap{background:#eee;border-radius:100px;height:6px;width:120px}
+    .bar-fill{background:linear-gradient(90deg,var(--verde-m),var(--verde-b));border-radius:100px;height:6px;transition:width .4s}
+
+    /* SELECTOR CLIENTE */
+    .cli-selector{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+    .cli-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--borde);
+      background:var(--verde-c);color:var(--verde-o);font-size:.76rem;font-weight:700;
+      cursor:pointer;font-family:var(--font);transition:all .18s}
+    .cli-btn:hover{border-color:var(--verde-m)}
+    .cli-btn.active{background:var(--verde-o);color:#fff;border-color:var(--verde-o)}
+
+    /* MÉTRICAS SELECTOR */
+    .metric-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+    .metric-tab{padding:5px 14px;border-radius:100px;border:1.5px solid var(--borde);
+      background:var(--verde-c);color:#666;font-size:.72rem;font-weight:700;
+      cursor:pointer;font-family:var(--font);transition:all .18s}
+    .metric-tab.active{background:var(--verde-o);color:#fff;border-color:var(--verde-o)}
+
+    /* ALERTAS */
+    .alert-item{display:flex;align-items:center;gap:12px;padding:10px 14px;
+      border-radius:10px;margin-bottom:8px;border:1.5px solid}
+    .alert-item.danger{background:#FFF5F5;border-color:#FFCDD2}
+    .alert-item.warn  {background:#FFFDE7;border-color:#FFE082}
+    .alert-item__ico{font-size:1.2rem;flex-shrink:0}
+    .alert-item__msg{font-size:.78rem;flex:1}
+    .alert-item__cli{font-weight:700;color:var(--verde-o)}
+
+    /* INSIGHTS */
+    .insight-list{list-style:none;padding:0}
+    .insight-list li{padding:10px 14px;border-radius:10px;background:var(--verde-c);
+      border-left:4px solid var(--verde-m);margin-bottom:8px;font-size:.8rem;line-height:1.5}
+    .insight-list li.warn{background:#FFFDE7;border-left-color:var(--amarillo)}
+    .insight-list li.danger{background:#FFF5F5;border-left-color:var(--rojo)}
+    .insight-list li.good{background:#E8F5E9;border-left-color:#2E7D3E}
+
+    /* BOTONES */
+    .btn-report{background:var(--verde-o);color:#fff;border:none;border-radius:100px;
+      padding:10px 24px;font-size:.82rem;font-weight:700;cursor:pointer;
+      font-family:var(--font);transition:background .15s;box-shadow:0 3px 12px rgba(27,77,62,.28)}
+    .btn-report:hover{background:var(--verde-m)}
+
+    /* GRID 2 cols */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:760px){.grid-2{grid-template-columns:1fr}}
+
+    /* TABLA PROYECCION */
+    .proj-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:10px}
+    .proj-table th{background:var(--verde-c);font-size:.65rem;font-weight:700;color:#666;
+      text-transform:uppercase;letter-spacing:.05em;padding:8px 10px;text-align:left}
+    .proj-table td{padding:8px 10px;border-bottom:1px solid var(--borde-c)}
+    .proj-table tr.proyectado td{color:var(--verde-m);font-style:italic}
+    .proj-table tr.proyectado td:first-child::after{content:' ▸';font-size:.65rem}
+
+    .empty{text-align:center;color:#ccc;padding:32px;font-size:.84rem}
+    .site-footer{text-align:center;padding:16px;font-size:.64rem;color:#aaa}
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <img height="30" src="https://amin.com.co/wp-content/uploads/2024/03/logo2.png" alt="AMIN" onerror="this.style.display='none'"/>
+  <div style="width:1px;height:22px;background:rgba(255,255,255,.2);margin:0 6px"></div>
+  <span class="header__title">📊 Dashboard Clientes Principales — AMIN</span>
+  <span class="header__user">Hola, <strong id="nomUser">…</strong></span>
+  <a class="btn-nav" href="/admin.html" style="margin-right:6px">⚙ Admin</a>
+  <a class="btn-nav" href="/">← Catálogo</a>
+</header>
+
+<main class="main">
+
+  <!-- KPIs globales -->
+  <div class="kpi-grid" id="kpiGrid">
+    <div class="kpi"><div class="kpi__label">Total ventas (último mes)</div>
+      <div class="kpi__value" id="kpiVentas">—</div><div class="kpi__sub" id="kpiVentasSub"></div></div>
+    <div class="kpi"><div class="kpi__label">Total unidades (último mes)</div>
+      <div class="kpi__value" id="kpiUnidades">—</div><div class="kpi__sub" id="kpiUnidadesSub"></div></div>
+    <div class="kpi"><div class="kpi__label">Total pedidos (último mes)</div>
+      <div class="kpi__value" id="kpiPedidos">—</div><div class="kpi__sub" id="kpiPedidosSub"></div></div>
+    <div class="kpi"><div class="kpi__label">Clientes activos</div>
+      <div class="kpi__value" id="kpiClientes">—</div><div class="kpi__sub" id="kpiClientesSub"></div></div>
+    <div class="kpi alert" style="display:none" id="kpiAlerta">
+      <div class="kpi__label">⚠ Alertas de caída</div>
+      <div class="kpi__value" id="kpiAlertaVal">0</div>
+      <div class="kpi__sub">clientes con tendencia negativa</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+
+    <!-- Ranking -->
+    <div class="card">
+      <div class="card__head">
+        <div><h2>🏆 Ranking por ventas</h2><p>Acumulado histórico — ordenado de mayor a menor</p></div>
+      </div>
+      <div class="card__body">
+        <div class="metric-tabs" id="rankMetricTabs">
+          <span class="metric-tab active" onclick="setRankMetric('ventas',this)">$ Ventas</span>
+          <span class="metric-tab" onclick="setRankMetric('unidades',this)">📦 Unidades</span>
+          <span class="metric-tab" onclick="setRankMetric('pedidos',this)">🛒 Pedidos</span>
+        </div>
+        <table class="rank-table"><thead><tr>
+          <th style="width:36px">#</th>
+          <th>Cliente</th>
+          <th>Total</th>
+          <th>Participación</th>
+          <th>vs mes ant.</th>
+        </tr></thead>
+        <tbody id="rankTbody"></tbody></table>
+      </div>
+    </div>
+
+    <!-- Alertas -->
+    <div>
+      <div class="card" style="margin-bottom:20px">
+        <div class="card__head"><div><h2>⚠ Alertas</h2><p>Clientes que requieren atención</p></div></div>
+        <div class="card__body" id="alertasBody">
+          <div class="empty">Sin alertas activas 🎉</div>
+        </div>
+      </div>
+
+      <!-- Insights IA -->
+      <div class="card">
+        <div class="card__head">
+          <div><h2>💡 Insights</h2><p>Análisis automático de la relación comercial</p></div>
+          <button class="btn-report" onclick="generarReporte()" style="padding:7px 16px;font-size:.72rem">📄 Reporte</button>
+        </div>
+        <div class="card__body">
+          <ul class="insight-list" id="insightsList">
+            <li>Carga datos de al menos 2 meses para generar insights.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Gráfica de tendencia -->
+  <div class="card">
+    <div class="card__head"><div><h2>📈 Tendencia por cliente</h2><p>Selecciona un cliente y la métrica a analizar</p></div></div>
+    <div class="card__body">
+      <div class="cli-selector" id="cliSelector"></div>
+      <div class="metric-tabs" id="metricTabs">
+        <span class="metric-tab active" onclick="setMetric('ventas',this)">$ Ventas</span>
+        <span class="metric-tab" onclick="setMetric('unidades',this)">📦 Unidades</span>
+        <span class="metric-tab" onclick="setMetric('pedidos',this)">🛒 Pedidos</span>
+        <span class="metric-tab" onclick="setMetric('devoluciones',this)">↩ Devoluciones</span>
+      </div>
+      <canvas id="trendChart" height="100"></canvas>
+    </div>
+  </div>
+
+  <!-- Proyecciones -->
+  <div class="card">
+    <div class="card__head"><div><h2>🔮 Proyecciones (próximos 3 meses)</h2><p>Basado en tendencia lineal de los últimos 6 meses — en $ Ventas</p></div></div>
+    <div class="card__body">
+      <table class="proj-table" id="projTable">
+        <thead><tr><th>Cliente</th><th>Mes +1</th><th>Mes +2</th><th>Mes +3</th><th>Tendencia</th></tr></thead>
+        <tbody id="projTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <strong style="color:var(--verde-b)">AMIN</strong> · Dashboard Clientes · 2026
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   Dashboard Clientes AMIN
+   ═══════════════════════════════════════════════════════ */
+
+let CLIENTES  = [];
+let DATA      = {};
+let chartInst = null;
+let metricActual   = 'ventas';
+let rankMetric     = 'ventas';
+let cliSeleccionado = null;
+
+const MESES_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const fmt  = n => '$'+Math.round(n||0).toLocaleString('es-CO');
+const fmtN = n => Math.round(n||0).toLocaleString('es-CO');
+
+/* ── Init ─────────────────────────────────────────────── */
+(async () => {
+  const [rSes, rCli, rDat] = await Promise.all([
+    fetch('/api/sesion'),
+    fetch('/api/clientes'),
+    fetch('/api/clientes-data'),
+  ]);
+  const ses = await rSes.json();
+  if (!ses.ok) { window.location.href='/login.html'; return; }
+  if (ses.rol !== 'admin') { window.location.href='/'; return; }
+  document.getElementById('nomUser').textContent = ses.nombre;
+
+  const cRes = await rCli.json();
+  const dRes = await rDat.json();
+  CLIENTES = (cRes.ok ? cRes.clientes : []).filter(c => c.activo !== false);
+  DATA     =  dRes.ok ? dRes.data : {};
+
+  renderKPIs();
+  renderRanking();
+  renderAlertas();
+  renderInsights();
+  renderSelector();
+  renderProyecciones();
+  if (CLIENTES.length) seleccionarCli(CLIENTES[0].id);
+})();
+
+/* ── Helpers de datos ─────────────────────────────────── */
+function periodos(clienteId) {
+  return Object.keys(DATA[clienteId] || {}).sort();
+}
+function valorMes(clienteId, periodo, metrica) {
+  return (DATA[clienteId]?.[periodo]?.[metrica]) || 0;
+}
+function ultimoPeriodo() {
+  const all = Object.values(DATA).flatMap(d => Object.keys(d));
+  return all.length ? all.sort().at(-1) : null;
+}
+function penultimoPeriodo() {
+  const all = [...new Set(Object.values(DATA).flatMap(d => Object.keys(d)))].sort();
+  return all.length >= 2 ? all.at(-2) : null;
+}
+
+/* ── KPIs ─────────────────────────────────────────────── */
+function renderKPIs() {
+  const ult = ultimoPeriodo();
+  const pen = penultimoPeriodo();
+  if (!ult) return;
+
+  const [tV, tU, tP] = ['ventas','unidades','pedidos'].map(m =>
+    CLIENTES.reduce((s,c) => s + valorMes(c.id, ult, m), 0));
+  const [pV, pU, pP] = ['ventas','unidades','pedidos'].map(m =>
+    pen ? CLIENTES.reduce((s,c) => s + valorMes(c.id, pen, m), 0) : 0);
+
+  const delta = (a,b) => b > 0 ? ((a-b)/b*100).toFixed(1) : null;
+  const dSub  = (a,b) => { const d=delta(a,b); return d===null?'':`${d>=0?'▲':'▼'} ${Math.abs(d)}% vs mes ant.`; };
+
+  document.getElementById('kpiVentas').textContent     = fmt(tV);
+  document.getElementById('kpiVentasSub').textContent   = dSub(tV,pV);
+  document.getElementById('kpiUnidades').textContent   = fmtN(tU);
+  document.getElementById('kpiUnidadesSub').textContent = dSub(tU,pU);
+  document.getElementById('kpiPedidos').textContent    = fmtN(tP);
+  document.getElementById('kpiPedidosSub').textContent  = dSub(tP,pP);
+  document.getElementById('kpiClientes').textContent   = CLIENTES.length;
+  document.getElementById('kpiClientesSub').textContent = `${ult} — periodo más reciente`;
+
+  // Alertas KPI
+  const alertas = CLIENTES.filter(c => esAlertaCaida(c.id)).length;
+  if (alertas > 0) {
+    document.getElementById('kpiAlerta').style.display = '';
+    document.getElementById('kpiAlertaVal').textContent = alertas;
+  }
+}
+
+/* ── Ranking ──────────────────────────────────────────── */
+function setRankMetric(m, el) {
+  rankMetric = m;
+  document.querySelectorAll('#rankMetricTabs .metric-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderRanking();
+}
+
+function renderRanking() {
+  const ult = ultimoPeriodo();
+  const pen = penultimoPeriodo();
+  const clientes = CLIENTES.map(c => ({
+    ...c,
+    total:    Object.keys(DATA[c.id]||{}).reduce((s,p) => s+valorMes(c.id,p,rankMetric), 0),
+    ult:      valorMes(c.id, ult, rankMetric),
+    pen:      pen ? valorMes(c.id, pen, rankMetric) : null,
+  })).sort((a,b) => b.total - a.total);
+
+  const maxTotal = clientes[0]?.total || 1;
+  const fmtVal = v => rankMetric==='ventas' ? fmt(v) : fmtN(v);
+
+  document.getElementById('rankTbody').innerHTML = clientes.map((c,i) => {
+    const pct  = Math.round(c.total / maxTotal * 100);
+    const posClass = i===0?'top1':i===1?'top2':i===2?'top3':'';
+    let trendClass='flat', trendTxt='—';
+    if (c.pen !== null && c.pen > 0) {
+      const chg = (c.ult - c.pen)/c.pen*100;
+      trendClass = chg >= 0 ? 'up' : 'down';
+      trendTxt   = `${chg>=0?'▲':'▼'} ${Math.abs(chg).toFixed(1)}%`;
+    }
+    return `<tr>
+      <td><span class="rank-pos ${posClass}">${i+1}</span></td>
+      <td style="font-weight:700">${c.nombre}<br><span style="font-size:.66rem;color:#aaa">${c.categoria||''}</span></td>
+      <td style="font-weight:700;color:var(--verde-o)">${fmtVal(c.total)}</td>
+      <td><div class="bar-wrap"><div class="bar-fill" style="width:${pct}%"></div></div></td>
+      <td><span class="trend ${trendClass}">${trendTxt}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── Alertas ──────────────────────────────────────────── */
+function esAlertaCaida(id) {
+  const ps = periodos(id);
+  if (ps.length < 3) return false;
+  const last3 = ps.slice(-3).map(p => valorMes(id, p, 'ventas'));
+  return last3[1] < last3[0] && last3[2] < last3[1];
+}
+
+function renderAlertas() {
+  const alertas = [];
+  CLIENTES.forEach(c => {
+    const ps = periodos(c.id);
+    if (ps.length < 2) return;
+    const v = ps.slice(-3).map(p => valorMes(c.id, p, 'ventas'));
+    if (esAlertaCaida(c.id)) {
+      alertas.push({ tipo:'danger', ico:'🔴', msg:`<span class="alert-item__cli">${c.nombre}</span> lleva 3 meses consecutivos en caída de ventas.` });
+    } else if (ps.length >= 2 && v.at(-1) < v.at(-2)) {
+      alertas.push({ tipo:'warn', ico:'🟡', msg:`<span class="alert-item__cli">${c.nombre}</span> bajó ventas respecto al mes anterior.` });
+    }
+    // Sin datos recientes
+    const ult = ultimoPeriodo();
+    if (ult && !DATA[c.id]?.[ult]) {
+      alertas.push({ tipo:'warn', ico:'📭', msg:`<span class="alert-item__cli">${c.nombre}</span> no tiene datos cargados en el período más reciente (${ult}).` });
+    }
+  });
+  const el = document.getElementById('alertasBody');
+  el.innerHTML = alertas.length
+    ? alertas.map(a => `<div class="alert-item ${a.tipo}"><span class="alert-item__ico">${a.ico}</span><span class="alert-item__msg">${a.msg}</span></div>`).join('')
+    : '<div class="empty">Sin alertas activas 🎉</div>';
+}
+
+/* ── Insights ─────────────────────────────────────────── */
+function renderInsights() {
+  const insights = [];
+  const ult = ultimoPeriodo();
+  const pen = penultimoPeriodo();
+  if (!ult) { return; }
+
+  // Top cliente
+  const ranked = CLIENTES.map(c => ({ ...c, v: Object.keys(DATA[c.id]||{}).reduce((s,p) => s+valorMes(c.id,p,'ventas'),0) })).sort((a,b)=>b.v-a.v);
+  if (ranked.length) insights.push({ tipo:'good', txt:`🏆 <strong>${ranked[0].nombre}</strong> es el cliente #1 con ${fmt(ranked[0].v)} en ventas acumuladas — fortalece esta relación.` });
+
+  // Cliente de mayor crecimiento
+  if (pen) {
+    const crecimientos = CLIENTES.map(c => {
+      const vA = valorMes(c.id, pen, 'ventas'), vB = valorMes(c.id, ult, 'ventas');
+      return { ...c, chg: vA > 0 ? (vB-vA)/vA*100 : 0, vB };
+    }).filter(c => c.vB > 0).sort((a,b) => b.chg - a.chg);
+    if (crecimientos.length && crecimientos[0].chg > 5)
+      insights.push({ tipo:'good', txt:`📈 <strong>${crecimientos[0].nombre}</strong> creció ${crecimientos[0].chg.toFixed(1)}% en ventas este mes — el mayor crecimiento del portafolio.` });
+    if (crecimientos.length && crecimientos.at(-1).chg < -10)
+      insights.push({ tipo:'danger', txt:`📉 <strong>${crecimientos.at(-1).nombre}</strong> cayó ${Math.abs(crecimientos.at(-1).chg).toFixed(1)}% respecto al mes anterior — requiere seguimiento urgente.` });
+  }
+
+  // Alertas de caída
+  CLIENTES.forEach(c => {
+    if (esAlertaCaida(c.id)) insights.push({ tipo:'danger', txt:`⚠ <strong>${c.nombre}</strong> acumula 3 meses consecutivos en caída. Es momento de revisar la relación comercial y ofrecerle incentivos.` });
+  });
+
+  // Concentración de cartera
+  const totalVentas = ranked.reduce((s,c) => s+c.v, 0);
+  if (ranked.length >= 2 && totalVentas > 0) {
+    const pct1 = ranked[0].v/totalVentas*100;
+    if (pct1 > 40) insights.push({ tipo:'warn', txt:`📊 <strong>${ranked[0].nombre}</strong> representa el ${pct1.toFixed(0)}% de tus ventas totales. Alta concentración — diversifica el portafolio de clientes.` });
+  }
+
+  // Sin datos
+  const sinDatos = CLIENTES.filter(c => !Object.keys(DATA[c.id]||{}).length);
+  if (sinDatos.length) insights.push({ tipo:'warn', txt:`📭 ${sinDatos.length} cliente${sinDatos.length>1?'s':''} (${sinDatos.map(c=>c.nombre).join(', ')}) aún no tienen datos cargados.` });
+
+  // Proyección positiva
+  const proyPos = CLIENTES.filter(c => proyectar(c.id, 1) > valorMes(c.id, ult, 'ventas') * 1.05);
+  if (proyPos.length) insights.push({ tipo:'good', txt:`🔮 La proyección indica crecimiento para <strong>${proyPos.map(c=>c.nombre).join(', ')}</strong> el próximo mes.` });
+
+  if (!insights.length) insights.push({ tipo:'', txt:'Carga al menos 3 meses de datos para generar insights más completos.' });
+
+  document.getElementById('insightsList').innerHTML = insights
+    .map(i => `<li class="${i.tipo}">${i.txt}</li>`).join('');
+}
+
+/* ── Selector cliente ─────────────────────────────────── */
+function renderSelector() {
+  document.getElementById('cliSelector').innerHTML = CLIENTES.map(c =>
+    `<button class="cli-btn${cliSeleccionado===c.id?' active':''}" onclick="seleccionarCli('${c.id}')">${c.nombre}</button>`
+  ).join('');
+}
+
+function seleccionarCli(id) {
+  cliSeleccionado = id;
+  renderSelector();
+  renderChart();
+}
+
+function setMetric(m, el) {
+  metricActual = m;
+  document.querySelectorAll('#metricTabs .metric-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderChart();
+}
+
+/* ── Gráfica de tendencia ─────────────────────────────── */
+function renderChart() {
+  if (!cliSeleccionado) return;
+  const ps  = periodos(cliSeleccionado);
+  const cli = CLIENTES.find(c => c.id === cliSeleccionado);
+  const vals = ps.map(p => valorMes(cliSeleccionado, p, metricActual));
+
+  // Proyección 3 meses
+  const nextPeriodos = [];
+  if (ps.length) {
+    let [y,m] = ps.at(-1).split('-').map(Number);
+    for (let i=1;i<=3;i++) {
+      m++; if(m>12){m=1;y++;}
+      nextPeriodos.push(`${y}-${String(m).padStart(2,'0')}`);
+    }
+  }
+  const proyVals = nextPeriodos.map((_,i) => proyectar(cliSeleccionado, i+1));
+
+  const labels = [...ps.map(p => { const [y,mo]=p.split('-'); return MESES_ES[parseInt(mo)-1]+' '+y.slice(2); }),
+                  ...nextPeriodos.map(p => { const [y,mo]=p.split('-'); return MESES_ES[parseInt(mo)-1]+' '+y.slice(2)+' ▸'; })];
+  const dataReal = [...vals, ...Array(3).fill(null)];
+  const dataProy = [...Array(ps.length).fill(null), ...proyVals];
+
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  if (chartInst) chartInst.destroy();
+  chartInst = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: cli.nombre+' — Real', data: dataReal, borderColor:'#2E7D5A', backgroundColor:'rgba(46,125,90,.1)',
+          borderWidth:2.5, pointRadius:4, pointBackgroundColor:'#2E7D5A', tension:.3, fill:true },
+        { label: 'Proyección', data: dataProy, borderColor:'#E67E22', backgroundColor:'rgba(230,126,34,.08)',
+          borderWidth:2, borderDash:[6,4], pointRadius:5, pointBackgroundColor:'#E67E22', tension:.3, fill:false },
+      ]
+    },
+    options: {
+      responsive:true, interaction:{ mode:'index', intersect:false },
+      plugins:{ legend:{ labels:{ font:{ family:'Poppins', size:11 } } },
+        tooltip:{ callbacks:{ label: ctx => {
+          const v = ctx.raw;
+          if (v===null) return null;
+          return metricActual==='ventas' ? fmt(v) : fmtN(v)+' '+(metricActual==='unidades'?'und':'ped');
+        }}}},
+      scales:{ y:{ ticks:{ callback: v => metricActual==='ventas' ? fmt(v) : fmtN(v),
+        font:{ family:'Poppins', size:10 } }, grid:{ color:'#eee' } },
+        x:{ ticks:{ font:{ family:'Poppins', size:10 } }, grid:{ display:false } } }
+    }
+  });
+}
+
+/* ── Proyección lineal ────────────────────────────────── */
+function proyectar(clienteId, mesesAdelante) {
+  const ps = periodos(clienteId);
+  const datos = ps.slice(-6).map(p => valorMes(clienteId, p, 'ventas'));
+  if (datos.length < 2) return datos.at(-1) || 0;
+  const n = datos.length;
+  const x = datos.map((_,i) => i);
+  const sumX = x.reduce((a,b)=>a+b,0), sumY = datos.reduce((a,b)=>a+b,0);
+  const sumXY = x.reduce((s,xi,i)=>s+xi*datos[i],0);
+  const sumX2 = x.reduce((s,xi)=>s+xi*xi,0);
+  const m = (n*sumXY - sumX*sumY) / (n*sumX2 - sumX*sumX);
+  const b = (sumY - m*sumX) / n;
+  const val = m*(n-1+mesesAdelante) + b;
+  return Math.max(0, Math.round(val));
+}
+
+/* ── Proyecciones tabla ───────────────────────────────── */
+function renderProyecciones() {
+  const ult = ultimoPeriodo();
+  if (!ult || !CLIENTES.length) {
+    document.getElementById('projTbody').innerHTML = `<tr><td colspan="5" class="empty">Sin datos suficientes para proyectar.</td></tr>`;
+    return;
+  }
+  document.getElementById('projTbody').innerHTML = CLIENTES.map(c => {
+    const p1=proyectar(c.id,1), p2=proyectar(c.id,2), p3=proyectar(c.id,3);
+    const vUlt = valorMes(c.id, ult, 'ventas');
+    const tendencia = p1 > vUlt*1.05 ? '📈 Crecimiento' : p1 < vUlt*0.95 ? '📉 Caída' : '➡ Estable';
+    return `<tr class="proyectado">
+      <td style="font-weight:700">${c.nombre}</td>
+      <td>${fmt(p1)}</td><td>${fmt(p2)}</td><td>${fmt(p3)}</td>
+      <td style="font-weight:600">${tendencia}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── Reporte texto ────────────────────────────────────── */
+function generarReporte() {
+  const ult = ultimoPeriodo() || '—';
+  const fecha = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
+  let txt = `REPORTE DE CLIENTES PRINCIPALES — AMIN\n${'═'.repeat(50)}\nGenerado: ${fecha} | Período más reciente: ${ult}\n\n`;
+
+  txt += `RANKING POR VENTAS ACUMULADAS\n${'─'.repeat(40)}\n`;
+  const ranked = CLIENTES.map(c => ({
+    ...c,
+    v: Object.keys(DATA[c.id]||{}).reduce((s,p) => s+valorMes(c.id,p,'ventas'),0),
+    u: Object.keys(DATA[c.id]||{}).reduce((s,p) => s+valorMes(c.id,p,'unidades'),0),
+  })).sort((a,b)=>b.v-a.v);
+  ranked.forEach((c,i) => {
+    txt += `${i+1}. ${c.nombre} — Ventas: ${fmt(c.v)} | Unidades: ${fmtN(c.u)}\n`;
+  });
+
+  txt += `\nPROYECCIONES PRÓXIMOS 3 MESES ($ Ventas)\n${'─'.repeat(40)}\n`;
+  CLIENTES.forEach(c => {
+    txt += `${c.nombre}: Mes+1 ${fmt(proyectar(c.id,1))} | Mes+2 ${fmt(proyectar(c.id,2))} | Mes+3 ${fmt(proyectar(c.id,3))}\n`;
+  });
+
+  txt += `\nINSIGHTS CLAVE\n${'─'.repeat(40)}\n`;
+  document.querySelectorAll('#insightsList li').forEach(li => {
+    txt += `• ${li.innerText}\n`;
+  });
+
+  txt += `\n${'═'.repeat(50)}\nIntranet AMIN — amin.com.co`;
+
+  const blob = new Blob([txt], {type:'text/plain;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Reporte_Clientes_AMIN_${ult}.txt`;
+  a.click();
+}
+</script>
+</body>
+</html>

@@ -286,7 +286,6 @@
         const res  = await fetch('/api/login', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
           body:    JSON.stringify({
             usuario: document.getElementById('usuario').value.trim(),
             clave:   document.getElementById('clave').value
@@ -295,7 +294,7 @@
         const data = await res.json();
         if (data.ok) {
           btn.textContent = '✓ Bienvenido';
-          window.location.href = '/catalogo.html';
+          window.location.href = data.rol === 'cliente' ? '/mi-cuenta.html' : '/catalogo.html';
         } else {
           err.textContent   = data.mensaje || 'Usuario o contraseña incorrectos';
           err.style.display = 'block';

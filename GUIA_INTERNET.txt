@@ -1,0 +1,96 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║         INTRANET AMIN — GUÍA DE ACCESO POR INTERNET               ║
+║         Cloudflare Tunnel — Costo: $0/mes                         ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+¿QUÉ ES CLOUDFLARE TUNNEL?
+────────────────────────────
+Cloudflare Tunnel crea un enlace seguro entre la PC de la oficina
+e Internet sin necesidad de:
+  ✓ Abrir puertos en el router
+  ✓ Contratar IP fija
+  ✓ Pagar un servidor en la nube
+  ✓ Instalar certificados SSL (HTTPS automático)
+
+La intranet corre localmente, Cloudflare la hace visible al mundo.
+
+
+══════════════════════════════════════════════════════════════════════
+PRIMERA VEZ — CONFIGURACIÓN (solo una vez)
+══════════════════════════════════════════════════════════════════════
+
+Paso 1: Descargar Cloudflare
+  → Ejecutar: DESCARGAR_CLOUDFLARE.bat
+  → Esperar que descargue cloudflared.exe (~40 MB)
+
+Paso 2: Probar acceso rápido (URL temporal)
+  → Ejecutar: INICIAR_CON_INTERNET.bat
+  → Buscar en la ventana la línea con la URL pública:
+      https://xxxxxxxx.trycloudflare.com
+  → Compartir esa URL con los clientes para probar
+
+Paso 3 (Opcional): Configurar URL fija permanente
+  → Ejecutar: CONFIGURAR_URL_PERMANENTE.bat
+  → Requiere cuenta gratuita en cloudflare.com
+  → Si tienen dominio propio (ej: amin.com.co), se puede usar:
+      https://intranet.amin.com.co
+  → Si no tienen dominio, Cloudflare asigna uno gratis
+
+
+══════════════════════════════════════════════════════════════════════
+USO DIARIO
+══════════════════════════════════════════════════════════════════════
+
+Para acceso solo en oficina (red local):
+  → Usar INICIAR.bat (como siempre)
+
+Para acceso desde internet / clientes externos:
+  → Usar INICIAR_CON_INTERNET.bat
+  → O INICIAR_TUNEL_FIJO.bat (si ya configuraste URL permanente)
+
+La PC donde corre el servidor DEBE estar encendida mientras
+los clientes necesiten acceder.
+
+
+══════════════════════════════════════════════════════════════════════
+USUARIOS Y ROLES
+══════════════════════════════════════════════════════════════════════
+
+  ROL: admin    → Panel completo, gestión de clientes y productos
+  ROL: asesor   → Solo catálogo
+  ROL: cliente  → Solo su portal personal (mi-cuenta.html)
+
+Para crear acceso a un cliente:
+  1. Entrar al admin → Tab "🏢 Clientes"
+  2. Seleccionar el cliente
+  3. En "Acceso al portal" → Crear acceso (usuario + clave)
+  4. El cliente recibe su usuario y clave
+  5. Entra a la URL pública e inicia sesión
+
+
+══════════════════════════════════════════════════════════════════════
+CONSIDERACIONES DE SEGURIDAD
+══════════════════════════════════════════════════════════════════════
+
+  ✓ HTTPS automático (conexión encriptada)
+  ✓ Protección básica DDoS de Cloudflare
+  ✓ Los datos (JSON) quedan en la PC de la oficina, no en la nube
+  ✓ Login con usuario y contraseña para todos los roles
+  ✗ No tiene autenticación de dos factores (2FA)
+  ✗ No hay logs de auditoría avanzados
+
+Para extranet de bajo tráfico con clientes de confianza,
+este nivel de seguridad es adecuado.
+
+
+══════════════════════════════════════════════════════════════════════
+RESUMEN DE ARCHIVOS
+══════════════════════════════════════════════════════════════════════
+
+  DESCARGAR_CLOUDFLARE.bat      → Descargar cloudflared.exe (1 sola vez)
+  INICIAR_CON_INTERNET.bat      → Iniciar con URL pública temporal
+  CONFIGURAR_URL_PERMANENTE.bat → Configurar URL fija (requiere cuenta CF)
+  INICIAR_TUNEL_FIJO.bat        → Iniciar con URL fija (se crea al configurar)
+  INICIAR.bat                   → Solo red local (sin internet)
+
+══════════════════════════════════════════════════════════════════════

@@ -811,6 +811,13 @@ const carouselState = {};
       adminLink.style.cssText = `background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
         color:#fff;border-radius:100px;padding:6px 14px;font-size:.74rem;font-weight:600;
         text-decoration:none;margin-right:8px;transition:background .15s;flex-shrink:0`;
+      const cliLink = document.createElement('a');
+      cliLink.href = '/clientes.html';
+      cliLink.textContent = '📊 Clientes';
+      cliLink.style.cssText = adminLink.style.cssText;
+      adminLink.style.cssText = `background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
+        color:#fff;border-radius:100px;padding:6px 14px;font-size:.74rem;font-weight:600;
+        text-decoration:none;margin-right:8px;transition:background .15s;flex-shrink:0`;
       adminLink.onmouseenter = () => adminLink.style.background = 'rgba(255,255,255,.22)';
       adminLink.onmouseleave = () => adminLink.style.background = 'rgba(255,255,255,.12)';
       const logoutBtn = document.querySelector('.btn-logout');
@@ -1338,13 +1345,17 @@ function generarPedido() {
   body += '═'.repeat(46) + '\nGenerado desde Intranet AMIN — amin.com.co';
   const sub = `Pedido Interno — ${usuario.nombre} — ${new Date().toLocaleDateString('es-CO')}`;
 
-  // Registrar unidades pedidas por producto (solo productos del catálogo regular)
+  // Registrar unidades del catálogo regular
   const ventasPayload = {};
+  const outletPayload = {};
   carrito.forEach(item => {
-    if (!item.pid.startsWith('out-')) {
+    if (item.pid.startsWith('out-')) {
+      outletPayload[item.pid] = (outletPayload[item.pid] || 0) + item.cantidad;
+    } else {
       ventasPayload[item.pid] = (ventasPayload[item.pid] || 0) + item.cantidad;
     }
   });
+
   if (Object.keys(ventasPayload).length) {
     fetch('/api/ventas', {
       method: 'POST',
@@ -1352,6 +1363,20 @@ function generarPedido() {
       body: JSON.stringify(ventasPayload)
     }).then(r => r.json()).then(d => {
       if (d.ok) { VENTAS = d.ventas; renderCatalog(); }
+    }).catch(() => {});
+  }
+
+  // Descontar stock de outlet y eliminar items agotados
+  if (Object.keys(outletPayload).length) {
+    fetch('/api/outlet/venta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(outletPayload)
+    }).then(r => r.json()).then(d => {
+      if (d.ok) {
+        OUTLET = d.outlet || [];
+        renderCatalog();
+      }
     }).catch(() => {});
   }
 

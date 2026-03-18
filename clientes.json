@@ -1,0 +1,793 @@
+[
+  {
+    "id": "cli-1",
+    "nombre": "Cliente 1",
+    "categoria": "Distribuidores",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-2",
+    "nombre": "Cliente 2",
+    "categoria": "Distribuidores",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-3",
+    "nombre": "Cliente 3",
+    "categoria": "Referidos",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-qlu",
+    "nombre": "45665",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-7sg",
+    "nombre": "45667",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-eb7",
+    "nombre": "45681",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-9kb",
+    "nombre": "45684",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-3qt",
+    "nombre": "45687",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-j4l",
+    "nombre": "45694",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-rbl",
+    "nombre": "45688",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-acl",
+    "nombre": "45695",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-fcu",
+    "nombre": "45702",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ldz",
+    "nombre": "45705",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-cg7",
+    "nombre": "45706",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-c5g",
+    "nombre": "45709",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-26j",
+    "nombre": "45698",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-kqv",
+    "nombre": "45712",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ptf",
+    "nombre": "45713",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-s4b",
+    "nombre": "45716",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-etj",
+    "nombre": "45735",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-i1h",
+    "nombre": "45720",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-6lp",
+    "nombre": "45721",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-myf",
+    "nombre": "45722",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-pgn",
+    "nombre": "45726",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-z4f",
+    "nombre": "45727",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-a9w",
+    "nombre": "45747",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-zd7",
+    "nombre": "45728",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-y5h",
+    "nombre": "45730",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-qg9",
+    "nombre": "45729",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-mni",
+    "nombre": "45744",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-o6k",
+    "nombre": "45756",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-cqr",
+    "nombre": "45762",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-6iy",
+    "nombre": "45771",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-kol",
+    "nombre": "45776",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-9ug",
+    "nombre": "45777",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ss2",
+    "nombre": "45799",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-421",
+    "nombre": "45800",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-h6r",
+    "nombre": "45805",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-xlm",
+    "nombre": "45807",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-4w4",
+    "nombre": "45817",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-4v8",
+    "nombre": "45819",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-98v",
+    "nombre": "45824",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-sci",
+    "nombre": "45827",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-zy3",
+    "nombre": "45828",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-0cu",
+    "nombre": "45835",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-tjw",
+    "nombre": "45836",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-mfe",
+    "nombre": "45847",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-b8h",
+    "nombre": "45849",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-kew",
+    "nombre": "45852",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-f9f",
+    "nombre": "45848",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-45z",
+    "nombre": "45853",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-se8",
+    "nombre": "45854",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-v7c",
+    "nombre": "45861",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-hn8",
+    "nombre": "45855",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-flb",
+    "nombre": "45856",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ip5",
+    "nombre": "45866",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-kta",
+    "nombre": "45867",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ggp",
+    "nombre": "45864",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ery",
+    "nombre": "45869",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-bx5",
+    "nombre": "45899",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-kf5",
+    "nombre": "45882",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-6sa",
+    "nombre": "45890",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-7ve",
+    "nombre": "45880",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-b98",
+    "nombre": "45889",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-zx1",
+    "nombre": "45894",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967339-ngq",
+    "nombre": "45895",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-9r0",
+    "nombre": "45911",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-439",
+    "nombre": "45922",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-32u",
+    "nombre": "45915",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-bcd",
+    "nombre": "45923",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-hei",
+    "nombre": "45926",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-wrc",
+    "nombre": "45930",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-4mu",
+    "nombre": "45940",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ikj",
+    "nombre": "45950",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-znr",
+    "nombre": "45952",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ucq",
+    "nombre": "45954",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ktr",
+    "nombre": "45961",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-4om",
+    "nombre": "45979",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-vhg",
+    "nombre": "45983",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-m4k",
+    "nombre": "45987",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-83n",
+    "nombre": "45988",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-r96",
+    "nombre": "45989",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-rpu",
+    "nombre": "45997",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-r3w",
+    "nombre": "46000",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-daa",
+    "nombre": "46003",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-j5t",
+    "nombre": "46007",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-jbh",
+    "nombre": "46010",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-22m",
+    "nombre": "46014",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-3io",
+    "nombre": "46017",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ey0",
+    "nombre": "46028",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-omh",
+    "nombre": "46031",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-km7",
+    "nombre": "46036",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-okb",
+    "nombre": "46037",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-6nw",
+    "nombre": "46038",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-4sm",
+    "nombre": "46042",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-2p6",
+    "nombre": "46044",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-i43",
+    "nombre": "46048",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-kfb",
+    "nombre": "46051",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-70x",
+    "nombre": "46052",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-mzw",
+    "nombre": "46058",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-jus",
+    "nombre": "46062",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-6mu",
+    "nombre": "46063",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-gur",
+    "nombre": "46066",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-v1f",
+    "nombre": "46069",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-fmi",
+    "nombre": "46071",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-c8h",
+    "nombre": "46072",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ekd",
+    "nombre": "46073",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-y5a",
+    "nombre": "46076",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-426",
+    "nombre": "46078",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-zuf",
+    "nombre": "46080",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-z9l",
+    "nombre": "46084",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-o90",
+    "nombre": "46091",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  },
+  {
+    "id": "cli-1773860967340-ysr",
+    "nombre": "46092",
+    "categoria": "Importado",
+    "contacto": "",
+    "activo": true
+  }
+]
