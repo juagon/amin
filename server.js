@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
-const { createClient } = require('redis');
+const Redis = require('redis'); // Import compatible con CommonJS
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -19,29 +19,29 @@ const VENTAS_FILE    = path.join(__dirname, 'ventas.json');
 const DESCUENTOS_FILE = path.join(__dirname, 'descuentos.json');
 const ENCUESTAS_FILE = path.join(__dirname, 'encuestas_log.json');
 
-// Crear cliente Redis
-const redisClient = createClient({ url: process.env.REDIS_URL });
-redisClient.connect().catch(console.error);
-
 // Determinar entorno
 const isProd = process.env.NODE_ENV === 'production';
+
+// Crear cliente Redis
+const redisClient = Redis.createClient({ url: process.env.REDIS_URL });
+redisClient.connect().catch(console.error);
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', 1); // necesario en Render para HTTPS
 
-// Configuración de sesión
+// Configuración de sesión con Redis
 app.use(session({
   store: new RedisStore({ client: redisClient }),
   secret: 'amin-intranet-2026-secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 8 * 60 * 60 * 1000,        // 8 horas
+    maxAge: 8 * 60 * 60 * 1000,       // 8 horas
     httpOnly: true,
-    sameSite: isProd ? 'none' : 'lax', // none para Render, lax local
-    secure: isProd                       // true en Render, false local
+    sameSite: isProd ? 'none' : 'lax',
+    secure: isProd
   }
 }));
 
@@ -105,7 +105,7 @@ app.get('/api/sesion', (req, res) => {
   else res.json({ ok: false });
 });
 
-// Aquí agregas tus demás APIs (productos, precios, badges, ventas, etc.) sin cambios
+// Aquí puedes agregar todas tus demás APIs (productos, precios, badges, ventas, etc.) sin cambios
 
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
