@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const Redis = require('redis'); // Import compatible con CommonJS
+const Redis = require('redis');
+const RedisStore = require('connect-redis').default; // ✅ Import correcto para v7+
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -105,7 +105,7 @@ app.get('/api/sesion', (req, res) => {
   else res.json({ ok: false });
 });
 
-// Aquí puedes agregar todas tus demás APIs (productos, precios, badges, ventas, etc.) sin cambios
+// Aquí agregas tus demás APIs (productos, precios, badges, ventas, etc.) sin cambios
 
 // Iniciar servidor
 app.listen(PORT, '0.0.0.0', () => {
