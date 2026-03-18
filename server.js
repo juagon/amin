@@ -7,96 +7,68 @@ const os      = require('os');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-const isProd = process.env.NODE_ENV === 'production';
-
 /* ── Archivos ───────────────────────────────────────────── */
 const USUARIOS_FILE  = path.join(__dirname, 'usuarios.json');
-const BADGES_FILE    = path.join(__dirname, 'badges.json');
-const PRECIOS_FILE   = path.join(__dirname, 'precios.json');
-const PRODUCTOS_FILE = path.join(__dirname, 'productos.json');
-const OUTLET_FILE    = path.join(__dirname, 'outlet.json');
-const VENTAS_FILE    = path.join(__dirname, 'ventas.json');
-const DESCUENTOS_FILE  = path.join(__dirname, 'descuentos.json');
-const ENCUESTAS_FILE   = path.join(__dirname, 'encuestas_log.json');
 
+/* ── Middlewares base ───────────────────────────────────── */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* ── 🔥 CLAVE PARA RENDER ───────────────────────────────── */
+/* 🔥 CLAVE PARA RENDER */
 app.set('trust proxy', 1);
 
-/* ── 🔥 SESIONES CORREGIDAS ─────────────────────────────── */
+/* 🔥 SESIÓN CORREGIDA */
 app.use(session({
   name: 'amin_session',
-  secret: process.env.SESSION_SECRET || 'amin-intranet-2026-secret',
+  secret: process.env.SESSION_SECRET || 'amin-secret',
   resave: false,
   saveUninitialized: false,
   proxy: true,
   cookie: {
     httpOnly: true,
-    secure: isProd, // 🔥 obligatorio en Render
-    sameSite: isProd ? 'none' : 'lax', // 🔥 clave para que no bloquee cookies
+    secure: true,      // 🔥 OBLIGATORIO
+    sameSite: 'none',  // 🔥 OBLIGATORIO
     maxAge: 8 * 60 * 60 * 1000
   }
 }));
 
-/* ── Helpers ─────────────────────────────────────────────── */
+/* 🔥 TEST PARA DEBUG */
+app.get('/test-session', (req, res) => {
+  res.json({
+    session: req.session,
+    user: req.session?.user || null
+  });
+});
+
+/* ── Helpers ───────────────────────────────────────────── */
 function readJson(file, fallback) {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
   catch { return fallback; }
 }
-function writeJson(file, data) {
-  fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8');
-}
 
-/* ── Middlewares ─────────────────────────────────────────── */
-function requireAuth(req, res, next) {
-  if (req.session && req.session.user) return next();
-  res.status(401).json({ ok: false, mensaje: 'No autenticado' });
-}
-function requireAdmin(req, res, next) {
-  if (req.session && req.session.user && req.session.user.rol === 'admin') return next();
-  res.status(403).json({ ok: false, mensaje: 'Acceso restringido a administradores' });
-}
-
-/* ── Estáticos ──────────────────────────────────────────── */
-app.use('/img',        express.static(path.join(__dirname, 'public', 'img')));
-app.use('/login.html', express.static(path.join(__dirname, 'public', 'login.html')));
-
-/* ── Rutas protegidas ───────────────────────────────────── */
-function authRedirect(req, res, next) {
-  if (req.session && req.session.user) return next();
-  res.redirect('/login.html');
-}
-
-app.get('/', authRedirect, (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'catalogo.html')));
-
-app.get('/catalogo.html', authRedirect, (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'catalogo.html')));
-
-app.get('/admin.html', authRedirect, (req, res) => {
-  if (req.session.user.rol !== 'admin') return res.redirect('/');
-  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
-});
-
-app.get('/encuesta.html', authRedirect, (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'encuesta.html')));
-
-/* ── AUTH ───────────────────────────────────────────────── */
+/* ── AUTH ─────────────────────────────────────────────── */
 app.post('/api/login', (req, res) => {
   try {
     const { usuario, clave } = req.body;
     const lista = readJson(USUARIOS_FILE, []);
-    const user  = lista.find(u => u.usuario === usuario && u.clave === clave);
+
+    const user = lista.find(u =>
+      u.usuario === usuario && u.clave === clave
+    );
 
     if (!user) {
-      return res.status(401).json({ ok: false, mensaje: 'Usuario o contraseña incorrectos' });
+      return res.status(401).json({
+        ok: false,
+        mensaje: 'Usuario o contraseña incorrectos'
+      });
     }
 
-    // 🔥 regenerar sesión (muy importante)
+    // 🔥 CREAR SESIÓN NUEVA
     req.session.regenerate(err => {
-      if (err) return res.status(500).json({ ok: false, mensaje: 'Error de sesión' });
+      if (err) {
+        console.error('Error regenerate:', err);
+        return res.status(500).json({ ok: false });
+      }
 
       req.session.user = {
         usuario: user.usuario,
@@ -104,8 +76,14 @@ app.post('/api/login', (req, res) => {
         rol: user.rol || 'asesor'
       };
 
+      // 🔥 FORZAR GUARDADO
       req.session.save(err => {
-        if (err) return res.status(500).json({ ok: false, mensaje: 'Error guardando sesión' });
+        if (err) {
+          console.error('Error save:', err);
+          return res.status(500).json({ ok: false });
+        }
+
+        console.log('✅ Sesión creada:', req.session.user);
 
         res.json({
           ok: true,
@@ -115,8 +93,9 @@ app.post('/api/login', (req, res) => {
       });
     });
 
-  } catch {
-    res.status(500).json({ ok: false, mensaje: 'Error interno' });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ ok: false });
   }
 });
 
@@ -135,33 +114,18 @@ app.get('/api/sesion', (req, res) => {
   }
 });
 
-/* ── CONFIG ─────────────────────────────────────────────── */
-app.get('/api/config', requireAuth, (req, res) => {
-  res.json({
-    ok: true,
-    badges:      readJson(BADGES_FILE, {}),
-    precios:     readJson(PRECIOS_FILE, {}),
-    productos:   readJson(PRODUCTOS_FILE, {}),
-    descuentos:  readJson(DESCUENTOS_FILE, []),
-  });
+/* ── PROTECCIÓN ───────────────────────────────────────── */
+function requireAuth(req, res, next) {
+  if (req.session && req.session.user) return next();
+  res.status(401).json({ ok: false });
+}
+
+/* ── RUTA PROTEGIDA DE PRUEBA ─────────────────────────── */
+app.get('/privado', requireAuth, (req, res) => {
+  res.send('Estás autenticado');
 });
 
-/* ── RESTO DE TU API (sin cambios) ───────────────────────── */
-/* 👉 Puedes dejar TODO lo demás exactamente igual */
-
-/* ── INICIAR ────────────────────────────────────────────── */
+/* ── INICIO ───────────────────────────────────────────── */
 app.listen(PORT, '0.0.0.0', () => {
-  let lanIP = 'localhost';
-  Object.values(os.networkInterfaces()).forEach(iface =>
-    iface.forEach(addr => {
-      if (addr.family === 'IPv4' && !addr.internal) lanIP = addr.address;
-    })
-  );
-
-  console.log('\n══════════════════════════════════════════');
-  console.log('   ✅  INTRANET AMIN — Servidor activo');
-  console.log('══════════════════════════════════════════');
-  console.log(`   📺  Local :  http://localhost:${PORT}`);
-  console.log(`   🌐  LAN   :  http://${lanIP}:${PORT}`);
-  console.log('══════════════════════════════════════════\n');
+  console.log(`Servidor activo en puerto ${PORT}`);
 });
