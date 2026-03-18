@@ -286,6 +286,7 @@
         const res  = await fetch('/api/login', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body:    JSON.stringify({
             usuario: document.getElementById('usuario').value.trim(),
             clave:   document.getElementById('clave').value
