@@ -1,0 +1,13 @@
+{
+  "name": "intranet-amin",
+  "version": "1.0.0",
+  "description": "Intranet Catálogo AMIN — Hotel Dreams / Coco Home",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3"
+  }
+}

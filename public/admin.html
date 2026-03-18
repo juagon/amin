@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel Admin — AMIN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --verde-o:#1B4D3E; --verde-m:#2E7D5A; --verde-c:#EBF5F0;
+      --verde-b:#5BA87A; --negro:#0F0C0C;   --blanco:#FFFFFF;
+      --borde:#C2DED3;   --borde-c:#D4EDE5; --texto:#222;
+      --sombra:rgba(27,77,62,.10);
+      --font:'Poppins',sans-serif; --head:'Raleway',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:#F0F4F2;color:var(--texto);min-height:100vh}
+
+    /* HEADER */
+    .site-header{background:linear-gradient(135deg,var(--verde-o) 0%,#1f5e4a 100%);
+      padding:0 28px;height:60px;display:flex;align-items:center;gap:12px;
+      position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+    .header__logo{height:32px}
+    .header__div{width:1px;height:24px;background:rgba(255,255,255,.2)}
+    .header__title{font-family:var(--head);font-size:.88rem;font-weight:800;
+      color:rgba(255,255,255,.9);flex:1}
+    .header__user{font-size:.72rem;color:rgba(255,255,255,.6)}
+    .header__user strong{color:#A8E063}
+    .btn-nav{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
+      color:#fff;border-radius:100px;padding:6px 16px;cursor:pointer;font-size:.74rem;
+      font-weight:600;text-decoration:none;font-family:var(--font);transition:background .15s}
+    .btn-nav:hover{background:rgba(255,255,255,.22)}
+
+    /* TABS */
+    .tabs-bar{background:var(--blanco);border-bottom:2px solid var(--borde);
+      padding:0 28px;display:flex;gap:4px;position:sticky;top:60px;z-index:99}
+    .tab-btn{padding:14px 22px;border:none;background:none;cursor:pointer;
+      font-family:var(--font);font-size:.8rem;font-weight:600;color:#888;
+      border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .18s}
+    .tab-btn:hover{color:var(--verde-m)}
+    .tab-btn.active{color:var(--verde-o);border-bottom-color:var(--verde-o)}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* MAIN */
+    .main{max-width:1000px;margin:0 auto;padding:28px 20px}
+
+    /* SECTION CARD */
+    .section-card{background:var(--blanco);border-radius:16px;
+      box-shadow:0 2px 16px var(--sombra);border:1.5px solid var(--borde-c);
+      overflow:hidden;margin-bottom:24px}
+    .section-card__head{background:var(--verde-o);color:var(--blanco);padding:14px 22px;
+      display:flex;align-items:center;gap:10px}
+    .section-card__head h2{font-family:var(--head);font-size:.96rem;font-weight:800;flex:1}
+    .section-card__head p{font-size:.7rem;opacity:.72}
+    .section-card__body{padding:22px}
+
+    /* SAVE BAR */
+    .save-bar{display:flex;align-items:center;gap:12px;padding:14px 22px;
+      background:var(--verde-c);border-top:2px solid var(--borde)}
+    .btn-save{background:var(--verde-o);color:#fff;border:none;border-radius:100px;
+      padding:11px 30px;font-size:.86rem;font-weight:700;cursor:pointer;
+      font-family:var(--font);transition:background .15s,transform .15s,box-shadow .15s;
+      box-shadow:0 4px 14px rgba(27,77,62,.28)}
+    .btn-save:hover{background:var(--verde-m);transform:translateY(-1px)}
+    .btn-save:disabled{background:#ccc;box-shadow:none;transform:none;cursor:not-allowed}
+    .save-st{font-size:.76rem;font-weight:600}
+    .save-st.ok {color:#2E7D5A}
+    .save-st.err{color:#C00}
+
+    /* TABLES */
+    table{width:100%;border-collapse:collapse}
+    th{font-size:.66rem;font-weight:700;color:#999;text-transform:uppercase;
+      letter-spacing:.07em;padding:0 0 10px;text-align:left;border-bottom:2px solid var(--borde)}
+    td{padding:11px 0;border-bottom:1px solid var(--borde-c);vertical-align:middle;font-size:.82rem}
+    tr:last-child td{border-bottom:none}
+
+    /* BADGE TAB */
+    .prod-info{display:flex;align-items:center;gap:10px}
+    .prod-thumb{width:50px;height:40px;object-fit:cover;border-radius:7px;
+      background:var(--verde-c);flex-shrink:0;border:1px solid var(--borde)}
+    .prod-nombre{font-weight:700;font-size:.83rem;color:var(--verde-o)}
+    .prod-linea{font-size:.66rem;color:#aaa}
+    .sel{border:1.5px solid var(--borde);border-radius:8px;padding:7px 10px;
+      font-size:.76rem;font-family:var(--font);color:var(--texto);background:var(--verde-c);
+      cursor:pointer;outline:none;transition:border-color .15s;min-width:180px}
+    .sel:focus{border-color:var(--verde-m);background:#fff}
+    .badge-prev{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+      border-radius:100px;font-size:.62rem;font-weight:800;margin-left:8px;
+      transition:all .2s;letter-spacing:.03em}
+    .badge-prev.hidden{opacity:0}
+    .badge-prev.mas-vendido{background:#E65100;color:#fff}
+    .badge-prev.recomendado{background:#1B4D3E;color:#fff}
+    .badge-prev.nuevo      {background:#0277BD;color:#fff}
+    .badge-prev.exclusivo  {background:#4a3580;color:#fff}
+
+    /* PRECIOS TAB */
+    .price-input{width:110px;border:1.5px solid var(--borde);border-radius:7px;
+      padding:6px 9px;font-size:.78rem;font-family:var(--font);
+      text-align:right;background:var(--verde-c);transition:border-color .15s}
+    .price-input:focus{border-color:var(--verde-m);background:#fff;outline:none}
+    .price-input.changed{border-color:#E65100;background:#FFF8F5}
+    .size-label{font-size:.7rem;color:#888;font-weight:600;display:block;margin-bottom:3px}
+    .prices-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    .prod-row{display:grid;grid-template-columns:180px 1fr;gap:16px;
+      align-items:center;padding:14px 0;border-bottom:1px solid var(--borde-c)}
+    .prod-row:last-child{border-bottom:none}
+
+    /* PRODUCTOS TAB */
+    .toggle-wrap{display:flex;align-items:center;gap:10px}
+    .toggle{position:relative;width:46px;height:26px;flex-shrink:0}
+    .toggle input{opacity:0;width:0;height:0;position:absolute}
+    .toggle__track{position:absolute;inset:0;background:#ccc;border-radius:100px;
+      cursor:pointer;transition:background .2s}
+    .toggle input:checked + .toggle__track{background:var(--verde-m)}
+    .toggle__track::before{content:'';position:absolute;left:3px;top:3px;
+      width:20px;height:20px;background:#fff;border-radius:50%;
+      transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+    .toggle input:checked + .toggle__track::before{transform:translateX(20px)}
+    .toggle-label{font-size:.78rem;font-weight:600;color:#666}
+    .toggle-label.on {color:var(--verde-m)}
+    .toggle-label.off{color:#bbb}
+
+    /* USUARIOS TAB */
+    .rol-pill{display:inline-flex;padding:3px 12px;border-radius:100px;
+      font-size:.62rem;font-weight:800;letter-spacing:.03em}
+    .rol-pill.admin {background:#EDE7F6;color:#4a3580}
+    .rol-pill.asesor{background:var(--verde-c);color:var(--verde-o)}
+    .btn-sm{padding:5px 14px;border-radius:100px;font-size:.7rem;font-weight:700;
+      cursor:pointer;font-family:var(--font);border:1.5px solid;transition:all .15s}
+    .btn-sm.edit{background:var(--verde-c);color:var(--verde-o);border-color:var(--borde)}
+    .btn-sm.edit:hover{background:var(--verde-o);color:#fff;border-color:var(--verde-o)}
+    .btn-sm.del {background:#FFF5F5;color:#C00;border-color:#fcc}
+    .btn-sm.del:hover{background:#C00;color:#fff;border-color:#C00}
+
+    /* MODAL */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;
+      display:none;align-items:center;justify-content:center}
+    .modal-bg.open{display:flex}
+    .modal{background:#fff;border-radius:16px;padding:28px;width:400px;max-width:95vw;
+      box-shadow:0 8px 40px rgba(0,0,0,.2)}
+    .modal h3{font-family:var(--head);font-size:1rem;font-weight:800;color:var(--verde-o);
+      margin-bottom:18px}
+    .field{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+    .field label{font-size:.7rem;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.04em}
+    .field input,.field select{border:1.5px solid var(--borde);border-radius:8px;
+      padding:9px 12px;font-size:.84rem;font-family:var(--font);
+      color:var(--texto);background:var(--verde-c);outline:none;transition:border-color .15s}
+    .field input:focus,.field select:focus{border-color:var(--verde-m);background:#fff}
+    .modal-btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+    .btn-cancel{padding:9px 20px;background:transparent;border:1.5px solid var(--borde);
+      border-radius:100px;font-size:.8rem;cursor:pointer;font-family:var(--font);color:#888}
+    .btn-confirm{padding:9px 22px;background:var(--verde-o);color:#fff;border:none;
+      border-radius:100px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:var(--font)}
+    .btn-confirm:hover{background:var(--verde-m)}
+    .modal-err{font-size:.74rem;color:#C00;margin-top:6px;min-height:1.2em}
+
+    /* NUEVO USUARIO BTN */
+    .btn-new{background:var(--verde-o);color:#fff;border:none;border-radius:100px;
+      padding:8px 20px;font-size:.76rem;font-weight:700;cursor:pointer;
+      font-family:var(--font);transition:background .15s}
+    .btn-new:hover{background:var(--verde-m)}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);
+      background:var(--verde-o);color:#fff;padding:11px 26px;border-radius:100px;
+      font-size:.8rem;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.2);
+      z-index:600;pointer-events:none;transition:transform .26s cubic-bezier(.4,0,.2,1);
+      border-left:4px solid var(--verde-b)}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    .site-footer{text-align:center;padding:18px;font-size:.66rem;color:#aaa}
+
+    /* DESCUENTOS TAB */
+    .desc-input{border:1.5px solid var(--borde);border-radius:7px;padding:7px 10px;
+      font-size:.8rem;font-family:var(--font);background:var(--verde-c);outline:none;
+      transition:border-color .15s;width:100%}
+    .desc-input:focus{border-color:var(--verde-m);background:#fff}
+    .desc-pct{width:80px}
+    .badge-activo{display:inline-flex;padding:2px 10px;border-radius:100px;
+      font-size:.62rem;font-weight:800;cursor:pointer;user-select:none;transition:all .18s}
+    .badge-activo.on {background:#E8F5E9;color:#2E7D3E;border:1.5px solid #A5D6A7}
+    .badge-activo.off{background:#FFF5F5;color:#C00;border:1.5px solid #FFCDD2}
+
+    /* ENCUESTAS TAB */
+    .enc-filtros{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+    .enc-input{border:1.5px solid var(--borde);border-radius:7px;padding:7px 10px;
+      font-size:.78rem;font-family:var(--font);background:var(--verde-c);outline:none}
+    .enc-input:focus{border-color:var(--verde-m);background:#fff}
+    .chip{display:inline-flex;padding:2px 10px;border-radius:100px;font-size:.68rem;font-weight:700;
+      background:var(--verde-c);color:var(--verde-o);border:1px solid var(--borde)}
+    .enc-empty{text-align:center;color:#aaa;padding:32px;font-size:.84rem}
+    .btn-danger{background:#FFF5F5;color:#C00;border:1.5px solid #fcc;border-radius:100px;
+      padding:7px 18px;font-size:.76rem;font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s}
+    .btn-danger:hover{background:#C00;color:#fff;border-color:#C00}
+    .enc-card{background:var(--verde-c);border:1.5px solid var(--borde);border-radius:12px;
+      padding:14px 18px;margin-bottom:10px}
+    .enc-card__head{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+    .enc-card__fecha{font-size:.68rem;color:#999}
+    .enc-card__asesor{font-weight:700;font-size:.8rem;color:var(--verde-o)}
+    .enc-card__match{font-size:.7rem;color:#666}
+    .enc-card__recom{font-family:var(--head);font-size:.92rem;font-weight:800;
+      color:var(--verde-o);margin-bottom:6px}
+    .enc-card__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;margin-top:8px}
+    .enc-card__field{font-size:.7rem;color:#666}
+    .enc-card__field strong{color:var(--texto);display:block;font-size:.75rem}
+    .enc-card__razones{margin-top:8px;font-size:.72rem;color:#555;padding-left:16px}
+    .enc-card__razones li{margin-bottom:2px}
+    @media(max-width:640px){
+      .site-header{padding:0 14px}.tabs-bar{padding:0 10px}.main{padding:16px 10px}
+      .prod-row{grid-template-columns:1fr}.prices-grid{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <img class="header__logo" src="https://amin.com.co/wp-content/uploads/2024/03/logo2.png" alt="AMIN"
+       onerror="this.style.display='none'"/>
+  <div class="header__div"></div>
+  <span class="header__title">Panel de Administración — AMIN</span>
+  <span class="header__user">Bienvenido, <strong id="nomUser">…</strong></span>
+  <a class="btn-nav" href="/" style="margin-right:6px">← Catálogo</a>
+  <button class="btn-nav" onclick="logout()">Salir ↗</button>
+</header>
+
+<!-- TABS -->
+<nav class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('badges',this)">🏷 Badges</button>
+  <button class="tab-btn"        onclick="showTab('precios',this)">💲 Precios</button>
+  <button class="tab-btn"        onclick="showTab('productos',this)">📦 Productos</button>
+  <button class="tab-btn"        onclick="showTab('outlet',this)">🏷 Outlet</button>
+  <button class="tab-btn"        onclick="showTab('usuarios',this)">👥 Usuarios</button>
+  <button class="tab-btn"        onclick="showTab('descuentos',this)">🏷 Descuentos</button>
+  <button class="tab-btn"        onclick="showTab('encuestas',this)">📋 Encuestas</button>
+</nav>
+
+<main class="main">
+
+  <!-- ══ TAB: BADGES ═══════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab-badges">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div><h2>🏷 Badges de Producto</h2>
+          <p>Asigna una etiqueta destacada a cada producto.</p></div>
+      </div>
+      <div class="section-card__body">
+        <table><thead><tr>
+          <th style="width:46%">Producto</th><th>Badge</th>
+        </tr></thead>
+        <tbody id="badgeTbody"></tbody></table>
+      </div>
+      <div class="save-bar">
+        <button class="btn-save" onclick="guardar('badges')">💾 Guardar badges</button>
+        <span class="save-st" id="st-badges"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: PRECIOS ══════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-precios">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div><h2>💲 Precios por talla</h2>
+          <p>Edita los precios antes de IVA. Los cambios se reflejan de inmediato en el catálogo.</p></div>
+      </div>
+      <div class="section-card__body" id="preciosList"></div>
+      <div class="save-bar">
+        <button class="btn-save" onclick="guardar('precios')">💾 Guardar precios</button>
+        <span class="save-st" id="st-precios"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: PRODUCTOS ════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-productos">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div><h2>📦 Visibilidad de productos</h2>
+          <p>Desactiva un producto para ocultarlo del catálogo sin eliminarlo.</p></div>
+      </div>
+      <div class="section-card__body">
+        <table><thead><tr>
+          <th style="width:55%">Producto</th><th>Visible en catálogo</th>
+        </tr></thead>
+        <tbody id="productosTbody"></tbody></table>
+      </div>
+      <div class="save-bar">
+        <button class="btn-save" onclick="guardar('productos')">💾 Guardar visibilidad</button>
+        <span class="save-st" id="st-productos"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: OUTLET ══════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-outlet">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div style="flex:1">
+          <h2>🏷 Productos Outlet</h2>
+          <p>Agrega, edita o elimina productos de la sección Outlet. Puedes importarlos desde Excel.</p>
+        </div>
+        <button class="btn-new" onclick="abrirModalOutletNuevo()" style="margin-right:8px">+ Nuevo producto</button>
+        <label class="btn-new" style="cursor:pointer;background:#2E7D5A;position:relative">
+          📊 Importar Excel
+          <input type="file" id="excelFile" accept=".xlsx,.xls,.csv"
+                 style="position:absolute;inset:0;opacity:0;cursor:pointer"
+                 onchange="importarExcel(this)"/>
+        </label>
+      </div>
+      <div class="section-card__body" style="padding:0">
+        <div id="outletImportStatus" style="display:none;padding:10px 22px;font-size:.78rem;font-weight:600"></div>
+        <table>
+          <thead><tr>
+            <th style="width:32%">Producto</th>
+            <th>Talla</th>
+            <th style="text-align:center">Cant.</th>
+            <th>Precio</th>
+            <th style="width:80px;text-align:center">Visible</th>
+            <th>Acciones</th>
+          </tr></thead>
+          <tbody id="outletTbody">
+            <tr><td colspan="5" style="text-align:center;color:#aaa;padding:28px;font-size:.82rem">
+              No hay productos Outlet. Agrega uno manualmente o importa desde Excel.
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="save-bar">
+        <span class="save-st" id="st-outlet"></span>
+      </div>
+    </div>
+    <!-- Formato Excel esperado -->
+    <div class="section-card" style="margin-top:16px">
+      <div class="section-card__head">
+        <div><h2>📋 Formato del archivo Excel</h2>
+          <p>Columnas esperadas en el archivo .xlsx o .csv</p>
+        </div>
+      </div>
+      <div class="section-card__body">
+        <table>
+          <thead><tr>
+            <th>Columna A</th><th>Columna B</th><th>Columna C</th><th>Columna D</th><th>Columna E</th><th>Columna F</th>
+          </tr></thead>
+          <tbody><tr>
+            <td><strong>Nombre</strong><br><span style="font-size:.7rem;color:#888">Ej: Colchón Active King</span></td>
+            <td><strong>Descripción</strong><br><span style="font-size:.7rem;color:#888">Texto libre</span></td>
+            <td><strong>Talla</strong><br><span style="font-size:.7rem;color:#888">Ej: King 200×200 cm</span></td>
+            <td><strong>Cantidad</strong><br><span style="font-size:.7rem;color:#888">Número. Ej: 3</span></td>
+            <td><strong>Precio</strong><br><span style="font-size:.7rem;color:#888">Número sin puntos. Ej: 750000</span></td>
+            <td><strong>URL Foto</strong><br><span style="font-size:.7rem;color:#888">https://... (opcional)</span></td>
+          </tr></tbody>
+        </table>
+        <p style="font-size:.72rem;color:#aaa;margin-top:10px">
+          La primera fila puede ser encabezado — se detecta automáticamente y se omite.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: USUARIOS ═════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-usuarios">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div style="flex:1"><h2>👥 Usuarios del sistema</h2>
+          <p>Gestiona quién tiene acceso a la intranet.</p></div>
+        <button class="btn-new" onclick="abrirModalNuevo()">+ Nuevo usuario</button>
+      </div>
+      <div class="section-card__body">
+        <table><thead><tr>
+          <th>Usuario</th><th>Nombre</th><th>Rol</th><th>Acciones</th>
+        </tr></thead>
+        <tbody id="usuariosTbody"></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: DESCUENTOS ══════════════════════════════════ -->
+  <div class="tab-panel" id="tab-descuentos">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div style="flex:1">
+          <h2>🏷 Códigos de Descuento</h2>
+          <p>Agrega, edita o elimina códigos. El catálogo los carga automáticamente.</p>
+        </div>
+        <button class="btn-new" onclick="nuevoDescuento()">+ Nuevo código</button>
+      </div>
+      <div class="section-card__body" style="padding:0">
+        <table>
+          <thead><tr>
+            <th style="padding-left:18px">Código</th>
+            <th>Etiqueta</th>
+            <th style="width:100px;text-align:center">Descuento</th>
+            <th style="width:90px;text-align:center">Activo</th>
+            <th style="width:100px">Acciones</th>
+          </tr></thead>
+          <tbody id="descTbody" style="font-size:.82rem"></tbody>
+        </table>
+      </div>
+      <div class="save-bar">
+        <button class="btn-save" onclick="guardarDescuentos()">💾 Guardar cambios</button>
+        <span class="save-st" id="st-descuentos"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: ENCUESTAS ════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-encuestas">
+    <div class="section-card">
+      <div class="section-card__head">
+        <div style="flex:1">
+          <h2>📋 Informe de Encuestas — Asesor Externo</h2>
+          <p>Cada vez que un asesor completa el cuestionario, el resultado queda registrado aquí.</p>
+        </div>
+        <button class="btn-danger" onclick="limpiarEncuestas()">🗑 Limpiar todo</button>
+      </div>
+      <div class="section-card__body">
+        <div class="enc-filtros">
+          <input class="enc-input" id="encFiltroAsesor" placeholder="Filtrar por asesor…" oninput="renderEncuestas()"/>
+          <input class="enc-input" id="encFiltroRecom"  placeholder="Filtrar por recomendación…" oninput="renderEncuestas()"/>
+          <span id="encContador" style="font-size:.74rem;color:#888;margin-left:auto"></span>
+        </div>
+        <div id="encLista"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <strong style="color:var(--verde-b)">AMIN</strong> · Panel Admin · Intranet v2.1 · 2026
+</footer>
+
+<!-- MODAL USUARIO -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Nuevo usuario</h3>
+    <div class="field">
+      <label>Usuario (login)</label>
+      <input id="mUsuario" placeholder="asesor4" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Nombre completo</label>
+      <input id="mNombre" placeholder="Asesor Comercial 4"/>
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input id="mClave" type="password" placeholder="••••••"/>
+    </div>
+    <div class="field">
+      <label>Rol</label>
+      <select id="mRol">
+        <option value="asesor">Asesor</option>
+        <option value="admin">Administrador</option>
+      </select>
+    </div>
+    <div class="modal-err" id="modalErr"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-confirm" id="modalConfirm" onclick="confirmarModal()">Crear</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL OUTLET -->
+<div class="modal-bg" id="outletModalBg">
+  <div class="modal" style="max-width:500px">
+    <h3 id="outletModalTitle">Nuevo producto Outlet</h3>
+    <div class="field">
+      <label>Nombre del producto *</label>
+      <input id="omNombre" placeholder="Colchón Active King — exhibición"/>
+    </div>
+    <div class="field">
+      <label>Descripción</label>
+      <input id="omDesc" placeholder="Leve uso, en perfecto estado"/>
+    </div>
+    <div class="field">
+      <label>Talla / Tamaño</label>
+      <input id="omTalla" placeholder="King 200×200 cm"/>
+    </div>
+    <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <label>Cantidad en stock</label>
+        <input id="omCantidad" type="number" min="0" step="1" placeholder="1"/>
+      </div>
+      <div>
+        <label>Precio (antes de IVA)</label>
+        <input id="omPrecio" type="number" min="0" step="1000" placeholder="750000"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>URL de la foto (opcional)</label>
+      <input id="omFoto" placeholder="https://..." type="url"/>
+    </div>
+    <div class="field" style="flex-direction:row;align-items:center;gap:10px">
+      <label style="margin:0">Visible en catálogo</label>
+      <input id="omActivo" type="checkbox" checked style="width:auto;accent-color:var(--verde-m)"/>
+    </div>
+    <div class="modal-err" id="outletModalErr"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="cerrarModalOutlet()">Cancelar</button>
+      <button class="btn-confirm" id="outletModalConfirm" onclick="confirmarModalOutlet()">Crear</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   Panel Admin AMIN v2.1
+   ════════════════════════════════════════════════════════ */
+
+const PRODUCTOS = [
+  { id:'active',   nombre:'Active — 23 cm',   linea:'Clásica', img:'img/active_4.jpg'   },
+  { id:'confort',  nombre:'Confort — 24 cm',  linea:'Clásica', img:'img/confort_4.jpg'  },
+  { id:'balance',  nombre:'Balance — 26 cm',  linea:'Clásica', img:'img/balance_4.jpg'  },
+  { id:'harmony',  nombre:'Harmony — 28 cm',  linea:'Premium', img:'img/harmony_4.jpg'  },
+  { id:'calm',     nombre:'Calm — 30 cm',     linea:'Premium', img:'img/calm_4.jpg'     },
+  { id:'vitality', nombre:'Vitality — 34 cm', linea:'Premium', img:'img/vitality_4.jpg' },
+  { id:'energy',   nombre:'Energy — 34 cm',   linea:'Premium', img:'img/energy_4.jpg'   },
+  { id:'prana',    nombre:'Prana — 34 cm',    linea:'Premium', img:'img/prana_4.jpg'    },
+];
+const TALLAS = [
+  { cod:'s100', nombre:'Sencillo'  },
+  { cod:'s120', nombre:'Semidoble' },
+  { cod:'s140', nombre:'Doble'     },
+  { cod:'s160', nombre:'Queen'     },
+  { cod:'s200', nombre:'King'      },
+];
+const BADGE_OPTS = [
+  { val:'',           label:'— Sin badge —'  },
+  { val:'mas-vendido',label:'🔥 Más vendido' },
+  { val:'recomendado',label:'👍 Recomendado' },
+  { val:'nuevo',      label:'✨ Nuevo'        },
+  { val:'exclusivo',  label:'💎 Exclusivo'   },
+];
+
+let DATA = { badges:{}, precios:{}, productos:{} };
+let modalMode = 'new';   // 'new' | 'edit'
+let modalEditId = null;
+
+/* ── Init ─────────────────────────────────────────────── */
+(async () => {
+  const [rSes, rConf, rUsers] = await Promise.all([
+    fetch('/api/sesion'),
+    fetch('/api/config'),
+    fetch('/api/usuarios'),
+  ]);
+  const ses   = await rSes.json();
+  const conf  = await rConf.json();
+  const users = await rUsers.json();
+
+  if (!ses.ok || ses.rol !== 'admin') { window.location.href = '/'; return; }
+  document.getElementById('nomUser').textContent = ses.nombre;
+
+  if (conf.ok) DATA = { badges: conf.badges||{}, precios: conf.precios||{}, productos: conf.productos||{} };
+  if (users.ok) renderUsuarios(users.usuarios);
+
+  renderBadges();
+  renderPrecios();
+  renderProductos();
+  await cargarOutlet();
+  await cargarDescuentos();
+  await cargarEncuestas();
+})();
+
+/* ── Tabs ─────────────────────────────────────────────── */
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ══ BADGES ═══════════════════════════════════════════════ */
+function renderBadges() {
+  document.getElementById('badgeTbody').innerHTML = PRODUCTOS.map(p => {
+    const cur = DATA.badges[p.id] || '';
+    const opts = BADGE_OPTS.map(o =>
+      `<option value="${o.val}"${o.val===cur?' selected':''}>${o.label}</option>`).join('');
+    return `<tr>
+      <td><div class="prod-info">
+        <img class="prod-thumb" src="${p.img}" alt="" onerror="this.style.background='var(--verde-c)';this.src=''"/>
+        <div><div class="prod-nombre">${p.nombre}</div><div class="prod-linea">Línea ${p.linea}</div></div>
+      </div></td>
+      <td>
+        <select class="sel" id="b-${p.id}" onchange="prevBadge('${p.id}',this.value)">${opts}</select>
+        <span class="badge-prev ${cur||'hidden'}" id="bp-${p.id}">
+          ${cur ? (BADGE_OPTS.find(o=>o.val===cur)||{label:''}).label : ''}
+        </span>
+      </td></tr>`;
+  }).join('');
+}
+function prevBadge(pid, val) {
+  const el = document.getElementById('bp-'+pid);
+  if (!val) { el.className='badge-prev hidden'; el.textContent=''; return; }
+  const opt = BADGE_OPTS.find(o=>o.val===val);
+  el.className = `badge-prev ${val}`;
+  el.textContent = opt ? opt.label : val;
+}
+
+/* ══ PRECIOS ══════════════════════════════════════════════ */
+function fmt(n){ return n ? '$'+Math.round(n).toLocaleString('es-CO') : ''; }
+function renderPrecios() {
+  document.getElementById('preciosList').innerHTML = PRODUCTOS.map(p =>
+    `<div class="prod-row">
+      <div class="prod-info">
+        <img class="prod-thumb" src="${p.img}" alt="" onerror="this.style.background='var(--verde-c)';this.src=''"/>
+        <div><div class="prod-nombre">${p.nombre}</div><div class="prod-linea">Línea ${p.linea}</div></div>
+      </div>
+      <div class="prices-grid">
+        ${TALLAS.map(t => {
+          const v = DATA.precios[p.id] ? (DATA.precios[p.id][t.cod]||0) : 0;
+          return `<div>
+            <span class="size-label">${t.nombre}</span>
+            <input class="price-input" id="p-${p.id}-${t.cod}"
+                   type="number" value="${v}" min="0" step="1000"
+                   oninput="this.classList.add('changed')"/>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+}
+
+/* ══ PRODUCTOS ════════════════════════════════════════════ */
+function renderProductos() {
+  document.getElementById('productosTbody').innerHTML = PRODUCTOS.map(p => {
+    const activo = DATA.productos[p.id] !== false;
+    return `<tr>
+      <td><div class="prod-info">
+        <img class="prod-thumb" src="${p.img}" alt="" onerror="this.style.background='var(--verde-c)';this.src=''"/>
+        <div><div class="prod-nombre">${p.nombre}</div><div class="prod-linea">Línea ${p.linea}</div></div>
+      </div></td>
+      <td>
+        <div class="toggle-wrap">
+          <label class="toggle">
+            <input type="checkbox" id="t-${p.id}" ${activo?'checked':''}
+                   onchange="updTogLabel('${p.id}')"/>
+            <span class="toggle__track"></span>
+          </label>
+          <span class="toggle-label ${activo?'on':'off'}" id="tl-${p.id}">
+            ${activo ? 'Visible' : 'Oculto'}
+          </span>
+        </div>
+      </td></tr>`;
+  }).join('');
+}
+function updTogLabel(pid) {
+  const chk = document.getElementById('t-'+pid);
+  const lbl = document.getElementById('tl-'+pid);
+  lbl.textContent = chk.checked ? 'Visible' : 'Oculto';
+  lbl.className   = 'toggle-label '+(chk.checked?'on':'off');
+}
+
+/* ══ GUARDAR GENÉRICO ═════════════════════════════════════ */
+async function guardar(tab) {
+  const btn = document.querySelector(`#tab-${tab} .btn-save`);
+  const st  = document.getElementById(`st-${tab}`);
+  btn.disabled = true;
+  st.textContent = 'Guardando…'; st.className = 'save-st';
+
+  let url = '', payload = {};
+
+  if (tab === 'badges') {
+    url = '/api/badges';
+    PRODUCTOS.forEach(p => payload[p.id] = document.getElementById('b-'+p.id).value || null);
+  } else if (tab === 'precios') {
+    url = '/api/precios';
+    PRODUCTOS.forEach(p =>
+      TALLAS.forEach(t => payload[`${p.id}_${t.cod}`] = document.getElementById(`p-${p.id}-${t.cod}`).value));
+  } else if (tab === 'productos') {
+    url = '/api/productos';
+    PRODUCTOS.forEach(p => payload[p.id] = document.getElementById('t-'+p.id).checked);
+  }
+
+  try {
+    const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    const d = await r.json();
+    if (d.ok) {
+      st.textContent = '✓ Guardado correctamente'; st.className = 'save-st ok';
+      toast('✓ Cambios guardados');
+      if (tab==='precios') document.querySelectorAll('.price-input').forEach(i=>i.classList.remove('changed'));
+    } else {
+      st.textContent = '✗ '+d.mensaje; st.className = 'save-st err';
+    }
+  } catch {
+    st.textContent = '✗ Error de conexión'; st.className = 'save-st err';
+  }
+  btn.disabled = false;
+  setTimeout(() => st.textContent='', 4000);
+}
+
+/* ══ USUARIOS ════════════════════════════════════════════= */
+function renderUsuarios(lista) {
+  document.getElementById('usuariosTbody').innerHTML = lista.map(u =>
+    `<tr>
+      <td><code style="background:var(--verde-c);padding:2px 8px;border-radius:6px;font-size:.76rem">${u.usuario}</code></td>
+      <td style="font-weight:600">${u.nombre}</td>
+      <td><span class="rol-pill ${u.rol}">${u.rol}</span></td>
+      <td style="display:flex;gap:6px;padding-top:4px">
+        <button class="btn-sm edit" onclick="abrirModalEditar('${u.usuario}','${u.nombre}','${u.rol}')">Editar</button>
+        <button class="btn-sm del"  onclick="eliminarUsuario('${u.usuario}')">Eliminar</button>
+      </td>
+    </tr>`).join('');
+}
+async function recargarUsuarios() {
+  const r = await fetch('/api/usuarios');
+  const d = await r.json();
+  if (d.ok) renderUsuarios(d.usuarios);
+}
+
+/* Modal nuevo */
+function abrirModalNuevo() {
+  modalMode = 'new'; modalEditId = null;
+  document.getElementById('modalTitle').textContent   = 'Nuevo usuario';
+  document.getElementById('modalConfirm').textContent = 'Crear';
+  document.getElementById('mUsuario').value = '';
+  document.getElementById('mUsuario').disabled = false;
+  document.getElementById('mNombre').value  = '';
+  document.getElementById('mClave').value   = '';
+  document.getElementById('mRol').value     = 'asesor';
+  document.getElementById('modalErr').textContent = '';
+  document.getElementById('modalBg').classList.add('open');
+  document.getElementById('mUsuario').focus();
+}
+function abrirModalEditar(usuario, nombre, rol) {
+  modalMode = 'edit'; modalEditId = usuario;
+  document.getElementById('modalTitle').textContent   = 'Editar usuario';
+  document.getElementById('modalConfirm').textContent = 'Guardar';
+  document.getElementById('mUsuario').value    = usuario;
+  document.getElementById('mUsuario').disabled = true;
+  document.getElementById('mNombre').value     = nombre;
+  document.getElementById('mClave').value      = '';
+  document.getElementById('mRol').value        = rol;
+  document.getElementById('modalErr').textContent = '';
+  document.getElementById('modalBg').classList.add('open');
+  document.getElementById('mNombre').focus();
+}
+function cerrarModal() { document.getElementById('modalBg').classList.remove('open'); }
+
+async function confirmarModal() {
+  const usuario = document.getElementById('mUsuario').value.trim();
+  const nombre  = document.getElementById('mNombre').value.trim();
+  const clave   = document.getElementById('mClave').value.trim();
+  const rol     = document.getElementById('mRol').value;
+  const errEl   = document.getElementById('modalErr');
+  errEl.textContent = '';
+
+  if (!nombre) { errEl.textContent = 'El nombre es obligatorio.'; return; }
+  if (modalMode==='new' && (!usuario || !clave)) { errEl.textContent = 'Usuario y contraseña son obligatorios.'; return; }
+
+  const url     = modalMode==='new' ? '/api/usuarios' : `/api/usuarios/${modalEditId}`;
+  const method  = modalMode==='new' ? 'POST' : 'PUT';
+  const payload = modalMode==='new' ? { usuario,nombre,clave,rol } : { nombre, rol, ...(clave?{clave}:{}) };
+
+  try {
+    const r = await fetch(url, { method, headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    const d = await r.json();
+    if (d.ok) {
+      cerrarModal();
+      await recargarUsuarios();
+      toast(modalMode==='new' ? '✓ Usuario creado' : '✓ Usuario actualizado');
+    } else {
+      errEl.textContent = d.mensaje || 'Error al guardar.';
+    }
+  } catch { errEl.textContent = 'Error de conexión.'; }
+}
+
+async function eliminarUsuario(usuario) {
+  if (!confirm(`¿Eliminar el usuario "${usuario}"? Esta acción no se puede deshacer.`)) return;
+  try {
+    const r = await fetch(`/api/usuarios/${usuario}`, { method:'DELETE' });
+    const d = await r.json();
+    if (d.ok) { await recargarUsuarios(); toast('✓ Usuario eliminado'); }
+    else toast('✗ '+d.mensaje);
+  } catch { toast('✗ Error de conexión'); }
+}
+
+/* Cerrar modal al hacer clic afuera */
+document.getElementById('modalBg').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalBg')) cerrarModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') cerrarModal();
+});
+
+/* ══ OUTLET ══════════════════════════════════════════════= */
+let OUTLET_DATA = [];
+let outletModalMode = 'new';
+let outletModalEditIdx = null;
+
+async function cargarOutlet() {
+  const r = await fetch('/api/outlet');
+  const d = await r.json();
+  if (d.ok) { OUTLET_DATA = d.outlet || []; renderOutlet(); }
+}
+
+function renderOutlet() {
+  const tbody = document.getElementById('outletTbody');
+  if (!OUTLET_DATA.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#aaa;padding:28px;font-size:.82rem">
+      No hay productos Outlet. Agrega uno manualmente o importa desde Excel.</td></tr>`;
+    return;
+  }
+  const fmtP = n => n > 0 ? '$'+Math.round(n).toLocaleString('es-CO') : '—';
+  tbody.innerHTML = OUTLET_DATA.map((p, i) => `
+    <tr>
+      <td>
+        <div class="prod-info">
+          ${p.foto ? `<img class="prod-thumb" src="${p.foto}" alt="" onerror="this.style.background='var(--verde-c)';this.src=''"/>` :
+            `<div class="prod-thumb" style="background:var(--verde-c);display:flex;align-items:center;justify-content:center;font-size:1.2rem">🛏</div>`}
+          <div><div class="prod-nombre">${p.nombre}</div>
+          <div class="prod-linea">${p.talla || '—'}</div></div>
+        </div>
+      </td>
+      <td style="font-size:.78rem">${p.talla || '—'}</td>
+      <td style="text-align:center;font-weight:700;${(p.cantidad||0)<=3?'color:#996600':''}">${p.cantidad ?? '—'}</td>
+      <td style="font-weight:700;color:var(--verde-o)">${fmtP(p.precio)}</td>
+      <td style="text-align:center">
+        <input type="checkbox" ${p.activo!==false?'checked':''} style="accent-color:var(--verde-m)"
+               onchange="toggleOutletActivo(${i},this.checked)"/>
+      </td>
+      <td style="display:flex;gap:6px;padding-top:4px">
+        <button class="btn-sm edit" onclick="abrirModalOutletEditar(${i})">Editar</button>
+        <button class="btn-sm del"  onclick="eliminarOutlet(${i})">Eliminar</button>
+      </td>
+    </tr>`).join('');
+}
+
+function toggleOutletActivo(idx, val) {
+  OUTLET_DATA[idx].activo = val;
+  guardarOutlet();
+}
+
+async function guardarOutlet() {
+  const st = document.getElementById('st-outlet');
+  st.textContent = 'Guardando…'; st.className = 'save-st';
+  try {
+    const r = await fetch('/api/outlet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(OUTLET_DATA)
+    });
+    const d = await r.json();
+    if (d.ok) {
+      st.textContent = '✓ Guardado'; st.className = 'save-st ok';
+      toast('✓ Outlet guardado');
+    } else {
+      st.textContent = '✗ '+d.mensaje; st.className = 'save-st err';
+    }
+  } catch {
+    st.textContent = '✗ Error de conexión'; st.className = 'save-st err';
+  }
+  setTimeout(() => st.textContent='', 3500);
+}
+
+function eliminarOutlet(idx) {
+  if (!confirm(`¿Eliminar "${OUTLET_DATA[idx].nombre}"?`)) return;
+  OUTLET_DATA.splice(idx, 1);
+  renderOutlet();
+  guardarOutlet();
+}
+
+/* Modal outlet */
+function abrirModalOutletNuevo() {
+  outletModalMode = 'new'; outletModalEditIdx = null;
+  document.getElementById('outletModalTitle').textContent   = 'Nuevo producto Outlet';
+  document.getElementById('outletModalConfirm').textContent = 'Crear';
+  document.getElementById('omNombre').value   = '';
+  document.getElementById('omDesc').value     = '';
+  document.getElementById('omTalla').value    = '';
+  document.getElementById('omCantidad').value = '';
+  document.getElementById('omPrecio').value   = '';
+  document.getElementById('omFoto').value     = '';
+  document.getElementById('omActivo').checked = true;
+  document.getElementById('outletModalErr').textContent = '';
+  document.getElementById('outletModalBg').classList.add('open');
+  document.getElementById('omNombre').focus();
+}
+function abrirModalOutletEditar(idx) {
+  outletModalMode = 'edit'; outletModalEditIdx = idx;
+  const p = OUTLET_DATA[idx];
+  document.getElementById('outletModalTitle').textContent   = 'Editar producto Outlet';
+  document.getElementById('outletModalConfirm').textContent = 'Guardar';
+  document.getElementById('omNombre').value   = p.nombre       || '';
+  document.getElementById('omDesc').value     = p.descripcion  || '';
+  document.getElementById('omTalla').value    = p.talla        || '';
+  document.getElementById('omCantidad').value = p.cantidad     ?? '';
+  document.getElementById('omPrecio').value   = p.precio       || '';
+  document.getElementById('omFoto').value     = p.foto         || '';
+  document.getElementById('omActivo').checked = p.activo !== false;
+  document.getElementById('outletModalErr').textContent = '';
+  document.getElementById('outletModalBg').classList.add('open');
+  document.getElementById('omNombre').focus();
+}
+function cerrarModalOutlet() {
+  document.getElementById('outletModalBg').classList.remove('open');
+}
+function confirmarModalOutlet() {
+  const nombre = document.getElementById('omNombre').value.trim();
+  const errEl  = document.getElementById('outletModalErr');
+  if (!nombre) { errEl.textContent = 'El nombre es obligatorio.'; return; }
+  const item = {
+    id:          outletModalMode==='new' ? 'out-'+Date.now() : OUTLET_DATA[outletModalEditIdx].id,
+    nombre,
+    descripcion: document.getElementById('omDesc').value.trim(),
+    talla:       document.getElementById('omTalla').value.trim(),
+    cantidad:    parseInt(document.getElementById('omCantidad').value) || 0,
+    precio:      parseFloat(document.getElementById('omPrecio').value) || 0,
+    foto:        document.getElementById('omFoto').value.trim(),
+    activo:      document.getElementById('omActivo').checked,
+  };
+  if (outletModalMode === 'new') OUTLET_DATA.push(item);
+  else OUTLET_DATA[outletModalEditIdx] = item;
+  cerrarModalOutlet();
+  renderOutlet();
+  guardarOutlet();
+}
+document.getElementById('outletModalBg').addEventListener('click', e => {
+  if (e.target === document.getElementById('outletModalBg')) cerrarModalOutlet();
+});
+
+/* ── Importar Excel ─────────────────────────────────────── */
+async function importarExcel(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('outletImportStatus');
+  statusEl.style.display = 'block';
+  statusEl.style.color   = '#888';
+  statusEl.textContent   = '⏳ Leyendo archivo…';
+
+  /* Cargar SheetJS dinámicamente si no está */
+  if (!window.XLSX) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb   = XLSX.read(e.target.result, { type: 'array' });
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+      /* Detectar si la primera fila es encabezado */
+      const isHeader = row => {
+        const joined = row.join(' ').toLowerCase();
+        return joined.includes('nombre') || joined.includes('descripcion') ||
+               joined.includes('talla')  || joined.includes('precio');
+      };
+      const data = (rows.length > 0 && isHeader(rows[0])) ? rows.slice(1) : rows;
+      const nuevos = data
+        .filter(r => String(r[0]).trim())
+        .map(r => ({
+          id:          'out-' + Date.now() + '-' + Math.random().toString(36).slice(2,6),
+          nombre:      String(r[0]||'').trim(),
+          descripcion: String(r[1]||'').trim(),
+          talla:       String(r[2]||'').trim(),
+          cantidad:    parseInt(String(r[3]||'').replace(/[^0-9]/g,'')) || 0,
+          precio:      parseFloat(String(r[4]||'').replace(/[^0-9.]/g,'')) || 0,
+          foto:        String(r[5]||'').trim(),
+          activo:      true,
+        }));
+
+      if (!nuevos.length) {
+        statusEl.style.color = '#C00';
+        statusEl.textContent = '✗ No se encontraron filas válidas en el archivo.';
+        input.value = '';
+        return;
+      }
+
+      OUTLET_DATA = [...OUTLET_DATA, ...nuevos];
+      renderOutlet();
+      guardarOutlet();
+      statusEl.style.color = 'var(--verde-m)';
+      statusEl.textContent = `✅ ${nuevos.length} producto${nuevos.length!==1?'s':''} importado${nuevos.length!==1?'s':''} correctamente.`;
+    } catch(err) {
+      statusEl.style.color = '#C00';
+      statusEl.textContent = '✗ Error al leer el archivo: ' + err.message;
+    }
+    input.value = '';
+    setTimeout(() => { statusEl.style.display='none'; }, 5000);
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+
+/* ══ DESCUENTOS ══════════════════════════════════════════= */
+let DESCUENTOS_DATA = [];
+
+async function cargarDescuentos() {
+  const r = await fetch('/api/descuentos');
+  const d = await r.json();
+  if (d.ok) { DESCUENTOS_DATA = d.descuentos || []; renderDescuentos(); }
+}
+
+function renderDescuentos() {
+  const tbody = document.getElementById('descTbody');
+  if (!DESCUENTOS_DATA.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#aaa;padding:24px">
+      No hay códigos. Haz clic en "+ Nuevo código" para agregar.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = DESCUENTOS_DATA.map((d, i) => `
+    <tr>
+      <td style="padding-left:18px;font-weight:700">
+        <code style="background:var(--verde-c);padding:2px 8px;border-radius:6px;font-size:.76rem">${d.codigo}</code>
+      </td>
+      <td><input class="desc-input" value="${d.label}" oninput="DESCUENTOS_DATA[${i}].label=this.value" placeholder="Ej: Friends & Family (20%)"/></td>
+      <td style="text-align:center">
+        <input class="desc-input desc-pct" type="number" value="${d.pct}" min="1" max="99"
+               oninput="DESCUENTOS_DATA[${i}].pct=parseInt(this.value)||0" style="text-align:center"/>
+        <span style="font-size:.7rem;color:#888">%</span>
+      </td>
+      <td style="text-align:center">
+        <span class="badge-activo ${d.activo!==false?'on':'off'}" onclick="toggleDescActivo(${i})">
+          ${d.activo!==false?'✓ Activo':'✗ Inactivo'}
+        </span>
+      </td>
+      <td>
+        <button class="btn-sm del" onclick="eliminarDescuento(${i})">Eliminar</button>
+      </td>
+    </tr>`).join('');
+}
+
+function toggleDescActivo(i) {
+  DESCUENTOS_DATA[i].activo = DESCUENTOS_DATA[i].activo === false ? true : false;
+  renderDescuentos();
+}
+
+function nuevoDescuento() {
+  const codigo = prompt('Código de descuento (ej: PROMO2026):');
+  if (!codigo || !codigo.trim()) return;
+  const pctStr = prompt('Porcentaje de descuento (ej: 15):');
+  const pct = parseInt(pctStr);
+  if (isNaN(pct) || pct < 1 || pct > 99) { alert('Porcentaje inválido'); return; }
+  const label = prompt(`Etiqueta del código (ej: Promo 2026 (${pct}%)):`, `${codigo.trim()} (${pct}%)`);
+  if (!label) return;
+  DESCUENTOS_DATA.push({ codigo: codigo.trim().toUpperCase(), pct, label: label.trim(), activo: true });
+  renderDescuentos();
+}
+
+function eliminarDescuento(i) {
+  if (!confirm(`¿Eliminar el código "${DESCUENTOS_DATA[i].codigo}"?`)) return;
+  DESCUENTOS_DATA.splice(i, 1);
+  renderDescuentos();
+}
+
+async function guardarDescuentos() {
+  const btn = document.querySelector('#tab-descuentos .btn-save');
+  const st  = document.getElementById('st-descuentos');
+  btn.disabled = true;
+  st.textContent = 'Guardando…'; st.className = 'save-st';
+  try {
+    const r = await fetch('/api/descuentos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(DESCUENTOS_DATA)
+    });
+    const d = await r.json();
+    if (d.ok) {
+      st.textContent = '✓ Guardado correctamente'; st.className = 'save-st ok';
+      toast('✓ Descuentos guardados — el catálogo los reflejará de inmediato');
+    } else {
+      st.textContent = '✗ ' + (d.mensaje||'Error'); st.className = 'save-st err';
+    }
+  } catch { st.textContent = '✗ Error de conexión'; st.className = 'save-st err'; }
+  btn.disabled = false;
+  setTimeout(() => st.textContent = '', 4000);
+}
+
+/* ══ ENCUESTAS ═══════════════════════════════════════════= */
+let ENCUESTAS_DATA = [];
+
+async function cargarEncuestas() {
+  const r = await fetch('/api/encuesta-log');
+  const d = await r.json();
+  if (d.ok) { ENCUESTAS_DATA = d.encuestas || []; renderEncuestas(); }
+}
+
+function renderEncuestas() {
+  const filtAsesor = (document.getElementById('encFiltroAsesor').value || '').toLowerCase();
+  const filtRecom  = (document.getElementById('encFiltroRecom').value  || '').toLowerCase();
+
+  let lista = [...ENCUESTAS_DATA].reverse(); // más recientes primero
+  if (filtAsesor) lista = lista.filter(e => (e.asesor||'').toLowerCase().includes(filtAsesor));
+  if (filtRecom)  lista = lista.filter(e => (e.recomendacion||'').toLowerCase().includes(filtRecom));
+
+  document.getElementById('encContador').textContent =
+    lista.length === ENCUESTAS_DATA.length
+      ? `${lista.length} resultado${lista.length!==1?'s':''}`
+      : `${lista.length} de ${ENCUESTAS_DATA.length}`;
+
+  if (!lista.length) {
+    document.getElementById('encLista').innerHTML =
+      `<div class="enc-empty">${ENCUESTAS_DATA.length ? 'Sin resultados para ese filtro.' : 'Aún no hay encuestas registradas.<br>Aparecerán aquí cada vez que un asesor complete el cuestionario.'}</div>`;
+    return;
+  }
+
+  const fmtFecha = iso => {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'}) +
+           ' ' + d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  };
+  const campo = (label, val) => val ? `<div class="enc-card__field"><strong>${label}</strong>${val}</div>` : '';
+
+  document.getElementById('encLista').innerHTML = lista.map(e => `
+    <div class="enc-card">
+      <div class="enc-card__head">
+        <span class="enc-card__asesor">👤 ${e.asesor || e.usuario || '—'}</span>
+        <span class="enc-card__fecha">📅 ${fmtFecha(e.fecha)}</span>
+        <span class="enc-card__match chip">✅ ${e.match}% compatibilidad</span>
+      </div>
+      <div class="enc-card__recom">🛏 Recomendado: ${e.recomendacion || '—'}</div>
+      ${e.alternativas?.length ? `<div style="font-size:.72rem;color:#888;margin-bottom:6px">Alternativas: ${e.alternativas.join(', ')}</div>` : ''}
+      <div class="enc-card__grid">
+        ${campo('Sexo',        e.sexo)}
+        ${campo('Edad',        e.edad ? e.edad+' años' : '')}
+        ${campo('Peso',        e.peso ? e.peso+' kg' : '')}
+        ${campo('Clima',       e.clima)}
+        ${campo('Posición',    e.posicion)}
+        ${campo('Firmeza pref.',e.firmezaPref)}
+        ${campo('Prioridad',   e.prioridad)}
+        ${campo('Temperatura', e.temperatura)}
+        ${campo('Compañero',   e.compañero)}
+        ${campo('Tipo colchón',e.tipoColchon)}
+        ${campo('Antigüedad',  e.antiguedad)}
+        ${campo('Sensación',   e.sensacion)}
+        ${e.problemas?.length ? campo('Problemas', e.problemas.join(', ')) : ''}
+        ${e.condiciones?.length ? campo('Condiciones', e.condiciones.join(', ')) : ''}
+      </div>
+      ${e.razones?.length ? `<ul class="enc-card__razones">${e.razones.map(r=>`<li>${r}</li>`).join('')}</ul>` : ''}
+    </div>`).join('');
+}
+
+async function limpiarEncuestas() {
+  if (!confirm('¿Eliminar TODAS las encuestas registradas? Esta acción no se puede deshacer.')) return;
+  try {
+    const r = await fetch('/api/encuesta-log', { method: 'DELETE' });
+    const d = await r.json();
+    if (d.ok) { ENCUESTAS_DATA = []; renderEncuestas(); toast('✓ Encuestas eliminadas'); }
+  } catch { toast('✗ Error de conexión'); }
+}
+
+/* ── Helpers ─────────────────────────────────────────────── */
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._tid); t._tid = setTimeout(() => t.classList.remove('show'), 3200);
+}
+async function logout() {
+  await fetch('/api/logout', { method:'POST' });
+  window.location.href = '/login.html';
+}
+</script>
+</body>
+</html>

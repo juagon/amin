@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<!--
+  Intranet AMIN — Encuesta de Recomendación de Colchón
+  Marca: Andina de Materiales Industriales S.A.S
+  Paleta: #1B4D3E · #2E7D5A · #EBF5F0 · Fuente: Poppins
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Asesor de Colchón — AMIN</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde-o:#1B4D3E; --verde-m:#2E7D5A; --verde-c:#EBF5F0;
+      --verde-b:#5BA87A; --negro:#0F0C0C;   --blanco:#FFFFFF;
+      --texto:#222222;   --borde:#C2DED3;   --borde-c:#D4EDE5;
+      --sombra:rgba(27,77,62,.10); --sombra-h:rgba(27,77,62,.20);
+      --pill:100px; --card:18px;
+      --font:'Poppins',sans-serif; --head:'Raleway',sans-serif;
+      --nav:60px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:14.4px}
+    body{font-family:var(--font);background:var(--verde-c);color:var(--texto);min-height:100vh;padding-bottom:60px}
+
+    /* TOP BAR */
+    .top-bar{background:var(--negro);padding:6px 32px;display:flex;align-items:center;gap:16px}
+    .top-bar a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.72rem;font-weight:500;transition:color .15s}
+    .top-bar a:hover{color:var(--verde-b)}
+    .top-bar__sep{color:rgba(255,255,255,.2);font-size:.7rem}
+    .top-bar__right{margin-left:auto;font-size:.7rem;color:rgba(255,255,255,.45)}
+
+    /* HEADER */
+    .site-header{background:var(--verde-o);padding:0 32px;height:var(--nav);display:flex;align-items:center;
+      position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+    .header__logo{height:38px;width:auto;margin-right:16px;flex-shrink:0}
+    .header__logo-fb{display:none;background:var(--blanco);border-radius:40px;padding:5px 16px;height:38px;
+      align-items:center;margin-right:16px}
+    .header__logo-fb span{font-weight:900;font-size:1rem;color:var(--verde-o)}
+    .header__div{width:1px;height:28px;background:rgba(255,255,255,.2);margin-right:16px;flex-shrink:0}
+    .header__title{font-family:var(--head);font-size:.86rem;font-weight:800;color:rgba(255,255,255,.88);letter-spacing:.02em;flex:1}
+    .btn-back{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+      border:1.5px solid rgba(255,255,255,.25);color:var(--blanco);border-radius:var(--pill);
+      padding:6px 16px;cursor:pointer;font-size:.78rem;font-weight:700;transition:background .15s;
+      text-decoration:none;flex-shrink:0}
+    .btn-back:hover{background:rgba(255,255,255,.22)}
+
+    /* MAIN CONTAINER */
+    .survey-container{max-width:700px;margin:40px auto;padding:0 20px}
+
+    /* HERO */
+    .hero{text-align:center;margin-bottom:36px}
+    .hero__icon{font-size:3.2rem;margin-bottom:12px;line-height:1}
+    .hero__title{font-family:var(--head);font-size:1.8rem;font-weight:900;color:var(--verde-o);margin-bottom:8px}
+    .hero__sub{font-size:.88rem;color:#666;max-width:480px;margin:0 auto;line-height:1.7}
+
+    /* PROGRESS */
+    .progress-wrap{margin-bottom:32px}
+    .progress-steps{display:flex;justify-content:space-between;margin-bottom:10px;gap:4px}
+    .progress-step{flex:1;text-align:center;font-size:.65rem;font-weight:700;color:#bbb;
+      text-transform:uppercase;letter-spacing:.05em;transition:color .3s}
+    .progress-step.active{color:var(--verde-m)}
+    .progress-step.done{color:var(--verde-b)}
+    .progress-bar-bg{background:var(--borde);border-radius:var(--pill);height:6px;overflow:hidden}
+    .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--verde-o),var(--verde-b));
+      border-radius:var(--pill);transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+    /* CARDS */
+    .step-card{background:var(--blanco);border-radius:var(--card);
+      box-shadow:0 8px 32px var(--sombra),0 2px 8px rgba(0,0,0,.06);
+      padding:36px 40px;display:none}
+    .step-card.visible{display:block;animation:fadeSlide .35s ease}
+    @keyframes fadeSlide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    .step-card__num{font-size:.68rem;font-weight:700;color:var(--verde-m);
+      text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+    .step-card__title{font-family:var(--head);font-size:1.2rem;font-weight:900;color:var(--verde-o);margin-bottom:4px}
+    .step-card__sub{font-size:.8rem;color:#888;margin-bottom:28px;line-height:1.6}
+
+    /* FORM FIELDS */
+    .field{margin-bottom:22px}
+    .field label{display:block;font-size:.72rem;font-weight:700;color:#555;
+      text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+    .field input[type=number],
+    .field select{width:100%;border:2px solid var(--borde);border-radius:12px;
+      padding:12px 16px;font-size:.92rem;font-family:var(--font);color:var(--texto);
+      background:var(--verde-c);outline:none;transition:border-color .2s,background .2s;
+      appearance:none;-webkit-appearance:none}
+    .field input[type=number]:focus,
+    .field select:focus{border-color:var(--verde-m);background:var(--blanco)}
+    .select-wrap{position:relative}
+    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);
+      color:var(--verde-m);font-size:.9rem;pointer-events:none}
+
+    /* RADIO / CHECK OPTIONS */
+    .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .options-grid--3{grid-template-columns:1fr 1fr 1fr}
+    .options-grid--1{grid-template-columns:1fr}
+    .opt-btn{border:2px solid var(--borde);border-radius:14px;padding:14px 16px;
+      cursor:pointer;transition:all .2s;background:var(--verde-c);
+      display:flex;align-items:flex-start;gap:12px;text-align:left}
+    .opt-btn:hover{border-color:var(--verde-m);background:#f0faf5;transform:translateY(-1px)}
+    .opt-btn.selected{border-color:var(--verde-o);background:#e8f5ee;box-shadow:0 3px 12px rgba(27,77,62,.15)}
+    .opt-btn__icon{font-size:1.5rem;flex-shrink:0;line-height:1;margin-top:2px}
+    .opt-btn__text{flex:1}
+    .opt-btn__label{font-size:.82rem;font-weight:700;color:var(--texto);display:block;margin-bottom:2px}
+    .opt-btn__desc{font-size:.7rem;color:#888;line-height:1.4}
+    .opt-btn.selected .opt-btn__label{color:var(--verde-o)}
+
+    /* CHECKBOX OPTIONS (multiselect) */
+    .check-grid{display:flex;flex-direction:column;gap:10px}
+    .check-btn{border:2px solid var(--borde);border-radius:12px;padding:12px 16px;
+      cursor:pointer;transition:all .2s;background:var(--verde-c);
+      display:flex;align-items:center;gap:12px}
+    .check-btn:hover{border-color:var(--verde-m);background:#f0faf5}
+    .check-btn.selected{border-color:var(--verde-o);background:#e8f5ee}
+    .check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--borde);
+      flex-shrink:0;display:flex;align-items:center;justify-content:center;
+      background:var(--blanco);transition:all .2s}
+    .check-btn.selected .check-box{background:var(--verde-o);border-color:var(--verde-o)}
+    .check-tick{color:var(--blanco);font-size:.7rem;display:none}
+    .check-btn.selected .check-tick{display:block}
+    .check-label{font-size:.82rem;font-weight:600;color:var(--texto)}
+    .check-btn.selected .check-label{color:var(--verde-o)}
+
+    /* RANGE SLIDER */
+    .range-wrap{padding:0 4px}
+    .range-labels{display:flex;justify-content:space-between;font-size:.68rem;color:#aaa;font-weight:600;margin-bottom:8px}
+    input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:var(--pill);
+      background:var(--borde);outline:none;cursor:pointer}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
+      border-radius:50%;background:var(--verde-o);cursor:pointer;box-shadow:0 2px 8px rgba(27,77,62,.3)}
+    .range-val{text-align:center;font-size:1.1rem;font-weight:800;color:var(--verde-o);margin-top:10px}
+
+    /* TWO COLUMNS */
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+    /* NAVIGATION BUTTONS */
+    .step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:32px;gap:12px}
+    .btn-prev{background:transparent;border:2px solid var(--borde);color:#666;border-radius:var(--pill);
+      padding:11px 28px;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s}
+    .btn-prev:hover{border-color:var(--verde-m);color:var(--verde-o)}
+    .btn-next{background:var(--verde-o);color:var(--blanco);border:none;border-radius:var(--pill);
+      padding:12px 36px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
+      box-shadow:0 4px 14px rgba(27,77,62,.3)}
+    .btn-next:hover{background:var(--verde-m);transform:translateY(-1px)}
+    .btn-next:active{transform:scale(.98)}
+    .btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn-submit{background:linear-gradient(135deg,var(--verde-o),var(--verde-m));color:var(--blanco);
+      border:none;border-radius:var(--pill);padding:14px 44px;font-size:.94rem;font-weight:800;
+      cursor:pointer;transition:all .2s;box-shadow:0 6px 20px rgba(27,77,62,.35);letter-spacing:.02em}
+    .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,77,62,.4)}
+
+    /* VALIDATION */
+    .val-msg{font-size:.75rem;color:#e74c3c;font-weight:600;margin-top:8px;display:none}
+    .val-msg.show{display:block}
+
+    /* RESULT CARD */
+    .result-card{display:none;background:var(--blanco);border-radius:var(--card);
+      box-shadow:0 8px 32px var(--sombra),0 2px 8px rgba(0,0,0,.06);overflow:hidden}
+    .result-card.visible{display:block;animation:fadeSlide .5s ease}
+    .result-header{background:linear-gradient(135deg,var(--verde-o) 0%,var(--verde-m) 100%);
+      padding:36px 40px;text-align:center;position:relative;overflow:hidden}
+    .result-header::before{content:'';position:absolute;width:300px;height:300px;
+      border-radius:50%;background:rgba(255,255,255,.06);top:-120px;right:-80px}
+    .result-header__pre{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.7);
+      text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+    .result-header__name{font-family:var(--head);font-size:2.8rem;font-weight:900;color:var(--blanco);
+      margin-bottom:4px;position:relative}
+    .result-header__perfil{font-size:.82rem;color:rgba(255,255,255,.8);font-weight:600}
+    .result-body{padding:36px 40px}
+    .result-score-row{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+    .result-match{background:var(--verde-c);border-radius:50px;padding:8px 20px;
+      font-size:.82rem;font-weight:700;color:var(--verde-o)}
+    .result-match span{font-size:1.1rem;font-weight:900}
+    .result-desc{font-size:.88rem;color:#444;line-height:1.8;margin-bottom:24px}
+    .result-why{background:var(--verde-c);border-radius:14px;padding:18px 22px;margin-bottom:24px}
+    .result-why__title{font-size:.72rem;font-weight:800;color:var(--verde-o);
+      text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+    .result-why__items{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .result-why__items li{font-size:.8rem;color:#444;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+    .result-why__items li::before{content:'✓';color:var(--verde-b);font-weight:900;flex-shrink:0;margin-top:.1em}
+    .firmeza-bar{margin-bottom:24px}
+    .firmeza-bar__label{font-size:.72rem;font-weight:700;color:#888;text-transform:uppercase;
+      letter-spacing:.07em;margin-bottom:8px;display:flex;justify-content:space-between}
+    .firmeza-track{background:var(--borde);border-radius:var(--pill);height:10px;overflow:hidden}
+    .firmeza-fill{height:100%;border-radius:var(--pill);
+      background:linear-gradient(90deg,var(--verde-c),var(--verde-o));transition:width 1s .3s ease}
+    .firmeza-scale{display:flex;justify-content:space-between;font-size:.63rem;color:#bbb;margin-top:5px}
+    .result-alts{margin-bottom:28px}
+    .result-alts__title{font-size:.75rem;font-weight:700;color:#888;text-transform:uppercase;
+      letter-spacing:.08em;margin-bottom:12px}
+    .alts-row{display:flex;gap:10px;flex-wrap:wrap}
+    .alt-chip{border:2px solid var(--borde);border-radius:50px;padding:6px 16px;
+      font-size:.76rem;font-weight:700;color:#666;background:var(--verde-c)}
+    .result-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-cta-main{background:var(--verde-o);color:var(--blanco);border:none;border-radius:var(--pill);
+      padding:13px 32px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;
+      text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn-cta-main:hover{background:var(--verde-m);transform:translateY(-1px)}
+    .btn-cta-sec{background:transparent;color:var(--verde-o);border:2px solid var(--verde-o);
+      border-radius:var(--pill);padding:11px 28px;font-size:.84rem;font-weight:700;cursor:pointer;
+      transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+    .btn-cta-sec:hover{background:var(--verde-c)}
+
+    /* TAGS */
+    .tags-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+    .tag{background:var(--verde-c);border-radius:50px;padding:5px 14px;
+      font-size:.72rem;font-weight:700;color:var(--verde-o);border:1.5px solid var(--borde-c)}
+
+    /* LOADING */
+    .analyzing{text-align:center;padding:60px 40px;display:none}
+    .analyzing.visible{display:block}
+    .spinner{width:52px;height:52px;border:4px solid var(--verde-c);border-top-color:var(--verde-o);
+      border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .analyzing p{font-size:.9rem;color:#666;font-weight:500}
+
+    @media(max-width:600px){
+      .survey-container{padding:0 12px;margin:20px auto}
+      .step-card,.result-body,.result-header{padding:24px 20px}
+      .options-grid{grid-template-columns:1fr}
+      .options-grid--3{grid-template-columns:1fr 1fr}
+      .field-row{grid-template-columns:1fr}
+      .hero__title{font-size:1.4rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="/catalogo.html">← Catálogo</a>
+    <span class="top-bar__sep">|</span>
+    <a href="/catalogo.html">Inicio</a>
+    <span class="top-bar__right" id="topBarUser"></span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <img class="header__logo" src="https://amin.com.co/wp-content/uploads/2024/03/logo2.png" alt="AMIN"
+      onerror="this.style.display='none';document.querySelector('.header__logo-fb').style.display='inline-flex'">
+    <div class="header__logo-fb"><span>amin</span></div>
+    <div class="header__div"></div>
+    <span class="header__title">Asesor de Colchón Personalizado</span>
+    <a class="btn-back" href="/catalogo.html">← Volver al catálogo</a>
+  </header>
+
+  <!-- SURVEY CONTAINER -->
+  <div class="survey-container">
+
+    <!-- HERO -->
+    <div class="hero" id="heroSection">
+      <div class="hero__icon">🛏️</div>
+      <h1 class="hero__title">Encuentra tu colchón ideal</h1>
+      <p class="hero__sub">Responde 5 preguntas rápidas y nuestro sistema analizará tu perfil para recomendarte el colchón AMIN perfecto para ti.</p>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap" id="progressWrap" style="display:none">
+      <div class="progress-steps">
+        <span class="progress-step" id="ps1">Perfil</span>
+        <span class="progress-step" id="ps2">Colchón</span>
+        <span class="progress-step" id="ps3">Problemas</span>
+        <span class="progress-step" id="ps4">Hábitos</span>
+        <span class="progress-step" id="ps5">Preferencias</span>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+
+    <!-- STEP 1: PERFIL PERSONAL -->
+    <div class="step-card visible" id="step1">
+      <div class="step-card__num">Paso 1 de 5</div>
+      <h2 class="step-card__title">Tu perfil personal</h2>
+      <p class="step-card__sub">Esta información nos ayuda a entender tus necesidades físicas de soporte y confort.</p>
+
+      <div class="field">
+        <label>Sexo biológico</label>
+        <div class="options-grid--3">
+          <div class="opt-btn" data-group="sexo" data-val="F" onclick="selectOpt(this,'sexo')">
+            <div class="opt-btn__icon">👩</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Femenino</span></div>
+          </div>
+          <div class="opt-btn" data-group="sexo" data-val="M" onclick="selectOpt(this,'sexo')">
+            <div class="opt-btn__icon">👨</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Masculino</span></div>
+          </div>
+          <div class="opt-btn" data-group="sexo" data-val="O" onclick="selectOpt(this,'sexo')">
+            <div class="opt-btn__icon">🧑</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Otro</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-sexo">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="edad">Edad (años)</label>
+          <input type="number" id="edad" min="10" max="99" placeholder="Ej: 35" inputmode="numeric">
+          <div class="val-msg" id="val-edad">Ingresa tu edad (10-99).</div>
+        </div>
+        <div class="field">
+          <label for="peso">Peso aproximado (kg)</label>
+          <input type="number" id="peso" min="30" max="250" placeholder="Ej: 70" inputmode="numeric">
+          <div class="val-msg" id="val-peso">Ingresa tu peso (30-250 kg).</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Tipo de clima donde vives</label>
+        <div class="select-wrap">
+          <select id="clima">
+            <option value="">— Selecciona —</option>
+            <option value="caliente">Cálido / Costa o tierras bajas (Cali, Barranquilla, Santa Marta, Cúcuta…)</option>
+            <option value="templado">Templado / Zona cafetera y valles (Medellín, Pereira, Manizales…)</option>
+            <option value="frio">Frío / Altiplano (Bogotá, Tunja, Pasto, Ipiales…)</option>
+          </select>
+        </div>
+        <div class="val-msg" id="val-clima">Por favor selecciona tu clima.</div>
+      </div>
+
+      <div class="step-nav">
+        <div></div>
+        <button class="btn-next" onclick="goNext(1)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: COLCHÓN ACTUAL -->
+    <div class="step-card" id="step2">
+      <div class="step-card__num">Paso 2 de 5</div>
+      <h2 class="step-card__title">Tu colchón actual</h2>
+      <p class="step-card__sub">Cuéntanos sobre el colchón en el que duermes hoy. Si no conoces los detalles, elige la opción más cercana.</p>
+
+      <div class="field">
+        <label>¿De qué tipo es tu colchón actual?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="tipoColchon" data-val="resortes" onclick="selectOpt(this,'tipoColchon')">
+            <div class="opt-btn__icon">🔩</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Resortes / Espiral</span>
+              <span class="opt-btn__desc">Los más tradicionales, con muelles metálicos internos</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoColchon" data-val="espuma" onclick="selectOpt(this,'tipoColchon')">
+            <div class="opt-btn__icon">🧽</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Espuma / Foam</span>
+              <span class="opt-btn__desc">Sin resortes, de esponja de poliuretano</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoColchon" data-val="viscoelastico" onclick="selectOpt(this,'tipoColchon')">
+            <div class="opt-btn__icon">🌊</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Viscoelástico</span>
+              <span class="opt-btn__desc">Memory foam, se adapta al cuerpo con el calor</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoColchon" data-val="no-se" onclick="selectOpt(this,'tipoColchon')">
+            <div class="opt-btn__icon">🤷</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">No sé / No recuerdo</span>
+              <span class="opt-btn__desc">No conozco las especificaciones</span>
+            </div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-tipoColchon">Por favor selecciona una opción.</div>
+      </div>
+
+      <!-- Pregunta condicional: solo visible si eligió "resortes" -->
+      <div class="field field--resorte" id="fieldTipoResorte" style="display:none;animation:fadeSlide .3s ease">
+        <label>¿Qué tipo de resorte tiene?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="tipoResorte" data-val="pocket" onclick="selectOpt(this,'tipoResorte')">
+            <div class="opt-btn__icon">🔘</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Pocket / Bolsillo</span>
+              <span class="opt-btn__desc">Cada resorte va envuelto individualmente. Más silencioso, se adapta mejor al cuerpo y aísla el movimiento de la pareja</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoResorte" data-val="encapsulado" onclick="selectOpt(this,'tipoResorte')">
+            <div class="opt-btn__icon">🔗</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Encapsulado / Bonell</span>
+              <span class="opt-btn__desc">Resortes interconectados en una sola estructura. Mayor rebote, sensación más firme y tradicional</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoResorte" data-val="no-se" onclick="selectOpt(this,'tipoResorte')">
+            <div class="opt-btn__icon">🤷</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">No sé</span>
+              <span class="opt-btn__desc">No conozco el detalle técnico</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="tipoResorte" data-val="gusta" onclick="selectOpt(this,'tipoResorte')">
+            <div class="opt-btn__icon">😊</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Me gusta como está</span>
+              <span class="opt-btn__desc">Sea cual sea, estoy satisfecho con la sensación actual</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>¿Cuánto tiempo llevas con tu colchón actual?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="antiguedad" data-val="nuevo" onclick="selectOpt(this,'antiguedad')">
+            <div class="opt-btn__icon">✨</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Menos de 2 años</span></div>
+          </div>
+          <div class="opt-btn" data-group="antiguedad" data-val="medio" onclick="selectOpt(this,'antiguedad')">
+            <div class="opt-btn__icon">📅</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">2 a 5 años</span></div>
+          </div>
+          <div class="opt-btn" data-group="antiguedad" data-val="viejo" onclick="selectOpt(this,'antiguedad')">
+            <div class="opt-btn__icon">📦</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">5 a 10 años</span></div>
+          </div>
+          <div class="opt-btn" data-group="antiguedad" data-val="muy-viejo" onclick="selectOpt(this,'antiguedad')">
+            <div class="opt-btn__icon">🏚️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Más de 10 años</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-antiguedad">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Cómo describes la sensación de tu colchón actual?</label>
+        <div class="options-grid--3">
+          <div class="opt-btn" data-group="sensacion" data-val="muy-suave" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">☁️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Muy suave</span><span class="opt-btn__desc">Me hundo demasiado</span></div>
+          </div>
+          <div class="opt-btn" data-group="sensacion" data-val="suave" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">🌸</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Suave</span><span class="opt-btn__desc">Agradable y blando</span></div>
+          </div>
+          <div class="opt-btn" data-group="sensacion" data-val="medio" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">⚖️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Medio</span><span class="opt-btn__desc">Ni muy suave ni firme</span></div>
+          </div>
+          <div class="opt-btn" data-group="sensacion" data-val="firme" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">🪨</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Firme</span><span class="opt-btn__desc">Soporte sólido</span></div>
+          </div>
+          <div class="opt-btn" data-group="sensacion" data-val="muy-firme" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">🏋️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Muy firme</span><span class="opt-btn__desc">Se siente duro</span></div>
+          </div>
+          <div class="opt-btn" data-group="sensacion" data-val="hundido" onclick="selectOpt(this,'sensacion')">
+            <div class="opt-btn__icon">📉</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Deformado</span><span class="opt-btn__desc">Hundido o desgastado</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-sensacion">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-prev" onclick="goPrev(2)">← Anterior</button>
+        <button class="btn-next" onclick="goNext(2)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: PROBLEMAS DE SUEÑO -->
+    <div class="step-card" id="step3">
+      <div class="step-card__num">Paso 3 de 5</div>
+      <h2 class="step-card__title">Problemas al dormir</h2>
+      <p class="step-card__sub">Selecciona todos los problemas que experimentas regularmente al dormir. Puedes elegir varios.</p>
+
+      <div class="field">
+        <label>¿Qué molestias tienes? (selecciona todas las que apliquen)</label>
+        <div class="check-grid" id="problemasList">
+          <div class="check-btn" data-val="dolor-espalda" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">🔴 Dolor de espalda baja o lumbar al despertar</span>
+          </div>
+          <div class="check-btn" data-val="dolor-cervical" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">🟠 Dolor de cuello o cervical</span>
+          </div>
+          <div class="check-btn" data-val="presion-hombros" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">🟡 Presión o adormecimiento en hombros y caderas</span>
+          </div>
+          <div class="check-btn" data-val="calor" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">🌡️ Me da mucho calor durante la noche</span>
+          </div>
+          <div class="check-btn" data-val="movimiento" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">🔄 Me despierto con el movimiento de mi pareja</span>
+          </div>
+          <div class="check-btn" data-val="insomnio" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">😴 Dificultad para conciliar el sueño</span>
+          </div>
+          <div class="check-btn" data-val="cansancio" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">😩 Me levanto cansado/a aunque dormí suficiente</span>
+          </div>
+          <div class="check-btn" data-val="ninguno" onclick="toggleCheck(this,'problemas')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">✅ No tengo problemas específicos al dormir</span>
+          </div>
+        </div>
+        <div class="val-msg" id="val-problemas">Por favor selecciona al menos una opción.</div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-prev" onclick="goPrev(3)">← Anterior</button>
+        <button class="btn-next" onclick="goNext(3)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: HÁBITOS DE SUEÑO -->
+    <div class="step-card" id="step4">
+      <div class="step-card__num">Paso 4 de 5</div>
+      <h2 class="step-card__title">Hábitos de sueño</h2>
+      <p class="step-card__sub">Tus posiciones y entorno de descanso determinan qué tipo de soporte necesitas.</p>
+
+      <div class="field">
+        <label>¿Cómo duermes habitualmente?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="posicion" data-val="lado" onclick="selectOpt(this,'posicion')">
+            <div class="opt-btn__icon">🫃</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">De lado</span>
+              <span class="opt-btn__desc">Posición fetal o lateral</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="posicion" data-val="espalda" onclick="selectOpt(this,'posicion')">
+            <div class="opt-btn__icon">🧍</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Boca arriba</span>
+              <span class="opt-btn__desc">De espaldas, mirando al techo</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="posicion" data-val="boca-abajo" onclick="selectOpt(this,'posicion')">
+            <div class="opt-btn__icon">🫄</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Boca abajo</span>
+              <span class="opt-btn__desc">Mirando hacia la cama</span>
+            </div>
+          </div>
+          <div class="opt-btn" data-group="posicion" data-val="variable" onclick="selectOpt(this,'posicion')">
+            <div class="opt-btn__icon">🔀</div>
+            <div class="opt-btn__text">
+              <span class="opt-btn__label">Variable</span>
+              <span class="opt-btn__desc">Cambio de posición durante la noche</span>
+            </div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-posicion">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Duermes solo/a o acompañado/a?</label>
+        <div class="options-grid--3">
+          <div class="opt-btn" data-group="compañero" data-val="solo" onclick="selectOpt(this,'compañero')">
+            <div class="opt-btn__icon">🛏️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Solo/a</span></div>
+          </div>
+          <div class="opt-btn" data-group="compañero" data-val="pareja" onclick="selectOpt(this,'compañero')">
+            <div class="opt-btn__icon">👫</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Con pareja</span></div>
+          </div>
+          <div class="opt-btn" data-group="compañero" data-val="variable" onclick="selectOpt(this,'compañero')">
+            <div class="opt-btn__icon">🔄</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Varía</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-compañero">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Cómo describes tu temperatura corporal al dormir?</label>
+        <div class="options-grid--3">
+          <div class="opt-btn" data-group="temperatura" data-val="frio" onclick="selectOpt(this,'temperatura')">
+            <div class="opt-btn__icon">🥶</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Me da frío</span><span class="opt-btn__desc">Necesito cobijas</span></div>
+          </div>
+          <div class="opt-btn" data-group="temperatura" data-val="normal" onclick="selectOpt(this,'temperatura')">
+            <div class="opt-btn__icon">😊</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Normal</span><span class="opt-btn__desc">No tengo problemas</span></div>
+          </div>
+          <div class="opt-btn" data-group="temperatura" data-val="calor" onclick="selectOpt(this,'temperatura')">
+            <div class="opt-btn__icon">🥵</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Me da calor</span><span class="opt-btn__desc">Sudo o me acaloro</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-temperatura">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-prev" onclick="goPrev(4)">← Anterior</button>
+        <button class="btn-next" onclick="goNext(4)">Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: PREFERENCIAS -->
+    <div class="step-card" id="step5">
+      <div class="step-card__num">Paso 5 de 5</div>
+      <h2 class="step-card__title">Tus preferencias</h2>
+      <p class="step-card__sub">Cuéntanos qué esperas de tu nuevo colchón para afinar nuestra recomendación.</p>
+
+      <div class="field">
+        <label>¿Qué firmeza prefieres en un colchón?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="firmezaPref" data-val="suave" onclick="selectOpt(this,'firmezaPref')">
+            <div class="opt-btn__icon">☁️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Suave</span><span class="opt-btn__desc">Que acune mi cuerpo</span></div>
+          </div>
+          <div class="opt-btn" data-group="firmezaPref" data-val="medio" onclick="selectOpt(this,'firmezaPref')">
+            <div class="opt-btn__icon">⚖️</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Medio</span><span class="opt-btn__desc">Balance ideal</span></div>
+          </div>
+          <div class="opt-btn" data-group="firmezaPref" data-val="firme" onclick="selectOpt(this,'firmezaPref')">
+            <div class="opt-btn__icon">🪨</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Firme</span><span class="opt-btn__desc">Buen soporte postural</span></div>
+          </div>
+          <div class="opt-btn" data-group="firmezaPref" data-val="no-se" onclick="selectOpt(this,'firmezaPref')">
+            <div class="opt-btn__icon">🔍</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">No sé</span><span class="opt-btn__desc">Que la encuesta decida</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-firmezaPref">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Cuál es tu prioridad principal al elegir un colchón?</label>
+        <div class="options-grid">
+          <div class="opt-btn" data-group="prioridad" data-val="salud" onclick="selectOpt(this,'prioridad')">
+            <div class="opt-btn__icon">💚</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Salud y postura</span><span class="opt-btn__desc">Bienestar a largo plazo</span></div>
+          </div>
+          <div class="opt-btn" data-group="prioridad" data-val="confort" onclick="selectOpt(this,'prioridad')">
+            <div class="opt-btn__icon">😌</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Máximo confort</span><span class="opt-btn__desc">Que sea cómodo al acostarse</span></div>
+          </div>
+          <div class="opt-btn" data-group="prioridad" data-val="durabilidad" onclick="selectOpt(this,'prioridad')">
+            <div class="opt-btn__icon">🏆</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Durabilidad</span><span class="opt-btn__desc">Que dure muchos años</span></div>
+          </div>
+          <div class="opt-btn" data-group="prioridad" data-val="precio" onclick="selectOpt(this,'prioridad')">
+            <div class="opt-btn__icon">💰</div>
+            <div class="opt-btn__text"><span class="opt-btn__label">Mejor precio</span><span class="opt-btn__desc">Excelente relación calidad-precio</span></div>
+          </div>
+        </div>
+        <div class="val-msg" id="val-prioridad">Por favor selecciona una opción.</div>
+      </div>
+
+      <div class="field">
+        <label>¿Tienes alguna condición especial? (opcional)</label>
+        <div class="check-grid">
+          <div class="check-btn" data-val="hernia" onclick="toggleCheck(this,'condiciones')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">Hernia discal o problemas de columna diagnosticados</span>
+          </div>
+          <div class="check-btn" data-val="fibromialgia" onclick="toggleCheck(this,'condiciones')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">Fibromialgia o sensibilidad al dolor generalizada</span>
+          </div>
+          <div class="check-btn" data-val="embarazo" onclick="toggleCheck(this,'condiciones')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">Embarazo o postparto reciente</span>
+          </div>
+          <div class="check-btn" data-val="ninguna-cond" onclick="toggleCheck(this,'condiciones')">
+            <div class="check-box"><span class="check-tick">✓</span></div>
+            <span class="check-label">Ninguna condición especial</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-nav">
+        <button class="btn-prev" onclick="goPrev(5)">← Anterior</button>
+        <button class="btn-submit" onclick="calcularRecomendacion()">🔍 Ver mi recomendación</button>
+      </div>
+    </div>
+
+    <!-- ANALYZING -->
+    <div class="analyzing" id="analyzing">
+      <div class="spinner"></div>
+      <p>Analizando tu perfil con datos de sueño colombianos y tendencias globales de colchones…</p>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <div class="result-header__pre">Tu colchón ideal AMIN es</div>
+        <div class="result-header__name" id="resNombre">—</div>
+        <div class="result-header__perfil" id="resPerfil">—</div>
+      </div>
+      <div class="result-body">
+        <div class="result-score-row">
+          <div class="result-match">Compatibilidad: <span id="resMatch">—</span>%</div>
+        </div>
+        <p class="result-desc" id="resDesc">—</p>
+        <div class="firmeza-bar">
+          <div class="firmeza-bar__label"><span>Nivel de firmeza</span></div>
+          <div class="firmeza-track"><div class="firmeza-fill" id="resFirmeza" style="width:0%"></div></div>
+          <div class="firmeza-scale"><span>Muy suave</span><span>Suave</span><span>Medio</span><span>Firme</span><span>Muy firme</span></div>
+        </div>
+        <div class="tags-row" id="resTags"></div>
+        <div class="result-why">
+          <div class="result-why__title">¿Por qué este colchón?</div>
+          <ul class="result-why__items" id="resWhy"></ul>
+        </div>
+        <div class="result-alts">
+          <div class="result-alts__title">También podrías considerar</div>
+          <div class="alts-row" id="resAlts"></div>
+        </div>
+        <div class="result-cta">
+          <a class="btn-cta-main" href="/catalogo.html" id="resCta">🎯 Ver mi colchón en el catálogo →</a>
+          <a class="btn-cta-sec" href="/catalogo.html" id="resCtaDirect">Ver todo el catálogo</a>
+          <button class="btn-cta-sec" onclick="reiniciarEncuesta()">↺ Hacer de nuevo</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /survey-container -->
+
+<script>
+/* ── Estado de la encuesta ──────────────────────────────── */
+const DATA = {
+  sexo:        null,
+  edad:        null,
+  peso:        null,
+  clima:       null,
+  tipoColchon: null,
+  tipoResorte: null,
+  antiguedad:  null,
+  sensacion:   null,
+  problemas:   [],
+  posicion:    null,
+  compañero:   null,
+  temperatura: null,
+  firmezaPref: null,
+  prioridad:   null,
+  condiciones: []
+};
+
+/* ── Catálogo de productos AMIN ─────────────────────────── */
+const PORTFOLIO = {
+  active: {
+    nombre: 'Active',
+    perfil: 'Firme | Alto rendimiento',
+    firmeza: 78,
+    desc: 'Diseñado para personas activas y deportistas. Su espuma de alta densidad brinda soporte lumbar superior y facilita la recuperación muscular. Excelente circulación de aire para climas cálidos.',
+    tags: ['Alto soporte', 'Recuperación muscular', 'Transpirable', 'Alta densidad']
+  },
+  confort: {
+    nombre: 'Confort',
+    perfil: 'Medio | Versátil',
+    firmeza: 50,
+    desc: 'Equilibrio perfecto entre soporte y comodidad. Una opción versátil ideal para quienes buscan renovar su colchón con una excelente relación calidad-precio y comodidad inmediata.',
+    tags: ['Versátil', 'Equilibrado', 'Accesible', 'Para toda la familia']
+  },
+  balance: {
+    nombre: 'Balance',
+    perfil: 'Medio | Progresivo',
+    firmeza: 55,
+    desc: 'Tecnología de capas múltiples que ofrece soporte progresivo: firme en la base y más suave en la superficie. Ideal para quienes duermen en distintas posiciones.',
+    tags: ['Capas múltiples', 'Soporte progresivo', 'Multiposición', 'Duradero']
+  },
+  harmony: {
+    nombre: 'Harmony',
+    perfil: 'Medio-suave | Ideal en pareja',
+    firmeza: 44,
+    desc: 'Concebido para el descanso en pareja. Su sistema de aislamiento de movimiento asegura que los movimientos de uno no perturben al otro. Distribución de presión equilibrada para ambos.',
+    tags: ['Ideal en pareja', 'Aislamiento de movimiento', 'Distribución de presión', 'Confort']
+  },
+  calm: {
+    nombre: 'Calm',
+    perfil: 'Suave | Alivio de presión',
+    firmeza: 32,
+    desc: 'Superficie acolchada premium pensada para máxima relajación. Alivia los puntos de presión en hombros y caderas, ideal para quienes duermen de lado o con sensibilidad corporal.',
+    tags: ['Alivio de presión', 'Ideal lateral', 'Suave al tacto', 'Relajación profunda']
+  },
+  vitality: {
+    nombre: 'Vitality',
+    perfil: 'Firme | Ortopédico',
+    firmeza: 74,
+    desc: 'Estructura ortopédica que optimiza la alineación de la columna durante el sueño. Recomendado para quienes tienen dolores de espalda o buscan un soporte postural de nivel clínico.',
+    tags: ['Ortopédico', 'Alineación columna', 'Anti-dolor', 'Soporte postural']
+  },
+  energy: {
+    nombre: 'Energy',
+    perfil: 'Muy firme | Máximo soporte',
+    firmeza: 90,
+    desc: 'El colchón de mayor densidad en el portafolio AMIN. Diseñado para personas de peso elevado o quienes duermen boca abajo y necesitan el máximo nivel de soporte sin hundimiento.',
+    tags: ['Máxima densidad', 'Anti-hundimiento', 'Boca abajo', 'Soporte extremo']
+  },
+  prana: {
+    nombre: 'Prana',
+    perfil: 'Adaptable | Premium',
+    firmeza: 52,
+    desc: 'Nuestra línea premium. Tecnología avanzada de espuma adaptativa que responde al calor y peso del cuerpo para una experiencia de sueño de clase mundial. Se adapta a cualquier tipo de durmiente.',
+    tags: ['Premium', 'Espuma adaptativa', 'Tecnología avanzada', 'Aislamiento total']
+  }
+};
+
+/* ── Interacción UI ─────────────────────────────────────── */
+function selectOpt(el, group) {
+  document.querySelectorAll(`.opt-btn[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  DATA[group] = el.dataset.val;
+  const vm = document.getElementById(`val-${group}`);
+  if (vm) vm.classList.remove('show');
+
+  // Mostrar/ocultar pregunta de tipo de resorte según el tipo de colchón
+  if (group === 'tipoColchon') {
+    const fieldResorte = document.getElementById('fieldTipoResorte');
+    if (el.dataset.val === 'resortes') {
+      fieldResorte.style.display = 'block';
+    } else {
+      fieldResorte.style.display = 'none';
+      DATA.tipoResorte = null;
+      document.querySelectorAll('.opt-btn[data-group="tipoResorte"]').forEach(b => b.classList.remove('selected'));
+    }
+  }
+}
+
+function toggleCheck(el, group) {
+  const val = el.dataset.val;
+  // If "ninguno" or "ninguna-cond" is clicked, clear others
+  const isNone = val === 'ninguno' || val === 'ninguna-cond';
+  if (isNone) {
+    document.querySelectorAll(`#${group === 'problemas' ? 'problemasList' : 'step5'} .check-btn`).forEach(b => {
+      if (b.dataset.val !== val) b.classList.remove('selected');
+    });
+    DATA[group] = el.classList.contains('selected') ? [] : [val];
+    el.classList.toggle('selected');
+  } else {
+    // Remove "ninguno" if selecting something else
+    const noneEl = document.querySelector(`.check-btn[data-val="${group === 'problemas' ? 'ninguno' : 'ninguna-cond'}"]`);
+    if (noneEl) noneEl.classList.remove('selected');
+    DATA[group] = DATA[group].filter(v => v !== 'ninguno' && v !== 'ninguna-cond');
+
+    el.classList.toggle('selected');
+    if (el.classList.contains('selected')) {
+      if (!DATA[group].includes(val)) DATA[group].push(val);
+    } else {
+      DATA[group] = DATA[group].filter(v => v !== val);
+    }
+  }
+  const vm = document.getElementById(`val-${group}`);
+  if (vm) vm.classList.remove('show');
+}
+
+/* ── Validación por paso ───────────────────────────────── */
+const STEP_VALIDATIONS = {
+  1: () => {
+    let ok = true;
+    if (!DATA.sexo) { document.getElementById('val-sexo').classList.add('show'); ok = false; }
+    const edad = parseInt(document.getElementById('edad').value);
+    if (!edad || edad < 10 || edad > 99) { document.getElementById('val-edad').classList.add('show'); ok = false; }
+    else DATA.edad = edad;
+    const peso = parseInt(document.getElementById('peso').value);
+    if (!peso || peso < 30 || peso > 250) { document.getElementById('val-peso').classList.add('show'); ok = false; }
+    else DATA.peso = peso;
+    const clima = document.getElementById('clima').value;
+    if (!clima) { document.getElementById('val-clima').classList.add('show'); ok = false; }
+    else DATA.clima = clima;
+    return ok;
+  },
+  2: () => {
+    let ok = true;
+    if (!DATA.tipoColchon) { document.getElementById('val-tipoColchon').classList.add('show'); ok = false; }
+    if (!DATA.antiguedad) { document.getElementById('val-antiguedad').classList.add('show'); ok = false; }
+    if (!DATA.sensacion) { document.getElementById('val-sensacion').classList.add('show'); ok = false; }
+    return ok;
+  },
+  3: () => {
+    if (DATA.problemas.length === 0) { document.getElementById('val-problemas').classList.add('show'); return false; }
+    return true;
+  },
+  4: () => {
+    let ok = true;
+    if (!DATA.posicion) { document.getElementById('val-posicion').classList.add('show'); ok = false; }
+    if (!DATA.compañero) { document.getElementById('val-compañero').classList.add('show'); ok = false; }
+    if (!DATA.temperatura) { document.getElementById('val-temperatura').classList.add('show'); ok = false; }
+    return ok;
+  },
+  5: () => {
+    let ok = true;
+    if (!DATA.firmezaPref) { document.getElementById('val-firmezaPref').classList.add('show'); ok = false; }
+    if (!DATA.prioridad) { document.getElementById('val-prioridad').classList.add('show'); ok = false; }
+    return ok;
+  }
+};
+
+/* ── Navegación ─────────────────────────────────────────── */
+let currentStep = 1;
+
+function updateProgress(step) {
+  const pct = ((step - 1) / 5) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  for (let i = 1; i <= 5; i++) {
+    const el = document.getElementById('ps' + i);
+    el.className = 'progress-step' + (i < step ? ' done' : i === step ? ' active' : '');
+  }
+}
+
+function goNext(step) {
+  if (!STEP_VALIDATIONS[step]()) return;
+  document.getElementById('step' + step).classList.remove('visible');
+  document.getElementById('step' + (step + 1)).classList.add('visible');
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('heroSection').style.display = 'none';
+  currentStep = step + 1;
+  updateProgress(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goPrev(step) {
+  document.getElementById('step' + step).classList.remove('visible');
+  document.getElementById('step' + (step - 1)).classList.add('visible');
+  currentStep = step - 1;
+  updateProgress(currentStep);
+  if (currentStep === 1) {
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('progressWrap').style.display = 'none';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Algoritmo de recomendación ─────────────────────────── */
+function algoritmo() {
+  const scores = { active:0, confort:0, balance:0, harmony:0, calm:0, vitality:0, energy:0, prana:0 };
+
+  /* 1. PESO — 25 pts */
+  const peso = DATA.peso;
+  if (peso < 55) {
+    scores.calm += 22; scores.harmony += 18; scores.confort += 14; scores.prana += 12; scores.balance += 9;
+  } else if (peso < 70) {
+    scores.balance += 20; scores.harmony += 18; scores.calm += 14; scores.confort += 12; scores.vitality += 10; scores.prana += 10;
+  } else if (peso < 85) {
+    scores.balance += 18; scores.vitality += 20; scores.active += 16; scores.harmony += 12; scores.energy += 8;
+  } else if (peso < 105) {
+    scores.vitality += 24; scores.active += 20; scores.energy += 18; scores.balance += 8;
+  } else {
+    scores.energy += 28; scores.active += 20; scores.vitality += 16;
+  }
+
+  /* 2. EDAD — 20 pts */
+  const edad = DATA.edad;
+  if (edad < 22) {
+    scores.active += 16; scores.energy += 13; scores.vitality += 11; scores.balance += 10; scores.confort += 8;
+  } else if (edad < 35) {
+    scores.balance += 16; scores.vitality += 14; scores.active += 11; scores.harmony += 12; scores.energy += 9;
+  } else if (edad < 50) {
+    scores.harmony += 16; scores.balance += 13; scores.vitality += 12; scores.prana += 12; scores.calm += 9;
+  } else if (edad < 65) {
+    scores.prana += 18; scores.harmony += 14; scores.calm += 14; scores.vitality += 10;
+  } else {
+    scores.prana += 18; scores.calm += 18; scores.harmony += 13; scores.vitality += 7;
+  }
+
+  /* 3. POSICIÓN DE SUEÑO — 25 pts */
+  if (DATA.posicion === 'lado') {
+    scores.calm += 23; scores.harmony += 18; scores.confort += 12; scores.prana += 11;
+  } else if (DATA.posicion === 'espalda') {
+    scores.balance += 19; scores.vitality += 18; scores.harmony += 14; scores.active += 11;
+  } else if (DATA.posicion === 'boca-abajo') {
+    scores.active += 22; scores.energy += 20; scores.vitality += 16;
+  } else {
+    scores.balance += 20; scores.harmony += 16; scores.prana += 14; scores.vitality += 10;
+  }
+
+  /* 4. SEXO — 10 pts */
+  if (DATA.sexo === 'F') {
+    scores.harmony += 8; scores.calm += 8; scores.prana += 6; scores.balance += 4;
+  } else if (DATA.sexo === 'M') {
+    scores.active += 8; scores.vitality += 7; scores.energy += 5; scores.balance += 4;
+  } else {
+    scores.balance += 6; scores.harmony += 6; scores.prana += 4;
+  }
+
+  /* 5. COMPAÑERO — 5 pts */
+  if (DATA.compañero === 'pareja') {
+    scores.prana += 5; scores.harmony += 5; scores.calm += 3;
+  }
+
+  /* 6. TEMPERATURA + CLIMA — 10 pts */
+  const calor = DATA.temperatura === 'calor' || DATA.clima === 'caliente';
+  const frio  = DATA.temperatura === 'frio'  || DATA.clima === 'frio';
+  if (calor) {
+    scores.active += 6; scores.vitality += 5; scores.energy += 4; scores.balance += 3;
+  } else if (frio) {
+    scores.calm += 5; scores.prana += 5; scores.harmony += 4;
+  } else {
+    scores.balance += 4; scores.harmony += 3; scores.prana += 3;
+  }
+
+  /* 7. PROBLEMAS — 15 pts */
+  if (DATA.problemas.includes('dolor-espalda')) {
+    scores.vitality += 12; scores.active += 9; scores.balance += 7; scores.energy += 5;
+  }
+  if (DATA.problemas.includes('dolor-cervical')) {
+    scores.vitality += 10; scores.prana += 8; scores.balance += 7; scores.active += 5;
+  }
+  if (DATA.problemas.includes('presion-hombros')) {
+    scores.calm += 12; scores.harmony += 9; scores.prana += 8; scores.confort += 5;
+  }
+  if (DATA.problemas.includes('calor')) {
+    scores.active += 7; scores.vitality += 6; scores.energy += 5;
+  }
+  if (DATA.problemas.includes('movimiento')) {
+    scores.prana += 10; scores.harmony += 8; scores.calm += 6;
+  }
+  if (DATA.problemas.includes('insomnio')) {
+    scores.calm += 8; scores.prana += 8; scores.harmony += 6;
+  }
+  if (DATA.problemas.includes('cansancio')) {
+    scores.vitality += 8; scores.prana += 7; scores.active += 5;
+  }
+
+  /* 8. CONDICIONES ESPECIALES */
+  if (DATA.condiciones.includes('hernia')) {
+    scores.vitality += 14; scores.active += 10; scores.prana += 6;
+  }
+  if (DATA.condiciones.includes('fibromialgia')) {
+    scores.calm += 12; scores.prana += 10; scores.harmony += 8;
+  }
+  if (DATA.condiciones.includes('embarazo')) {
+    scores.calm += 10; scores.harmony += 8; scores.prana += 8; scores.confort += 6;
+  }
+
+  /* 9. FIRMEZA PREFERIDA — bonus */
+  if (DATA.firmezaPref === 'suave') {
+    scores.calm += 9; scores.harmony += 7; scores.confort += 6;
+  } else if (DATA.firmezaPref === 'medio') {
+    scores.balance += 9; scores.harmony += 7; scores.confort += 6; scores.prana += 5;
+  } else if (DATA.firmezaPref === 'firme') {
+    scores.active += 9; scores.vitality += 8; scores.energy += 6;
+  }
+
+  /* 10. PRIORIDAD */
+  if (DATA.prioridad === 'precio') {
+    scores.confort += 6; scores.balance += 4;
+  } else if (DATA.prioridad === 'salud') {
+    scores.vitality += 6; scores.prana += 5; scores.active += 4;
+  } else if (DATA.prioridad === 'confort') {
+    scores.calm += 6; scores.harmony += 5; scores.prana += 4;
+  } else if (DATA.prioridad === 'durabilidad') {
+    scores.active += 5; scores.vitality += 5; scores.energy += 4;
+  }
+
+  /* 11. TIPO DE RESORTE (solo aplica si el colchón actual es de resortes) */
+  if (DATA.tipoColchon === 'resortes' && DATA.tipoResorte) {
+    if (DATA.tipoResorte === 'pocket') {
+      // Ya tiene pocket y está evaluando cambio → si sensación es buena, reforzar productos similares (aislamiento, adaptación)
+      if (DATA.sensacion !== 'hundido') {
+        scores.harmony += 8; scores.prana += 8; scores.calm += 6; scores.balance += 4;
+      } else {
+        // Pocket desgastado → busca algo diferente con mejor soporte
+        scores.vitality += 6; scores.active += 5; scores.balance += 5;
+      }
+    } else if (DATA.tipoResorte === 'encapsulado') {
+      // Tiene Bonell/encapsulado
+      if (DATA.sensacion === 'firme' || DATA.sensacion === 'muy-firme') {
+        // Le gusta la firmeza del encapsulado → reforzar productos firmes
+        scores.active += 8; scores.vitality += 7; scores.energy += 5;
+      } else if (DATA.sensacion === 'hundido' || DATA.sensacion === 'muy-suave') {
+        // El encapsulado cedió → quiere algo con mejor soporte y aislamiento
+        scores.harmony += 8; scores.prana += 8; scores.vitality += 6; scores.balance += 5;
+      } else {
+        // Experiencia neutral con encapsulado → balance o mejora moderada
+        scores.balance += 7; scores.harmony += 6; scores.vitality += 5;
+      }
+    } else if (DATA.tipoResorte === 'gusta') {
+      // Está satisfecho con su sistema de resorte actual
+      if (DATA.tipoColchon === 'resortes') {
+        scores.balance += 6; scores.harmony += 5; scores.vitality += 4;
+      }
+    }
+  }
+
+  /* 12. PENALIZACIÓN SENSACION ACTUAL DEFORMADA → necesita cambio */
+  if (DATA.sensacion === 'hundido' || DATA.antiguedad === 'muy-viejo') {
+    // Refuerza la recomendación principal sin bonus específico
+    const top = Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+    scores[top] += 10;
+  }
+
+  return Object.entries(scores).sort((a, b) => b[1] - a[1]);
+}
+
+function generarRazones() {
+  const razones = [];
+  const peso = DATA.peso;
+  const edad = DATA.edad;
+
+  if (DATA.posicion === 'lado') razones.push('Duermes de lado: necesitas alivio de presión en hombros y caderas');
+  else if (DATA.posicion === 'espalda') razones.push('Duermes boca arriba: requieres buen soporte lumbar y alineación de columna');
+  else if (DATA.posicion === 'boca-abajo') razones.push('Duermes boca abajo: necesitas firmeza para mantener la columna alineada');
+  else razones.push('Cambias de posición: un colchón equilibrado con soporte progresivo te beneficia');
+
+  if (peso >= 85) razones.push(`Tu peso (${peso} kg) requiere mayor densidad y soporte estructural`);
+  else if (peso < 60) razones.push(`Tu peso ligero (${peso} kg) permite un colchón más suave sin hundimiento`);
+
+  if (edad >= 50) razones.push(`Tu edad (${edad} años) se beneficia de tecnología de adaptación corporal y soporte articular`);
+  else if (edad < 25) razones.push(`Tu edad joven (${edad} años) permite mayor firmeza para soporte postural activo`);
+
+  if (DATA.problemas.includes('dolor-espalda')) razones.push('Tienes dolor de espalda: el soporte ortopédico es prioritario');
+  if (DATA.problemas.includes('presion-hombros')) razones.push('Sientes presión en hombros/caderas: necesitas distribución de presión mejorada');
+  if (DATA.problemas.includes('movimiento')) razones.push('El movimiento de pareja te despierta: el aislamiento de movimiento es clave');
+  if (DATA.problemas.includes('calor') || DATA.temperatura === 'calor') razones.push('Sufres de calor nocturno: necesitas materiales transpirables');
+  if (DATA.condiciones.includes('hernia')) razones.push('Tienes hernia discal: la firmeza ortopédica es médicamente recomendada');
+  if (DATA.condiciones.includes('fibromialgia')) razones.push('La fibromialgia requiere un colchón que minimice los puntos de presión');
+  if (DATA.compañero === 'pareja') razones.push('Duermes en pareja: el aislamiento de movimiento mejora el sueño de ambos');
+  if (DATA.tipoColchon === 'resortes' && DATA.tipoResorte === 'pocket')
+    razones.push('Vienes de un colchón Pocket: priorizamos productos con sensación similar de adaptación y aislamiento');
+  if (DATA.tipoColchon === 'resortes' && DATA.tipoResorte === 'encapsulado' && (DATA.sensacion === 'firme' || DATA.sensacion === 'muy-firme'))
+    razones.push('Tu colchón Bonell/Encapsulado te da la firmeza que buscas: mantenemos ese nivel de soporte');
+  if (DATA.tipoColchon === 'resortes' && DATA.tipoResorte === 'encapsulado' && DATA.sensacion === 'hundido')
+    razones.push('Tu colchón Bonell/Encapsulado cedió con el tiempo: recomendamos mayor soporte estructural');
+
+  return razones.slice(0, 5);
+}
+
+/* ── Calcular y mostrar resultado ───────────────────────── */
+function calcularRecomendacion() {
+  if (!STEP_VALIDATIONS[5]()) return;
+
+  // Ocultar paso 5, mostrar loader
+  document.getElementById('step5').classList.remove('visible');
+  document.getElementById('analyzing').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateProgress(6);
+
+  setTimeout(() => {
+    const ranked = algoritmo();
+    const top    = ranked[0][0];
+    const max    = ranked[0][1];
+    const alts   = ranked.slice(1, 4).map(r => r[0]);
+
+    // Match %: normalizar entre 60-98
+    const match = Math.min(98, Math.round(60 + (max / (max + 30)) * 38));
+
+    const prod = PORTFOLIO[top];
+    const razones = generarRazones();
+
+    // Ocultar loader, mostrar resultado
+    document.getElementById('analyzing').classList.remove('visible');
+    document.getElementById('progressWrap').style.display = 'none';
+
+    document.getElementById('resNombre').textContent = prod.nombre;
+    document.getElementById('resPerfil').textContent  = prod.perfil;
+    document.getElementById('resMatch').textContent   = match;
+    document.getElementById('resDesc').textContent    = prod.desc;
+
+    // Firmeza
+    setTimeout(() => {
+      document.getElementById('resFirmeza').style.width = prod.firmeza + '%';
+    }, 300);
+
+    // Tags
+    const tagsEl = document.getElementById('resTags');
+    tagsEl.innerHTML = prod.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+    // Razones
+    const whyEl = document.getElementById('resWhy');
+    whyEl.innerHTML = razones.map(r => `<li>${r}</li>`).join('');
+
+    // Alternativas — con link al catálogo
+    const altsEl = document.getElementById('resAlts');
+    altsEl.innerHTML = alts.map(id =>
+      `<a class="alt-chip" href="/catalogo.html#car-${id}" style="text-decoration:none;cursor:pointer">${PORTFOLIO[id].nombre}</a>`
+    ).join('');
+
+    // Link directo al producto recomendado
+    document.getElementById('resCta').href = `/catalogo.html#car-${top}`;
+
+    document.getElementById('resultCard').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // ── Guardar resultado en el log del servidor ──────────────
+    try {
+      await fetch('/api/encuesta-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          // Perfil del cliente
+          sexo:        DATA.sexo,
+          edad:        DATA.edad,
+          peso:        DATA.peso,
+          clima:       DATA.clima,
+          posicion:    DATA.posicion,
+          compañero:   DATA.compañero,
+          temperatura: DATA.temperatura,
+          firmezaPref: DATA.firmezaPref,
+          prioridad:   DATA.prioridad,
+          problemas:   DATA.problemas,
+          condiciones: DATA.condiciones,
+          tipoColchon: DATA.tipoColchon,
+          antiguedad:  DATA.antiguedad,
+          sensacion:   DATA.sensacion,
+          // Resultado
+          recomendacion: prod.nombre,
+          recomendacionId: top,
+          match,
+          alternativas: alts.map(id => PORTFOLIO[id].nombre),
+          razones,
+        })
+      });
+    } catch(e) { /* silencioso - no interrumpir la UX */ }
+  }, 2200);
+}
+
+function reiniciarEncuesta() {
+  // Reset DATA
+  Object.keys(DATA).forEach(k => { DATA[k] = Array.isArray(DATA[k]) ? [] : null; });
+  // Reset UI
+  document.querySelectorAll('.opt-btn.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.check-btn.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('.val-msg.show').forEach(el => el.classList.remove('show'));
+  document.getElementById('edad').value = '';
+  document.getElementById('peso').value = '';
+  document.getElementById('clima').value = '';
+  document.getElementById('fieldTipoResorte').style.display = 'none';
+  document.getElementById('resultCard').classList.remove('visible');
+  document.getElementById('step1').classList.add('visible');
+  document.getElementById('heroSection').style.display = 'block';
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0%';
+  currentStep = 1;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Auth check ─────────────────────────────────────────── */
+(async () => {
+  try {
+    const r = await fetch('/api/sesion');
+    const d = await r.json();
+    if (!d.ok) { window.location.href = '/login.html'; return; }
+    document.getElementById('topBarUser').textContent = `Hola, ${d.nombre}`;
+  } catch { window.location.href = '/login.html'; }
+})();
+</script>
+</body>
+</html>

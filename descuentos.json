@@ -1,0 +1,5 @@
+[
+  { "codigo": "FRIENDS&FAMILY", "pct": 20, "label": "Friends & Family (20%)", "activo": true },
+  { "codigo": "DISTRIBUIDORES",  "pct": 15, "label": "Distribuidores (15%)",   "activo": true },
+  { "codigo": "REFERIDOS",       "pct": 10, "label": "Referidos (10%)",        "activo": true }
+]

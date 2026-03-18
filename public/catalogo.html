@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<!--
+  Intranet AMIN — Catálogo Genérico 2026
+  Marca: Andina de Materiales Industriales S.A.S
+  Paleta: #274016 · #3C6D1B · #EFFBEF · Fuente: Poppins
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Catálogo AMIN — Genérico 2026</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --verde-o: #1B4D3E; --verde-m: #2E7D5A; --verde-c: #EBF5F0;
+      --verde-b: #5BA87A; --negro:  #0F0C0C;  --blanco: #FFFFFF;
+      --texto:   #222222; --borde:  #C2DED3;  --borde-c:#D4EDE5;
+      --sombra:  rgba(27,77,62,.10); --sombra-h:rgba(27,77,62,.20);
+      --pill:100px; --card:18px; --btn:12px;
+      --font:'Poppins',sans-serif; --head:'Raleway',sans-serif;
+      --nav:60px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:14.4px}
+    body{font-family:var(--font);background:var(--verde-c);color:var(--texto);min-height:100vh;padding-bottom:80px}
+    img{max-width:100%;display:block}
+    button,input{font-family:var(--font)}
+
+    /* TOP BAR */
+    .top-bar{background:var(--negro);padding:6px 32px;display:flex;align-items:center;gap:16px}
+    .top-bar a{color:rgba(255,255,255,.65);text-decoration:none;font-size:.72rem;font-weight:500;transition:color .15s}
+    .top-bar a:hover{color:var(--verde-b)}
+    .top-bar__sep{color:rgba(255,255,255,.2);font-size:.7rem}
+    .top-bar__right{margin-left:auto;font-size:.7rem;color:rgba(255,255,255,.45)}
+
+    /* HEADER */
+    .site-header{background:var(--verde-o);padding:0 32px;height:var(--nav);display:flex;align-items:center;
+      position:sticky;top:0;z-index:100;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+    .header__logo{height:38px;width:auto;margin-right:16px;flex-shrink:0}
+    .header__logo-fb{display:none;background:var(--blanco);border-radius:40px;padding:5px 16px;height:38px;
+      align-items:center;margin-right:16px}
+    .header__logo-fb span{font-weight:900;font-size:1rem;color:var(--verde-o)}
+    .header__div{width:1px;height:28px;background:rgba(255,255,255,.2);margin-right:16px;flex-shrink:0}
+    .header__title{font-family:var(--head);font-size:.86rem;font-weight:800;color:rgba(255,255,255,.88);
+      letter-spacing:.02em;flex:1}
+    .header__user{font-size:.75rem;color:rgba(255,255,255,.65);margin-right:14px;flex-shrink:0}
+    .header__user strong{color:#A8E063;font-weight:700}
+    .btn-cart{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);
+      border:1.5px solid rgba(255,255,255,.25);color:var(--blanco);border-radius:var(--pill);
+      padding:6px 16px;cursor:pointer;font-size:.78rem;font-weight:700;transition:background .15s;
+      margin-right:10px;flex-shrink:0}
+    .btn-cart:hover{background:rgba(255,255,255,.22)}
+    .btn-cart__badge{background:var(--verde-b);color:var(--verde-o);border-radius:50%;
+      width:20px;height:20px;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+    .btn-logout{background:transparent;border:1.5px solid rgba(255,255,255,.25);color:rgba(255,255,255,.6);
+      border-radius:var(--pill);padding:5px 14px;cursor:pointer;font-size:.72rem;font-weight:600;
+      transition:all .15s;flex-shrink:0}
+    .btn-logout:hover{border-color:var(--verde-b);color:var(--verde-b)}
+
+    /* FILTERS */
+    .filters-bar{background:var(--blanco);border-bottom:1px solid var(--borde);padding:12px 32px;
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      position:sticky;top:var(--nav);z-index:99;backdrop-filter:blur(4px)}
+    .filters-bar__label{font-size:.7rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em}
+    .filter-btn{padding:6px 20px;border:2px solid var(--borde);border-radius:var(--pill);
+      background:var(--verde-c);color:#555;font-size:.76rem;font-weight:600;cursor:pointer;
+      transition:all .2s cubic-bezier(.4,0,.2,1)}
+    .filter-btn:hover{border-color:var(--verde-m);color:var(--verde-o);transform:translateY(-1px);
+      box-shadow:0 3px 10px var(--sombra)}
+    .filter-btn.active{background:var(--verde-o);color:var(--blanco);border-color:var(--verde-o);
+      box-shadow:0 4px 14px rgba(27,77,62,.3)}
+    .filters-bar__count{font-size:.72rem;color:#aaa;font-weight:500}
+    .search-wrap{margin-left:auto;position:relative;display:flex;align-items:center}
+    .search-input{border:1.5px solid var(--borde);border-radius:var(--pill);
+      padding:6px 36px 6px 14px;font-size:.78rem;font-weight:500;color:var(--texto);
+      background:var(--verde-c);outline:none;width:220px;
+      transition:border-color .2s,box-shadow .2s,width .28s cubic-bezier(.4,0,.2,1)}
+    .search-input:focus{border-color:var(--verde-m);background:var(--blanco);width:280px;
+      box-shadow:0 3px 14px var(--sombra)}
+    .search-input::placeholder{color:#bbb}
+    .search-clear{position:absolute;right:10px;background:none;border:none;cursor:pointer;
+      color:#bbb;font-size:.9rem;line-height:1;padding:2px;display:none;
+      transition:color .15s}
+    .search-clear:hover{color:var(--verde-o)}
+    .search-clear.visible{display:block}
+    /* No-results */
+    .no-results{grid-column:1/-1;text-align:center;padding:64px 16px;color:#bbb}
+    .no-results .ico{font-size:3rem;margin-bottom:14px}
+    .no-results p{font-size:.9rem;font-weight:500}
+
+    /* GRID */
+    .catalog-container{max-width:1340px;margin:0 auto;padding:28px 24px}
+    .catalog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    @media(max-width:1100px){.catalog-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.catalog-grid{grid-template-columns:1fr}}
+
+    /* CARD */
+    .product-card{background:var(--blanco);border-radius:var(--card);box-shadow:0 2px 12px var(--sombra);
+      overflow:hidden;display:flex;flex-direction:column;
+      transition:transform .24s cubic-bezier(.4,0,.2,1),box-shadow .24s,border-color .24s;
+      border:1.5px solid var(--borde-c)}
+    .product-card:hover{transform:translateY(-7px) scale(1.008);
+      box-shadow:0 20px 50px var(--sombra-h);border-color:var(--verde-b)}
+
+    /* ── CAROUSEL ─────────────────────────────────────────── */
+    .carousel{position:relative;width:100%;height:230px;overflow:hidden;background:var(--verde-c);
+      cursor:zoom-in}
+    .carousel__track{display:flex;height:100%;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+    .carousel__slide{min-width:100%;height:230px;flex-shrink:0;overflow:hidden}
+    .carousel__slide img{width:100%;height:100%;object-fit:cover;
+      transition:transform .45s cubic-bezier(.4,0,.2,1)}
+    .carousel:hover .carousel__slide img{transform:scale(1.04)}
+    .carousel__btn{position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(255,255,255,.88);border:none;border-radius:50%;
+      width:34px;height:34px;cursor:pointer;font-size:.95rem;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 3px 12px rgba(0,0,0,.22);
+      transition:background .15s,opacity .2s,transform .15s;z-index:2;
+      opacity:0}
+    .carousel:hover .carousel__btn{opacity:1}
+    .carousel__btn:hover{background:var(--blanco);transform:translateY(-50%) scale(1.12)}
+    .carousel__btn--prev{left:10px}
+    .carousel__btn--next{right:10px}
+    .carousel__dots{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);
+      display:flex;gap:5px;z-index:2}
+    .carousel__dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);
+      border:none;cursor:pointer;transition:background .15s,transform .15s;padding:0}
+    .carousel__dot.active{background:var(--blanco);transform:scale(1.25)}
+    .carousel__counter{position:absolute;top:8px;right:10px;
+      background:rgba(0,0,0,.45);color:var(--blanco);
+      font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:var(--pill);z-index:2}
+    /* Size badge over carousel */
+    .carousel__size-badge{position:absolute;bottom:30px;left:10px;
+      background:var(--verde-o);color:var(--blanco);
+      font-size:.64rem;font-weight:700;padding:3px 10px;border-radius:var(--pill);
+      z-index:2;display:none}
+    .carousel__size-badge.show{display:block}
+
+    /* CARD BODY */
+    .card-body{padding:20px 20px 18px;flex:1;display:flex;flex-direction:column;gap:11px}
+    .card__brand{display:inline-flex;align-items:center;gap:5px;background:var(--verde-o);
+      color:var(--blanco);font-size:.64rem;font-weight:700;padding:3px 12px;
+      border-radius:var(--pill);width:fit-content;letter-spacing:.04em}
+    .card__brand--premium{background:#4a3580}
+    .card__name{font-family:var(--head);font-size:1.08rem;font-weight:800;color:var(--verde-o);
+      line-height:1.25;letter-spacing:-.01em}
+    .card__desc{font-size:.75rem;color:#777;line-height:1.65}
+    .card__specs{display:flex;flex-wrap:wrap;gap:5px;padding-bottom:10px;border-bottom:1px solid var(--borde-c)}
+    .spec-tag{background:var(--verde-c);border:1px solid var(--borde);border-radius:var(--pill);
+      padding:3px 10px;font-size:.67rem;color:var(--verde-o);font-weight:600}
+    .card__size-lbl{font-size:.68rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em}
+    .card__sizes{display:flex;flex-wrap:wrap;gap:6px}
+    .size-btn{padding:5px 14px;border:2px solid var(--borde);border-radius:var(--pill);
+      background:var(--verde-c);font-size:.71rem;font-weight:600;cursor:pointer;
+      transition:all .18s cubic-bezier(.4,0,.2,1);color:#444}
+    .size-btn:hover{border-color:var(--verde-m);color:var(--verde-o);
+      transform:translateY(-1px);box-shadow:0 2px 8px var(--sombra)}
+    .size-btn.sel{background:var(--verde-o);color:var(--blanco);border-color:var(--verde-o);
+      box-shadow:0 3px 10px rgba(27,77,62,.28)}
+    .card__price-row{display:flex;align-items:baseline;gap:8px;min-height:30px;flex-wrap:wrap}
+    .price-val{font-size:1.22rem;font-weight:900;color:var(--verde-o)}
+    .price-med{font-size:.73rem;color:#aaa;font-weight:500}
+    .price-note{font-size:.65rem;color:#999;font-style:italic}
+    .price-pend{font-size:.75rem;color:#bbb;font-style:italic}
+    .card__add-row{display:flex;align-items:center;gap:8px;margin-top:auto;
+      padding-top:12px;border-top:1px solid var(--borde-c)}
+    .qty-input{width:56px;border:2px solid var(--borde);border-radius:var(--btn);padding:8px;
+      font-size:.86rem;font-weight:700;text-align:center;background:var(--verde-c);
+      color:var(--texto);transition:border-color .2s}
+    .qty-input:focus{outline:none;border-color:var(--verde-m)}
+    .btn-add{flex:1;padding:11px 14px;background:var(--verde-o);color:var(--blanco);border:none;
+      border-radius:var(--pill);font-size:.78rem;font-weight:700;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:6px;
+      transition:background .18s,transform .18s,box-shadow .18s;letter-spacing:.02em;
+      box-shadow:0 4px 14px rgba(27,77,62,.28)}
+    .btn-add:hover{background:var(--verde-m);transform:translateY(-2px);
+      box-shadow:0 7px 20px rgba(27,77,62,.38)}
+    .btn-add:active{transform:scale(.96)}
+    .btn-add.added{background:var(--verde-m);animation:addPop .35s ease}
+
+    /* LIGHTBOX */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;
+      display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px}
+    .lightbox.open{display:flex}
+    .lightbox__img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:10px;
+      box-shadow:0 8px 40px rgba(0,0,0,.6)}
+    .lightbox__close{position:absolute;top:18px;right:22px;background:rgba(255,255,255,.15);
+      border:none;color:var(--blanco);border-radius:50%;width:38px;height:38px;
+      font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .lightbox__close:hover{background:rgba(255,255,255,.3)}
+    .lightbox__prev,.lightbox__next{position:absolute;top:50%;transform:translateY(-50%);
+      background:rgba(255,255,255,.15);border:none;color:var(--blanco);border-radius:50%;
+      width:46px;height:46px;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+    .lightbox__prev{left:16px}.lightbox__next{right:16px}
+    .lightbox__prev:hover,.lightbox__next:hover{background:rgba(255,255,255,.3)}
+    .lightbox__thumbs{display:flex;gap:8px;max-width:90vw;overflow-x:auto;padding:4px 0}
+    .lightbox__thumb{width:54px;height:44px;object-fit:cover;border-radius:6px;cursor:pointer;
+      opacity:.55;transition:opacity .15s,transform .15s;flex-shrink:0}
+    .lightbox__thumb.active,.lightbox__thumb:hover{opacity:1;transform:scale(1.06)}
+    .lightbox__caption{color:rgba(255,255,255,.7);font-size:.74rem;font-weight:500}
+
+    /* CART PANEL */
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;opacity:0;transition:opacity .22s}
+    .cart-overlay.open{display:block;opacity:1}
+    .cart-panel{position:fixed;right:0;top:0;bottom:0;width:430px;max-width:96vw;background:var(--blanco);
+      z-index:201;display:flex;flex-direction:column;transform:translateX(106%);
+      transition:transform .28s cubic-bezier(.4,0,.2,1);
+      box-shadow:-6px 0 40px rgba(0,0,0,.18);border-left:4px solid var(--verde-b)}
+    .cart-panel.open{transform:translateX(0)}
+    .cart-panel__head{background:var(--verde-o);color:var(--blanco);padding:16px 20px;
+      display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .cart-panel__head h2{font-family:var(--head);font-size:1rem;font-weight:800;flex:1}
+    .cart-panel__close{background:rgba(255,255,255,.15);border:none;color:var(--blanco);
+      border-radius:8px;padding:5px 12px;cursor:pointer;font-size:1rem}
+    .cart-panel__close:hover{background:rgba(255,255,255,.28)}
+    .cart-panel__items{flex:1;overflow-y:auto;padding:14px 18px}
+    .cart-panel__empty{text-align:center;padding:56px 16px;color:#ccc}
+    .cart-panel__empty .ico{font-size:3.4rem;margin-bottom:14px}
+    .cart-item{display:grid;grid-template-columns:68px 1fr;gap:12px;padding:12px 0;
+      border-bottom:1px solid var(--borde);align-items:start}
+    .cart-item__img{width:61px;height:50px;object-fit:cover;border-radius:10px;background:var(--verde-c)}
+    .cart-item__name{font-size:.8rem;font-weight:700;color:var(--texto);line-height:1.35}
+    .cart-item__talla{font-size:.7rem;color:#888;margin-top:2px}
+    .cart-item__ctrl{display:flex;align-items:center;gap:6px;margin-top:7px}
+    .qty-ctrl{width:27px;height:27px;border:2px solid var(--borde);border-radius:50%;
+      background:var(--verde-c);cursor:pointer;font-size:.9rem;font-weight:700;
+      display:flex;align-items:center;justify-content:center;transition:all .12s}
+    .qty-ctrl:hover{border-color:var(--verde-o);background:#E0F0D0}
+    .qty-num{min-width:22px;text-align:center;font-size:.84rem;font-weight:700}
+    .cart-item__sub{font-size:.76rem;font-weight:700;color:var(--verde-m);margin-left:auto}
+    .cart-item__sub-nc{font-size:.7rem;color:#bbb;font-style:italic;margin-left:auto}
+    .btn-remove{background:none;border:none;color:#ccc;cursor:pointer;font-size:1rem;padding:2px 4px;margin-left:2px}
+    .btn-remove:hover{color:#C00}
+    .cart-panel__foot{border-top:2px solid var(--borde);padding:18px 20px;flex-shrink:0}
+    .cart-panel__total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+    .cart-panel__total-label{font-size:.86rem;font-weight:600;color:#666}
+    .cart-panel__total-value{font-family:var(--head);font-size:1.3rem;font-weight:900;color:var(--verde-o)}
+    .cart-panel__iva-note{font-size:.67rem;color:#aaa;font-style:italic;margin-bottom:14px;text-align:right}
+    .cart-fields{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+    .cart-field{display:flex;flex-direction:column;gap:3px}
+    .cart-field label{font-size:.72rem;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.04em}
+    .cart-field input{border:1.5px solid var(--borde);border-radius:8px;padding:8px 12px;font-size:.84rem;
+      color:var(--texto);outline:none;transition:border-color .15s;background:#fafafa}
+    .cart-field input:focus{border-color:var(--verde-m);background:var(--blanco)}
+    .cart-field input::placeholder{color:#bbb}
+    .btn-generar{width:100%;padding:14px;background:var(--verde-o);color:var(--blanco);border:none;
+      border-radius:var(--pill);font-size:.92rem;font-weight:700;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s;letter-spacing:.02em}
+    .btn-generar:hover{background:var(--verde-m)}
+    .btn-vaciar{width:100%;padding:8px;background:transparent;color:#bbb;border:1.5px solid var(--borde);
+      border-radius:var(--pill);font-size:.74rem;cursor:pointer;margin-top:9px;transition:all .15s}
+    .btn-vaciar:hover{border-color:#C00;color:#C00}
+    /* DESCUENTO */
+    .discount-block{margin-bottom:12px;border:1.5px solid var(--borde);border-radius:10px;
+      overflow:hidden}
+    .discount-input-row{display:flex;gap:0}
+    .discount-input{flex:1;border:none;padding:9px 12px;font-size:.82rem;font-family:var(--font);
+      color:var(--texto);background:#fafafa;outline:none}
+    .discount-input::placeholder{color:#bbb}
+    .discount-input:focus{background:var(--blanco)}
+    .btn-apply{padding:9px 16px;background:var(--verde-o);color:#fff;border:none;
+      font-size:.74rem;font-weight:700;cursor:pointer;font-family:var(--font);
+      transition:background .15s;white-space:nowrap}
+    .btn-apply:hover{background:var(--verde-m)}
+    .discount-feedback{padding:6px 12px;font-size:.72rem;font-weight:600;display:none;
+      align-items:center;gap:6px;border-top:1px solid var(--borde)}
+    .discount-feedback.ok {background:#F0FBF4;color:var(--verde-m);display:flex}
+    .discount-feedback.err{background:#FFF5F5;color:#C00;display:flex}
+    /* Fila de descuento en el total */
+    .cart-panel__subtotal{display:flex;justify-content:space-between;
+      font-size:.78rem;color:#888;margin-bottom:3px}
+    .cart-panel__discount-row{display:flex;justify-content:space-between;
+      font-size:.78rem;font-weight:700;color:#2E7D32;margin-bottom:6px;
+      padding:4px 8px;background:#F0FBF4;border-radius:6px;display:none}
+    .cart-panel__discount-row.show{display:flex}
+    /* FICHA BUTTON (inside card) */
+    .btn-ficha{width:100%;padding:9px 14px;background:transparent;color:var(--verde-m);
+      border:1.5px solid var(--borde);border-radius:var(--pill);font-size:.74rem;font-weight:600;
+      cursor:pointer;margin-top:7px;transition:all .18s;display:flex;align-items:center;
+      justify-content:center;gap:6px}
+    .btn-ficha:hover{border-color:var(--verde-m);background:var(--verde-c);transform:translateY(-1px)}
+
+    /* ══ OUTLET — VISTA LISTADO ════════════════════════════════ */
+    .filter-btn--outlet.active{background:linear-gradient(135deg,var(--verde-o),var(--verde-m));
+      color:#fff;border-color:var(--verde-o)}
+    .filter-btn--outlet:not(.active):hover{color:var(--verde-m);border-color:var(--verde-m)}
+    .filter-btn--asesor{background:linear-gradient(135deg,var(--verde-o),var(--verde-m));
+      color:#fff!important;border-color:transparent;text-decoration:none;
+      box-shadow:0 3px 12px rgba(27,77,62,.25)}
+    .filter-btn--asesor:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(27,77,62,.35);
+      border-color:transparent!important;color:#fff!important}
+
+    /* Contenedor lista outlet — ocupa todo el ancho del grid */
+    .outlet-list{grid-column:1/-1;background:var(--blanco);border-radius:var(--card);
+      box-shadow:0 2px 12px var(--sombra);overflow:hidden;border:1.5px solid var(--borde-c)}
+    .outlet-list__header{background:linear-gradient(135deg,var(--verde-o),var(--verde-m));
+      color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;
+      font-family:var(--head);font-size:.88rem;font-weight:800}
+    .outlet-list__header span{font-size:.72rem;font-weight:500;opacity:.82;margin-left:auto}
+    .outlet-row{display:flex;align-items:center;gap:12px;padding:9px 16px;
+      border-bottom:1px solid var(--borde-c);transition:background .15s;cursor:default}
+    .outlet-row:last-child{border-bottom:none}
+    .outlet-row:hover{background:var(--verde-c)}
+    .outlet-row__thumb{width:54px;height:44px;border-radius:8px;object-fit:cover;
+      flex-shrink:0;background:var(--verde-c)}
+    .outlet-row__thumb-ph{width:54px;height:44px;border-radius:8px;background:var(--verde-c);
+      flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .outlet-row__name{font-size:.78rem;font-weight:700;color:var(--texto);line-height:1.3}
+    .outlet-row__desc{font-size:.67rem;color:#999;margin-top:1px}
+    .outlet-row__info{flex:1;min-width:0}
+    .outlet-row__tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}
+    .outlet-tag{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:var(--pill)}
+    .outlet-tag--talla{background:var(--verde-c);border:1px solid var(--borde);color:var(--verde-o)}
+    .outlet-tag--stock{background:var(--verde-c);border:1px solid var(--borde);color:var(--verde-m)}
+    .outlet-tag--low{background:#FFF8E6;border:1px solid #FFD78C;color:#996600}
+    .outlet-row__price{font-size:.88rem;font-weight:900;color:var(--verde-o);
+      flex-shrink:0;min-width:110px;text-align:right}
+    .outlet-row__price-nc{font-size:.72rem;color:#bbb;font-style:italic;
+      flex-shrink:0;min-width:110px;text-align:right}
+    .outlet-row__qty{width:42px;border:1.5px solid var(--borde);border-radius:8px;
+      padding:5px 4px;font-size:.76rem;font-weight:700;text-align:center;
+      background:var(--verde-c);font-family:var(--font);flex-shrink:0}
+    .btn-add-outlet{flex-shrink:0;padding:7px 14px;
+      background:linear-gradient(135deg,var(--verde-o),var(--verde-m));color:#fff;border:none;
+      border-radius:var(--pill);font-size:.72rem;font-weight:700;cursor:pointer;
+      transition:filter .18s,transform .15s;white-space:nowrap}
+    .btn-add-outlet:hover{filter:brightness(1.15)}
+    .btn-add-outlet:active{transform:scale(.97)}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
+      background:var(--verde-o);color:var(--blanco);padding:11px 26px;border-radius:var(--pill);
+      font-size:.79rem;font-weight:700;box-shadow:0 4px 20px var(--sombra-h);z-index:400;pointer-events:none;
+      transition:transform .26s cubic-bezier(.4,0,.2,1);white-space:nowrap;
+      border-left:4px solid var(--verde-b)}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* FOOTER */
+    .site-footer{background:var(--negro);color:rgba(255,255,255,.45);text-align:center;
+      padding:18px 24px;font-size:.7rem;margin-top:48px}
+    .site-footer strong{color:var(--verde-b);font-weight:700}
+    .accent-stripe{position:fixed;right:0;top:0;bottom:0;width:6px;z-index:99;
+      background:linear-gradient(180deg,var(--verde-b) 0%,#8ecf9c 100%)}
+
+    /* ══ MICROINTERACCIONES & ANIMACIONES ═════════════════════ */
+
+    /* Entrada de tarjetas */
+    @keyframes cardIn{
+      from{opacity:0;transform:translateY(20px)}
+      to  {opacity:1;transform:translateY(0)}
+    }
+    .product-card{animation:cardIn .4s cubic-bezier(.4,0,.2,1) both}
+    .product-card:nth-child(2){animation-delay:.07s}
+    .product-card:nth-child(3){animation-delay:.14s}
+    .product-card:nth-child(4){animation-delay:.07s}
+    .product-card:nth-child(5){animation-delay:.14s}
+    .product-card:nth-child(6){animation-delay:.21s}
+    .product-card:nth-child(7){animation-delay:.10s}
+    .product-card:nth-child(8){animation-delay:.17s}
+
+    /* Pop al agregar al carrito */
+    @keyframes addPop{
+      0%  {transform:scale(1)}
+      35% {transform:scale(1.08)}
+      65% {transform:scale(.95)}
+      100%{transform:scale(1)}
+    }
+
+    /* Rebote del badge del carrito */
+    @keyframes badgePop{
+      0%  {transform:scale(1)}
+      40% {transform:scale(1.6)}
+      70% {transform:scale(.85)}
+      100%{transform:scale(1)}
+    }
+    .btn-cart__badge.pop{animation:badgePop .42s cubic-bezier(.4,0,.2,1)}
+
+    /* Skeleton shimmer en imágenes cargando */
+    @keyframes shimmer{
+      0%  {background-position:-600px 0}
+      100%{background-position:600px 0}
+    }
+    .carousel__slide img:not([src]){
+      background:linear-gradient(90deg,var(--verde-c) 25%,#d4ede5 50%,var(--verde-c) 75%);
+      background-size:600px 100%;
+      animation:shimmer 1.5s infinite linear
+    }
+
+    /* ── BADGES DE PRODUCTO ─────────────────────────────────── */
+    .prod-badge{position:absolute;top:12px;left:12px;z-index:3;
+      display:inline-flex;align-items:center;gap:5px;
+      padding:5px 13px;border-radius:var(--pill);
+      font-size:.67rem;font-weight:800;letter-spacing:.04em;
+      box-shadow:0 3px 10px rgba(0,0,0,.22);
+      animation:badgeIn .4s cubic-bezier(.4,0,.2,1) both}
+    @keyframes badgeIn{
+      from{opacity:0;transform:translateX(-12px) scale(.85)}
+      to  {opacity:1;transform:translateX(0) scale(1)}
+    }
+    .prod-badge--mas-vendido{background:#E65100;color:#fff}
+    .prod-badge--recomendado{background:#1B4D3E;color:#fff;border:2px solid #5BA87A}
+    .prod-badge--nuevo      {background:#0277BD;color:#fff}
+    .prod-badge--exclusivo  {background:#4a3580;color:#fff}
+    /* Badge también junto al nombre */
+    .card__badge-name{display:inline-flex;align-items:center;gap:4px;
+      padding:2px 10px;border-radius:var(--pill);font-size:.6rem;font-weight:800;
+      letter-spacing:.04em;vertical-align:middle;margin-left:6px}
+    .card__badge-name--mas-vendido{background:#FFF3E0;color:#E65100}
+    .card__badge-name--recomendado{background:#E8F5E9;color:#1B4D3E}
+    .card__badge-name--nuevo      {background:#E3F2FD;color:#0277BD}
+    .card__badge-name--exclusivo  {background:#EDE7F6;color:#4a3580}
+
+    /* Scrollbar elegante */
+    ::-webkit-scrollbar{width:6px;height:6px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:var(--borde);border-radius:10px}
+    ::-webkit-scrollbar-thumb:hover{background:var(--verde-b)}
+
+    /* Header: gradient sutil */
+    .site-header{background:linear-gradient(135deg,var(--verde-o) 0%,#1f5e4a 100%)}
+
+    /* ══ RESPONSIVE MÓVIL ════════════════════════════════════ */
+
+    /* Tablet: 2 columnas */
+    @media(max-width:900px){
+      .top-bar{padding:5px 16px}
+      .top-bar__right{display:none}
+      .site-header{padding:0 16px}
+      .header__title{font-size:.78rem}
+      .catalog-container{padding:20px 16px}
+    }
+
+    /* Móvil: 1 columna, todo compacto */
+    @media(max-width:640px){
+      /* Top bar: ocultar */
+      .top-bar{display:none}
+      .accent-stripe{display:none}
+
+      /* Header compacto */
+      .site-header{padding:0 14px;height:52px}
+      --nav:52px;
+      .header__title{display:none}
+      .header__user{display:none}
+      .header__div{display:none}
+      .header__logo{height:30px}
+      .btn-cart{padding:7px 13px;font-size:.74rem;gap:5px}
+      .btn-logout{padding:5px 11px;font-size:.68rem}
+
+      /* Filtros: fila superior con scroll horizontal, búsqueda abajo */
+      .filters-bar{flex-wrap:wrap;padding:8px 14px;gap:6px;top:52px}
+      .filters-bar__label{display:none}
+      .filter-btn{padding:5px 16px;font-size:.72rem;white-space:nowrap}
+      .filters-bar__count{font-size:.68rem}
+      .search-wrap{margin-left:0;width:100%;order:10}
+      .search-input{width:100%;font-size:.8rem}
+      .search-input:focus{width:100%}
+
+      /* Grid: 1 col */
+      .catalog-container{padding:14px 10px}
+      .catalog-grid{grid-template-columns:1fr;gap:14px}
+
+      /* Carrusel: altura menor, botones siempre visibles */
+      .carousel{height:220px}
+      .carousel__slide{height:220px}
+      .carousel__btn{opacity:1;width:30px;height:30px;font-size:.85rem}
+
+      /* Card body */
+      .card-body{padding:16px 16px 14px;gap:9px}
+      .card__name{font-size:1rem}
+      .price-val{font-size:1.1rem}
+      .btn-add{padding:12px 14px;font-size:.8rem}
+      .btn-ficha{font-size:.72rem;padding:8px 14px}
+
+      /* Carrito: pantalla completa */
+      .cart-panel{width:100%;max-width:100%;border-left:none;border-top:4px solid var(--verde-b)}
+      .cart-panel__items{padding:12px 14px}
+      .cart-panel__foot{padding:14px 16px}
+      .cart-fields{gap:6px}
+
+      /* Toast: más ancho */
+      .toast{font-size:.76rem;padding:10px 20px;max-width:90vw;white-space:normal;text-align:center}
+
+      /* Footer */
+      .site-footer{font-size:.64rem;padding:14px 16px}
+    }
+
+    /* Muy pequeño (<380px) */
+    @media(max-width:380px){
+      .btn-cart .btn-label{display:none}
+      .card__specs{gap:4px}
+      .spec-tag{font-size:.62rem;padding:2px 8px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="accent-stripe"></div>
+
+<div class="top-bar">
+  <a href="https://amin.com.co" target="_blank">amin.com.co</a>
+  <span class="top-bar__sep">|</span>
+  <a href="mailto:info@amin.com.co">info@amin.com.co</a>
+  <div class="top-bar__right">Uso interno — no compartir &nbsp;·&nbsp; Precios antes de IVA &nbsp;·&nbsp; Lista Referidos 2026</div>
+</div>
+
+<header class="site-header">
+  <img class="header__logo" src="https://amin.com.co/wp-content/uploads/2024/03/logo2.png" alt="AMIN"
+       onerror="this.style.display='none';document.getElementById('lf').style.display='flex'"/>
+  <div class="header__logo-fb" id="lf"><span>amin</span></div>
+  <div class="header__div"></div>
+  <span class="header__title">Catálogo Genérico AMIN 2026 — Lista Referidos</span>
+  <span class="header__user">Bienvenido, <strong id="nomUser">...</strong></span>
+  <button class="btn-cart" onclick="toggleCart()">🛒 <span class="btn-label">Carrito</span> <span class="btn-cart__badge" id="cartBadge">0</span></button>
+  <button class="btn-logout" onclick="logout()">Salir ↗</button>
+</header>
+
+<div class="filters-bar">
+  <span class="filters-bar__label">Línea:</span>
+  <button class="filter-btn active" onclick="setFilter('all',this)">Todos</button>
+  <button class="filter-btn" onclick="setFilter('Clásica',this)">🛏 Clásica</button>
+  <button class="filter-btn" onclick="setFilter('Premium',this)">⭐ Premium</button>
+  <button class="filter-btn filter-btn--outlet" onclick="setFilter('Outlet',this)">🏷 Outlet</button>
+  <a class="filter-btn filter-btn--asesor" href="/encuesta.html">💡 Asesor Experto</a>
+  <span class="filters-bar__count" id="fcount"></span>
+  <div class="search-wrap">
+    <input class="search-input" id="searchInput" type="text"
+           placeholder="🔍  Buscar producto…"
+           oninput="onSearch(this.value)"
+           onkeydown="if(event.key==='Escape'){clearSearch()}"/>
+    <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Limpiar">✕</button>
+  </div>
+</div>
+
+<main>
+  <div class="catalog-container">
+    <div class="catalog-grid" id="catalogGrid"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <strong>Andina de Materiales Industriales S.A.S (AMIN)</strong> ·
+  Catálogo Genérico 2026 · Precios antes de IVA · Lista Referidos · Intranet v2.1 · 2026
+</footer>
+
+<!-- CART -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-panel__head">
+    <h2>🛒 Carrito de Pedido</h2>
+    <button class="cart-panel__close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-panel__items" id="cartItems">
+    <div class="cart-panel__empty"><div class="ico">🛍️</div><p>El carrito está vacío</p></div>
+  </div>
+  <div class="cart-panel__foot">
+    <div class="cart-panel__subtotal" id="cartSubtotal" style="display:none">
+      <span>Subtotal</span><span id="cartSubtotalVal">—</span>
+    </div>
+    <div class="cart-panel__discount-row" id="cartDiscountRow">
+      <span id="cartDiscountLabel">Descuento</span>
+      <span id="cartDiscountVal">—</span>
+    </div>
+    <div class="cart-panel__total">
+      <span class="cart-panel__total-label">Total del pedido</span>
+      <span class="cart-panel__total-value" id="cartTotal">—</span>
+    </div>
+    <!-- Código de descuento -->
+    <div class="discount-block" style="margin-top:12px">
+      <div class="discount-input-row">
+        <input class="discount-input" id="discountCode" type="text"
+               placeholder="Código de descuento"
+               onkeydown="if(event.key==='Enter')applyDiscount()"
+               oninput="resetDiscount()"/>
+        <button class="btn-apply" onclick="applyDiscount()">Aplicar</button>
+      </div>
+      <div class="discount-feedback" id="discountFeedback"></div>
+    </div>
+    <div class="cart-fields">
+      <div class="cart-field">
+        <label for="cpNombre">Nombre del cliente</label>
+        <input type="text" id="cpNombre" placeholder="Nombre completo">
+      </div>
+      <div class="cart-field">
+        <label for="cpEmail">Correo electrónico</label>
+        <input type="email" id="cpEmail" placeholder="correo@ejemplo.com">
+      </div>
+      <div class="cart-field">
+        <label for="cpCelular">Celular</label>
+        <input type="tel" id="cpCelular" placeholder="300 000 0000">
+      </div>
+      <div class="cart-field">
+        <label for="cpReferido">Referido por</label>
+        <input type="text" id="cpReferido" placeholder="Nombre de quien refiere">
+      </div>
+    </div>
+    <div class="cart-panel__iva-note">* Precios antes de IVA — Lista Referidos 2026</div>
+    <button class="btn-generar" onclick="generarPedido()">📧 Generar Pedido por Correo</button>
+    <button class="btn-vaciar" onclick="vaciarCarrito()">✕ Vaciar carrito</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="lbClickOutside(event)">
+  <button class="lightbox__close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox__prev" onclick="lbMove(-1);event.stopPropagation()">‹</button>
+  <img class="lightbox__img" id="lbImg" src="" alt=""/>
+  <button class="lightbox__next" onclick="lbMove(1);event.stopPropagation()">›</button>
+  <div class="lightbox__thumbs" id="lbThumbs"></div>
+  <div class="lightbox__caption" id="lbCaption"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   CATÁLOGO GENÉRICO AMIN 2026 — LISTA REFERIDOS
+   Precios antes de IVA · Fuente: LISTA DE PRECIOS GENÉRICOS 2026 REFERIDOS.xlsx
+   ════════════════════════════════════════════════════════════ */
+const CATALOGO = [
+
+  /* ── LÍNEA CLÁSICA ──────────────────────────────────────── */
+  {
+    id:'active', linea:'Clásica', codigo:'ACTIVE', nombre:'Active — 23 cm',
+    badge:'mas-vendido',
+    descripcion:'Tela suave tricot. Espuma laminada en ambas caras. Sistema de resortes bonell con aislante de fieltro. Diseñado para uso por ambas caras.',
+    tech:'Resortes Bonell', firmeza:'Suave', attrs:['Tela Tricot','Doble cara','Altura 23 cm'],
+    gallery:['img/active_4.jpg','img/active_3.jpg','img/active_5.jpg','img/active_6.jpg',
+             'img/active_2.jpg','img/active_1.jpg','img/active_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:346236, img:'img/active_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:397239, img:'img/active_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:454506, img:'img/active_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:512994, img:'img/active_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:652261, img:'img/active_s200.jpg'},
+    ]
+  },
+  {
+    id:'confort', linea:'Clásica', codigo:'CONFORT', nombre:'Confort — 24 cm',
+    badge:null,
+    descripcion:'Tela suave y transpirable. Espuma laminada en ambas caras. Sistema de resortes bonell con aislante de fieltro. Uso por ambas caras.',
+    tech:'Resortes Bonell', firmeza:'Suave', attrs:['Tela Transpirable','Doble cara','Altura 24 cm'],
+    gallery:['img/confort_4.jpg','img/confort_3.jpg','img/confort_5.jpg','img/confort_6.jpg',
+             'img/confort_2.jpg','img/confort_1.jpg','img/confort_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:382791, img:'img/confort_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:440391, img:'img/confort_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:500872, img:'img/confort_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:560377, img:'img/confort_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:698924, img:'img/confort_s200.jpg'},
+    ]
+  },
+  {
+    id:'balance', linea:'Clásica', codigo:'BALANCE', nombre:'Balance — 26 cm',
+    badge:'recomendado',
+    descripcion:'Tela con propiedades antivirus, suave y transpirable. Espuma laminada en ambas caras. Sistema de resortes bonell con aislante de fieltro. Uso por ambas caras.',
+    tech:'Resortes Bonell', firmeza:'Media', attrs:['Tela Antivirus','Doble cara','Altura 26 cm'],
+    gallery:['img/balance_4.jpg','img/balance_3.jpg','img/balance_5.jpg','img/balance_6.jpg',
+             'img/balance_2.jpg','img/balance_1.jpg','img/balance_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:433831, img:'img/balance_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:504441, img:'img/balance_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:572254, img:'img/balance_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:644857, img:'img/balance_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:804922, img:'img/balance_s200.jpg'},
+    ]
+  },
+
+  /* ── LÍNEA PREMIUM ──────────────────────────────────────── */
+  {
+    id:'harmony', linea:'Premium', codigo:'HARMONY', nombre:'Harmony — 28 cm',
+    badge:'nuevo',
+    descripcion:'Tela suave y transpirable de alta calidad. Espuma especial penta para mayor confort. Sistema de resortes bonell. Sistema Eurotop.',
+    tech:'Bonell + Eurotop', firmeza:'Media', attrs:['Espuma Penta','Sistema Eurotop','Altura 28 cm'],
+    gallery:['img/harmony_4.jpg','img/harmony_3.jpg','img/harmony_5.jpg','img/harmony_6.jpg',
+             'img/harmony_2.jpg','img/harmony_1.jpg','img/harmony_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:520265, img:'img/harmony_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:563529, img:'img/harmony_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:639485, img:'img/harmony_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:726520, img:'img/harmony_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:900214, img:'img/harmony_s200.jpg'},
+    ]
+  },
+  {
+    id:'calm', linea:'Premium', codigo:'CALM', nombre:'Calm — 30 cm',
+    badge:'mas-vendido',
+    descripcion:'Tela suave y transpirable de alta calidad. Espuma especial penta en ambas caras. Sistema de resortes bonell. Sistema Doble Euro. Ambas caras de uso.',
+    tech:'Bonell + Doble Euro', firmeza:'Media', attrs:['Espuma Penta','Doble Euro','Doble cara','Altura 30 cm'],
+    gallery:['img/calm_4.jpg','img/calm_3.jpg','img/calm_5.jpg','img/calm_6.jpg',
+             'img/calm_2.jpg','img/calm_1.jpg','img/calm_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:636456,  img:'img/calm_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:704916,  img:'img/calm_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:797030,  img:'img/calm_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:906729,  img:'img/calm_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:1117030, img:'img/calm_s200.jpg'},
+    ]
+  },
+  {
+    id:'vitality', linea:'Premium', codigo:'VITALITY', nombre:'Vitality — 34 cm',
+    badge:'recomendado',
+    descripcion:'Tela suave y transpirable de alta calidad. Espuma especial penta para mayor confort. Sistema de resortes bonell. Sistema One Pillow.',
+    tech:'Bonell + One Pillow', firmeza:'Media', attrs:['Espuma Penta','One Pillow','Altura 34 cm'],
+    gallery:['img/vitality_4.jpg','img/vitality_3.jpg','img/vitality_5.jpg','img/vitality_6.jpg',
+             'img/vitality_2.jpg','img/vitality_1.jpg','img/vitality_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:621777,  img:'img/vitality_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:691592,  img:'img/vitality_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:780648,  img:'img/vitality_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:894278,  img:'img/vitality_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:1144679, img:'img/vitality_s200.jpg'},
+    ]
+  },
+  {
+    id:'energy', linea:'Premium', codigo:'ENERGY', nombre:'Energy — 34 cm',
+    badge:null,
+    descripcion:'Tela suave y transpirable de alta calidad. Espuma especial penta en ambas caras. Sistema de resortes bonell. Sistema Doble Euro. Ambas caras de uso.',
+    tech:'Bonell + Doble Euro', firmeza:'Media', attrs:['Espuma Penta','Doble Euro','Doble cara','Altura 34 cm'],
+    gallery:['img/energy_4.jpg','img/energy_3.jpg','img/energy_5.jpg','img/energy_6.jpg',
+             'img/energy_2.jpg','img/energy_1.jpg','img/energy_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:732055,  img:'img/energy_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:822821,  img:'img/energy_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:941702,  img:'img/energy_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:1072761, img:'img/energy_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:1360876, img:'img/energy_s200.jpg'},
+    ]
+  },
+  {
+    id:'prana', linea:'Premium', codigo:'PRANA', nombre:'Prana — 34 cm',
+    badge:'exclusivo',
+    descripcion:'Tela con propiedades grafeno de alta calidad. Espuma especial penta y viscoelástica para mayor confort. Sistema pocket encajonado. Sistema Eurotop.',
+    tech:'Sistema Pocket', firmeza:'Media', attrs:['Tela Grafeno','Penta + Visco','Pocket Encajonado','Altura 34 cm'],
+    gallery:['img/prana_4.jpg','img/prana_3.jpg','img/prana_5.jpg','img/prana_6.jpg',
+             'img/prana_2.jpg','img/prana_1.jpg','img/prana_7.jpg'],
+    tallas:[
+      {cod:'s100',nombre:'Sencillo', medidas:'100×190 cm',precio:956629,  img:'img/prana_s100.jpg'},
+      {cod:'s120',nombre:'Semidoble',medidas:'120×190 cm',precio:1084102, img:'img/prana_s120.jpg'},
+      {cod:'s140',nombre:'Doble',    medidas:'140×190 cm',precio:1232922, img:'img/prana_s140.jpg'},
+      {cod:'s160',nombre:'Queen',    medidas:'160×190 cm',precio:1412337, img:'img/prana_s160.jpg'},
+      {cod:'s200',nombre:'King',     medidas:'200×200 cm',precio:1773658, img:'img/prana_s200.jpg'},
+    ]
+  },
+];
+/* ════════════════════════════════════════════════════════════ */
+
+const EMAIL_PEDIDOS = 'aux.lineacomercial@amin.com.co';
+const EMAIL_GERENCIA = 'gerencia@amin.com.co';
+let filtroActual = 'all';
+let busquedaActual = '';
+let carrito      = [];
+let usuario      = {};
+let OUTLET       = [];   // productos outlet cargados desde /api/outlet
+let VENTAS       = {};   // { pid: totalUnidadesPedidas }
+
+/* ── carouselState: índice activo por producto ─────────────── */
+const carouselState = {};
+
+/* ── Init ─────────────────────────────────────────────────── */
+(async () => {
+  try {
+    const [rSes, rConf, rOut, rVen] = await Promise.all([
+      fetch('/api/sesion'),
+      fetch('/api/config'),
+      fetch('/api/outlet'),
+      fetch('/api/ventas')
+    ]);
+    const ses     = await rSes.json();
+    const conf    = await rConf.json();
+    const outData = await rOut.json();
+    const venData = await rVen.json();
+    if (outData.ok) OUTLET = outData.outlet || [];
+    if (venData.ok) VENTAS = venData.ventas  || {};
+
+    if (!ses.ok) { window.location.href = '/login.html'; return; }
+    usuario = ses;
+    document.getElementById('nomUser').textContent = ses.nombre;
+
+    // Cargar descuentos dinámicos
+    if (conf.ok && conf.descuentos) {
+      CODIGOS = {};
+      conf.descuentos.forEach(d => {
+        if (d.activo !== false) CODIGOS[d.codigo.toUpperCase()] = { pct: d.pct, label: d.label };
+      });
+    }
+
+    // Aplicar configuración dinámica (badges, precios, visibilidad)
+    if (conf.ok) {
+      CATALOGO.forEach(p => {
+        p.badge  = (conf.badges   && conf.badges[p.id])    || null;
+        p.activo = (conf.productos && conf.productos[p.id] !== false) ? true : (conf.productos ? conf.productos[p.id] !== false : true);
+        if (conf.precios && conf.precios[p.id]) {
+          p.tallas.forEach(t => {
+            const v = conf.precios[p.id][t.cod];
+            if (v !== undefined) t.precio = v;
+          });
+        }
+      });
+    }
+
+    // Mostrar link al panel admin solo si es admin
+    if (ses.rol === 'admin') {
+      const adminLink = document.createElement('a');
+      adminLink.href = '/admin.html';
+      adminLink.textContent = '⚙ Admin';
+      adminLink.style.cssText = `background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);
+        color:#fff;border-radius:100px;padding:6px 14px;font-size:.74rem;font-weight:600;
+        text-decoration:none;margin-right:8px;transition:background .15s;flex-shrink:0`;
+      adminLink.onmouseenter = () => adminLink.style.background = 'rgba(255,255,255,.22)';
+      adminLink.onmouseleave = () => adminLink.style.background = 'rgba(255,255,255,.12)';
+      const logoutBtn = document.querySelector('.btn-logout');
+      logoutBtn.parentNode.insertBefore(adminLink, logoutBtn);
+    }
+
+    renderCatalog();
+
+    // ── Highlight producto si viene de la encuesta (#car-xxx) ──
+    const hash = window.location.hash; // e.g. "#car-active"
+    if (hash && hash.startsWith('#car-')) {
+      setTimeout(() => {
+        const el = document.getElementById(hash.slice(1)); // "car-active"
+        if (!el) return;
+        const card = el.closest('.product-card');
+        if (!card) return;
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.style.transition = 'box-shadow .3s, outline .3s';
+        card.style.outline = '3px solid var(--verde-m)';
+        card.style.boxShadow = '0 0 0 6px rgba(46,125,90,.18), 0 12px 36px rgba(27,77,62,.25)';
+        setTimeout(() => {
+          card.style.outline = '';
+          card.style.boxShadow = '';
+        }, 3000);
+      }, 600);
+    }
+  } catch { window.location.href = '/login.html'; }
+})();
+
+/* ── Filters & Search ─────────────────────────────────────── */
+function setFilter(val, btn) {
+  filtroActual = val;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCatalog();
+}
+function onSearch(val) {
+  busquedaActual = val.trim().toLowerCase();
+  document.getElementById('searchClear').classList.toggle('visible', busquedaActual.length > 0);
+  renderCatalog();
+}
+function clearSearch() {
+  busquedaActual = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  renderCatalog();
+  document.getElementById('searchInput').focus();
+}
+
+/* ── Badge config ─────────────────────────────────────────── */
+const BADGES = {
+  'mas-vendido': { ico:'🔥', label:'Más vendido' },
+  'recomendado': { ico:'👍', label:'Recomendado' },
+  'nuevo':       { ico:'✨', label:'Nuevo'       },
+  'exclusivo':   { ico:'💎', label:'Exclusivo'   },
+};
+function badgeOverlay(b) {
+  if (!b || !BADGES[b]) return '';
+  const {ico,label} = BADGES[b];
+  return `<span class="prod-badge prod-badge--${b}">${ico} ${label}</span>`;
+}
+function badgeInline(b) {
+  if (!b || !BADGES[b]) return '';
+  const {ico,label} = BADGES[b];
+  return `<span class="card__badge-name card__badge-name--${b}">${ico} ${label}</span>`;
+}
+
+/* ── Render catalog ───────────────────────────────────────── */
+function renderCatalog() {
+  const grid = document.getElementById('catalogGrid');
+
+  /* ── Outlet filter ── */
+  if (filtroActual === 'Outlet') {
+    let outLista = OUTLET.filter(p => p.activo !== false);
+    if (busquedaActual) {
+      outLista = outLista.filter(p =>
+        [p.nombre, p.descripcion, p.talla].join(' ').toLowerCase().includes(busquedaActual));
+    }
+    outLista.sort((a, b) => (b.precio || 0) - (a.precio || 0));
+    document.getElementById('fcount').textContent =
+      outLista.length + ' producto' + (outLista.length !== 1 ? 's' : '');
+    if (!outLista.length) {
+      grid.innerHTML = `<div class="no-results"><div class="ico">🏷</div>
+        <p>No hay productos en Outlet${busquedaActual ? ` que coincidan con <strong>"${busquedaActual}"</strong>` : ''}</p></div>`;
+      return;
+    }
+    grid.innerHTML = renderOutletList(outLista);
+    return;
+  }
+
+  /* ── Líneas regulares ── */
+  let lista = CATALOGO.filter(p => p.activo !== false);
+  if (filtroActual !== 'all') lista = lista.filter(p => p.linea === filtroActual);
+  lista.sort((a, b) => (VENTAS[b.id] || 0) - (VENTAS[a.id] || 0));
+  if (busquedaActual) {
+    lista = lista.filter(p => {
+      const hay = [p.nombre, p.codigo, p.descripcion, p.tech, p.firmeza, p.linea,
+                   ...(p.attrs||[])].join(' ').toLowerCase();
+      return hay.includes(busquedaActual);
+    });
+  }
+
+  /* En "Todos" también incluir outlet activos */
+  let outletExtra = [];
+  if (filtroActual === 'all' && !busquedaActual) {
+    outletExtra = OUTLET.filter(p => p.activo !== false);
+  } else if (filtroActual === 'all' && busquedaActual) {
+    outletExtra = OUTLET.filter(p => p.activo !== false &&
+      [p.nombre, p.descripcion, p.talla].join(' ').toLowerCase().includes(busquedaActual));
+  }
+  outletExtra.sort((a, b) => (b.precio || 0) - (a.precio || 0));
+
+  const total = lista.length + outletExtra.length;
+  document.getElementById('fcount').textContent =
+    total + ' producto' + (total !== 1 ? 's' : '');
+
+  CATALOGO.forEach(p => { carouselState[p.id] = 0; });
+
+  if (!total) {
+    grid.innerHTML = `<div class="no-results">
+       <div class="ico">🔍</div>
+       <p>No hay productos que coincidan con <strong>"${busquedaActual}"</strong></p>
+     </div>`;
+    return;
+  }
+
+  grid.innerHTML =
+    lista.map(p =>  `
+    <article class="product-card">
+      <!-- CAROUSEL -->
+      <div class="carousel" id="car-${p.id}">
+        <div class="carousel__track" id="track-${p.id}">
+          ${p.gallery.map((src, i) => `
+            <div class="carousel__slide">
+              <img src="${src}" alt="${p.nombre} foto ${i+1}"
+                   loading="${i===0?'eager':'lazy'}"
+                   onerror="this.style.background='var(--verde-c)';this.alt=''"
+                   onclick="openLightbox('${p.id}',${i})"/>
+            </div>`).join('')}
+        </div>
+        <button class="carousel__btn carousel__btn--prev" onclick="carMove('${p.id}',-1);event.stopPropagation()">‹</button>
+        <button class="carousel__btn carousel__btn--next" onclick="carMove('${p.id}',1);event.stopPropagation()">›</button>
+        <div class="carousel__dots" id="dots-${p.id}">
+          ${p.gallery.map((_,i) => `<button class="carousel__dot${i===0?' active':''}"
+            onclick="carGo('${p.id}',${i});event.stopPropagation()"></button>`).join('')}
+        </div>
+        <span class="carousel__counter" id="ctr-${p.id}">1 / ${p.gallery.length}</span>
+        <span class="carousel__size-badge" id="sbadge-${p.id}"></span>
+        ${badgeOverlay(p.badge)}
+      </div>
+      <!-- BODY -->
+      <div class="card-body">
+        <span class="card__brand ${p.linea==='Premium'?'card__brand--premium':''}">
+          ${p.linea==='Premium'?'⭐':'🛏'} Línea ${p.linea}
+        </span>
+        <h2 class="card__name">${p.nombre}${badgeInline(p.badge)}</h2>
+        <p class="card__desc">${p.descripcion}</p>
+        <div class="card__specs">
+          <span class="spec-tag">⚙ ${p.tech}</span>
+          <span class="spec-tag">💪 ${p.firmeza}</span>
+          ${p.attrs.map(a=>`<span class="spec-tag">${a}</span>`).join('')}
+        </div>
+        <div class="card__size-lbl">Selecciona tamaño</div>
+        <div class="card__sizes">
+          ${p.tallas.map(t=>`
+            <button class="size-btn" data-pid="${p.id}" data-cod="${t.cod}"
+              onclick="selectSize('${p.id}','${t.cod}')">${t.nombre}</button>`).join('')}
+        </div>
+        <div class="card__price-row">
+          <span id="prc-${p.id}" class="price-pend">Selecciona un tamaño</span>
+        </div>
+        <div class="card__add-row">
+          <input type="number" class="qty-input" id="qty-${p.id}" value="1" min="1" max="99"/>
+          <button class="btn-add" id="badd-${p.id}" onclick="addToCart('${p.id}')">
+            🛒 Agregar al carrito
+          </button>
+        </div>
+        <button class="btn-ficha" onclick="fichaProducto('${p.id}')">
+          📄 Ver ficha del producto
+        </button>
+      </div>
+    </article>`).join('') +
+    (outletExtra.length ? renderOutletList(outletExtra) : '');
+
+  initTouchCarousels();
+}
+
+/* ── Outlet: lista completa (cuando el filtro es Outlet) ─────── */
+function renderOutletList(lista) {
+  return `<div class="outlet-list">
+    <div class="outlet-list__header">
+      🏷 Outlet — Inventario disponible
+      <span>${lista.length} producto${lista.length !== 1 ? 's' : ''}</span>
+    </div>
+    ${lista.map(p => renderOutletRow(p)).join('')}
+  </div>`;
+}
+
+/* ── Outlet: fila compacta ─────────────────────────────────── */
+function renderOutletRow(p) {
+  const thumbHtml = p.foto
+    ? `<img class="outlet-row__thumb" src="${p.foto}" alt="${p.nombre}" loading="lazy"
+            onerror="this.outerHTML='<div class=\\'outlet-row__thumb-ph\\'>🛏</div>'"/>`
+    : `<div class="outlet-row__thumb-ph">🛏</div>`;
+
+  const stockTag = p.cantidad > 0
+    ? `<span class="outlet-tag ${p.cantidad <= 3 ? 'outlet-tag--low' : 'outlet-tag--stock'}">
+         ${p.cantidad <= 3 ? '⚠' : '📦'} ${p.cantidad} ud${p.cantidad !== 1 ? 's' : ''}
+       </span>` : '';
+
+  const priceHtml = p.precio > 0
+    ? `<div class="outlet-row__price">${fmt(p.precio)} COP</div>`
+    : `<div class="outlet-row__price-nc">Precio a confirmar</div>`;
+
+  return `
+    <div class="outlet-row">
+      ${thumbHtml}
+      <div class="outlet-row__info">
+        <div class="outlet-row__name">${p.nombre}</div>
+        <div class="outlet-row__tags">
+          ${p.talla  ? `<span class="outlet-tag outlet-tag--talla">📐 ${p.talla}</span>` : ''}
+          ${stockTag}
+        </div>
+      </div>
+      ${priceHtml}
+      <input type="number" class="outlet-row__qty" id="qty-o-${p.id}" value="1" min="1" max="99"/>
+      <button class="btn-add-outlet" onclick="addOutletToCart('${p.id}')">🛒 Agregar</button>
+    </div>`;
+}
+
+/* ── Add outlet product to cart ───────────────────────────── */
+function addOutletToCart(oid) {
+  const prod = OUTLET.find(p => p.id === oid);
+  if (!prod) return;
+  const qty = Math.max(1, parseInt(document.getElementById('qty-o-'+oid).value) || 1);
+  const existing = carrito.find(i => i.pid === oid);
+  if (existing) { existing.cantidad += qty; }
+  else {
+    carrito.push({
+      pid: oid,
+      nombre: '🏷 ' + prod.nombre,
+      talla: { nombre: prod.talla || '—', medidas: '' },
+      imgMain: prod.foto || '',
+      precio: prod.precio || 0,
+      cantidad: qty
+    });
+  }
+  updateBadge();
+  renderCart();
+  toast(`✓ ${prod.nombre} agregado al carrito`);
+  const panel = document.getElementById('cartPanel');
+  if (!panel.classList.contains('open')) toggleCart();
+}
+
+/* ── Touch swipe en carrusel ──────────────────────────────── */
+function initTouchCarousels() {
+  CATALOGO.forEach(prod => {
+    const car = document.getElementById(`car-${prod.id}`);
+    if (!car) return;
+    let startX = 0, startY = 0, isDragging = false;
+    car.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+    }, {passive: true});
+    car.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      const dx = Math.abs(e.touches[0].clientX - startX);
+      const dy = Math.abs(e.touches[0].clientY - startY);
+      // Si el movimiento es más horizontal que vertical, prevenimos scroll de página
+      if (dx > dy && dx > 8) e.preventDefault();
+    }, {passive: false});
+    car.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      // Solo contar como swipe si el movimiento fue predominantemente horizontal
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        carMove(prod.id, dx < 0 ? 1 : -1);
+      }
+    }, {passive: true});
+  });
+}
+
+/* ── Carousel ─────────────────────────────────────────────── */
+function carMove(pid, dir) {
+  const prod  = CATALOGO.find(p => p.id === pid);
+  const total = prod.gallery.length;
+  carouselState[pid] = (carouselState[pid] + dir + total) % total;
+  applyCarousel(pid);
+}
+function carGo(pid, idx) {
+  carouselState[pid] = idx;
+  applyCarousel(pid);
+  // clear size badge when user manually navigates
+  const badge = document.getElementById(`sbadge-${pid}`);
+  if (badge) { badge.classList.remove('show'); badge.textContent = ''; }
+}
+function applyCarousel(pid) {
+  const prod  = CATALOGO.find(p => p.id === pid);
+  const idx   = carouselState[pid];
+  const track = document.getElementById(`track-${pid}`);
+  if (track) track.style.transform = `translateX(-${idx * 100}%)`;
+  document.querySelectorAll(`#dots-${pid} .carousel__dot`).forEach((d,i) =>
+    d.classList.toggle('active', i === idx));
+  const ctr = document.getElementById(`ctr-${pid}`);
+  if (ctr) ctr.textContent = `${idx + 1} / ${prod.gallery.length}`;
+}
+
+/* ── Select size → show size image as extra slide ─────────── */
+function selectSize(pid, cod) {
+  const prod  = CATALOGO.find(p => p.id === pid);
+  const talla = prod.tallas.find(t => t.cod === cod);
+
+  document.querySelectorAll(`.size-btn[data-pid="${pid}"]`).forEach(b => b.classList.remove('sel'));
+  document.querySelector(`.size-btn[data-pid="${pid}"][data-cod="${cod}"]`).classList.add('sel');
+
+  // Show size image: inject as extra slide or show badge
+  const track = document.getElementById(`track-${pid}`);
+  if (track) {
+    // Swap first slide src to size image temporarily
+    const slides = track.querySelectorAll('.carousel__slide img');
+    if (slides[0]) slides[0].src = talla.img;
+    carouselState[pid] = 0;
+    applyCarousel(pid);
+    // Show badge
+    const badge = document.getElementById(`sbadge-${pid}`);
+    if (badge) { badge.textContent = talla.nombre; badge.classList.add('show'); }
+  }
+
+  const el = document.getElementById(`prc-${pid}`);
+  if (talla.precio > 0) {
+    el.className = 'price-val';
+    el.innerHTML = `${fmt(talla.precio)} COP <span class="price-med">${talla.medidas}</span> <span class="price-note">+ IVA</span>`;
+  } else {
+    el.className   = 'price-pend';
+    el.textContent = `Consultar precio — ${talla.medidas}`;
+  }
+}
+
+/* ── Add to cart ──────────────────────────────────────────── */
+function addToCart(pid) {
+  const prod   = CATALOGO.find(p => p.id === pid);
+  const selBtn = document.querySelector(`.size-btn[data-pid="${pid}"].sel`);
+  if (!selBtn) { toast('⚠ Selecciona un tamaño primero'); return; }
+  const talla  = prod.tallas.find(t => t.cod === selBtn.dataset.cod);
+  const qty    = Math.max(1, parseInt(document.getElementById(`qty-${pid}`).value) || 1);
+  const exist  = carrito.find(i => i.pid === pid && i.talla.cod === talla.cod);
+  if (exist) { exist.cantidad += qty; } else {
+    carrito.push({ pid, nombre:prod.nombre, imgMain:prod.gallery[0], talla, cantidad:qty, precio:talla.precio });
+  }
+  updateBadge();
+  // Badge bounce
+  const badge = document.getElementById('cartBadge');
+  badge.classList.remove('pop');
+  void badge.offsetWidth;
+  badge.classList.add('pop');
+  badge.addEventListener('animationend', () => badge.classList.remove('pop'), {once:true});
+  toast(`✓ ${prod.nombre} — ${talla.nombre}`);
+  const btn = document.getElementById(`badd-${pid}`);
+  btn.classList.add('added'); btn.innerHTML = '✓ Añadido';
+  setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = '🛒 Agregar al carrito'; }, 1800);
+}
+function updateBadge() {
+  document.getElementById('cartBadge').textContent = carrito.reduce((s,i) => s + i.cantidad, 0);
+}
+
+/* ── Lightbox ─────────────────────────────────────────────── */
+let lbPid = null; let lbIdx = 0;
+
+function openLightbox(pid, idx) {
+  lbPid = pid; lbIdx = idx;
+  const prod = CATALOGO.find(p => p.id === pid);
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderLightbox(prod);
+}
+function renderLightbox(prod) {
+  document.getElementById('lbImg').src = prod.gallery[lbIdx];
+  document.getElementById('lbCaption').textContent =
+    `${prod.nombre} · Foto ${lbIdx + 1} de ${prod.gallery.length}`;
+  document.getElementById('lbThumbs').innerHTML = prod.gallery.map((src, i) =>
+    `<img class="lightbox__thumb${i===lbIdx?' active':''}" src="${src}"
+          onclick="lbSet(${i});event.stopPropagation()" alt=""/>`).join('');
+}
+function lbMove(dir) {
+  const prod = CATALOGO.find(p => p.id === lbPid);
+  lbIdx = (lbIdx + dir + prod.gallery.length) % prod.gallery.length;
+  renderLightbox(prod);
+}
+function lbSet(idx) { lbIdx = idx; renderLightbox(CATALOGO.find(p => p.id === lbPid)); }
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbClickOutside(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lbMove(-1);
+  if (e.key === 'ArrowRight') lbMove(1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+/* ── Códigos de descuento (cargados dinámicamente desde admin) ── */
+let CODIGOS = {};  // se llena desde /api/config al iniciar
+let descuentoActivo = null; // { codigo, pct, label }
+
+function applyDiscount() {
+  const raw  = (document.getElementById('discountCode').value || '').trim().toUpperCase();
+  const fb   = document.getElementById('discountFeedback');
+  if (!raw) { fb.className='discount-feedback err'; fb.textContent='⚠ Ingresa un código'; return; }
+  if (CODIGOS[raw]) {
+    descuentoActivo = { codigo: raw, ...CODIGOS[raw] };
+    fb.className = 'discount-feedback ok';
+    fb.textContent = `✅ Código válido — ${descuentoActivo.label}`;
+    renderCart();
+  } else {
+    descuentoActivo = null;
+    fb.className = 'discount-feedback err';
+    fb.textContent = '❌ Código no válido';
+    renderCart();
+  }
+}
+
+function resetDiscount() {
+  if (!descuentoActivo) return;
+  descuentoActivo = null;
+  document.getElementById('discountFeedback').className = 'discount-feedback';
+  document.getElementById('discountFeedback').textContent = '';
+  renderCart();
+}
+
+/* ── Render cart ──────────────────────────────────────────── */
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  if (!carrito.length) {
+    el.innerHTML = `<div class="cart-panel__empty"><div class="ico">🛍️</div><p>El carrito está vacío</p></div>`;
+    document.getElementById('cartTotal').textContent = '—';
+    document.getElementById('cartSubtotal').style.display = 'none';
+    document.getElementById('cartDiscountRow').classList.remove('show');
+    return;
+  }
+  const BLANK = `data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7`;
+  el.innerHTML = carrito.map((item, i) => `
+    <div class="cart-item">
+      <img class="cart-item__img" src="${item.imgMain}" alt=""
+           onerror="this.src='${BLANK}';this.style.background='var(--verde-c)'"/>
+      <div>
+        <div class="cart-item__name">${item.nombre}</div>
+        <div class="cart-item__talla">📐 ${item.talla.nombre} — ${item.talla.medidas}</div>
+        <div class="cart-item__ctrl">
+          <button class="qty-ctrl" onclick="chgQty(${i},-1)">−</button>
+          <span class="qty-num">${item.cantidad}</span>
+          <button class="qty-ctrl" onclick="chgQty(${i},1)">+</button>
+          ${item.precio>0
+            ?`<span class="cart-item__sub">${fmt(item.precio*item.cantidad)}</span>`
+            :`<span class="cart-item__sub-nc">Consultar</span>`}
+          <button class="btn-remove" onclick="rmItem(${i})">🗑</button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const subtotal = carrito.reduce((s,i) => s + (i.precio*i.cantidad), 0);
+  const subEl    = document.getElementById('cartSubtotal');
+  const discRow  = document.getElementById('cartDiscountRow');
+
+  if (descuentoActivo && subtotal > 0) {
+    const descMonto = Math.round(subtotal * descuentoActivo.pct / 100);
+    const total     = subtotal - descMonto;
+    subEl.style.display = 'flex';
+    document.getElementById('cartSubtotalVal').textContent = fmt(subtotal) + ' COP';
+    discRow.classList.add('show');
+    document.getElementById('cartDiscountLabel').textContent = `🏷 Descuento ${descuentoActivo.pct}%`;
+    document.getElementById('cartDiscountVal').textContent   = '− ' + fmt(descMonto) + ' COP';
+    document.getElementById('cartTotal').textContent = fmt(total) + ' COP';
+  } else {
+    subEl.style.display = 'none';
+    discRow.classList.remove('show');
+    document.getElementById('cartTotal').textContent = subtotal > 0 ? fmt(subtotal) + ' COP' : 'Consultar precios';
+  }
+}
+function chgQty(i,d){ carrito[i].cantidad=Math.max(1,carrito[i].cantidad+d); updateBadge(); renderCart(); }
+function rmItem(i){ carrito.splice(i,1); updateBadge(); renderCart(); }
+function vaciarCarrito(){ if(!carrito.length) return; carrito=[]; updateBadge(); renderCart(); toast('Carrito vaciado'); }
+function toggleCart(){
+  const p=document.getElementById('cartPanel'), o=document.getElementById('cartOverlay');
+  if(!p.classList.contains('open')) renderCart();
+  p.classList.toggle('open'); o.classList.toggle('open');
+}
+
+/* ── Generate order ───────────────────────────────────────── */
+function generarPedido() {
+  if (!carrito.length) { toast('⚠ El carrito está vacío'); return; }
+  const cpNombre  = (document.getElementById('cpNombre').value  || '').trim();
+  const cpEmail   = (document.getElementById('cpEmail').value   || '').trim();
+  const cpCelular = (document.getElementById('cpCelular').value || '').trim();
+  const cpRef     = (document.getElementById('cpReferido').value|| '').trim();
+  const fecha = new Date().toLocaleDateString('es-CO',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const hora  = new Date().toLocaleTimeString('es-CO');
+  let body  = 'PEDIDO INTERNO — AMIN\n' + '═'.repeat(46) + '\n';
+  body += `Asesor  : ${usuario.nombre}\nFecha   : ${fecha}\nHora    : ${hora}\n`;
+  if (cpNombre)  body += `Cliente : ${cpNombre}\n`;
+  if (cpEmail)   body += `Correo  : ${cpEmail}\n`;
+  if (cpCelular) body += `Celular : ${cpCelular}\n`;
+  if (cpRef)     body += `Referido: ${cpRef}\n`;
+  body += `Lista   : Referidos 2026 (precios antes de IVA)\n` + '─'.repeat(46) + '\n\nPRODUCTOS SOLICITADOS:\n\n';
+  let total = 0;
+  carrito.forEach((item,i) => {
+    const sub = item.precio * item.cantidad; total += sub;
+    body += `${i+1}. ${item.nombre}\n   Código: ${item.pid.toUpperCase()}\n`;
+    body += `   Tamaño: ${item.talla.nombre} (${item.talla.medidas})\n   Cantidad: ${item.cantidad}\n`;
+    body += item.precio>0 ? `   P.unit.: ${fmt(item.precio)} COP\n   Subtotal: ${fmt(sub)} COP\n\n` : `   Precio: Por confirmar\n\n`;
+  });
+  body += '─'.repeat(46) + '\n';
+  if (descuentoActivo && total > 0) {
+    const descMonto = Math.round(total * descuentoActivo.pct / 100);
+    body += `SUBTOTAL : ${fmt(total)} COP\n`;
+    body += `DESCUENTO: ${descuentoActivo.label} → − ${fmt(descMonto)} COP\n`;
+    body += `TOTAL    : ${fmt(total - descMonto)} COP (antes de IVA)\n`;
+    body += `Código   : ${descuentoActivo.codigo}\n`;
+  } else {
+    body += total>0 ? `TOTAL: ${fmt(total)} COP (antes de IVA)\n` : 'TOTAL: Por confirmar\n';
+  }
+  body += '═'.repeat(46) + '\nGenerado desde Intranet AMIN — amin.com.co';
+  const sub = `Pedido Interno — ${usuario.nombre} — ${new Date().toLocaleDateString('es-CO')}`;
+
+  // Registrar unidades pedidas por producto (solo productos del catálogo regular)
+  const ventasPayload = {};
+  carrito.forEach(item => {
+    if (!item.pid.startsWith('out-')) {
+      ventasPayload[item.pid] = (ventasPayload[item.pid] || 0) + item.cantidad;
+    }
+  });
+  if (Object.keys(ventasPayload).length) {
+    fetch('/api/ventas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ventasPayload)
+    }).then(r => r.json()).then(d => {
+      if (d.ok) { VENTAS = d.ventas; renderCatalog(); }
+    }).catch(() => {});
+  }
+
+  window.location.href = `mailto:${EMAIL_PEDIDOS}?cc=${encodeURIComponent(EMAIL_GERENCIA)}&subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+}
+
+/* ── Ficha de producto (impresión / PDF) ──────────────────── */
+function fichaProducto(pid) {
+  const prod = CATALOGO.find(p => p.id === pid);
+  const fecha = new Date().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'});
+  const base  = window.location.origin;
+  const esc   = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  const filasPrecios = prod.tallas.map(t => `
+    <tr>
+      <td><strong>${esc(t.nombre)}</strong></td>
+      <td>${esc(t.medidas)}</td>
+      <td class="price-cell">${t.precio > 0 ? fmtN(t.precio)+' COP' : 'Consultar'}</td>
+    </tr>`).join('');
+
+  const galeria = prod.gallery.slice(1).map(src =>
+    `<img src="${base}/${src}" alt="" onerror="this.style.display='none'"/>`).join('');
+
+  const isPremium = prod.linea === 'Premium';
+
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Ficha ${esc(prod.nombre)} — AMIN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Raleway:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;color:#1a1a1a;background:#fff;
+         width:210mm;min-height:297mm;display:flex;flex-direction:column}
+    /* HEADER */
+    .hd{background:#1B4D3E;color:#fff;padding:14px 28px;
+        display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .hd__brand{font-family:'Raleway',sans-serif;font-size:1.1rem;font-weight:900;letter-spacing:.04em}
+    .hd__right{text-align:right;font-size:.66rem;font-weight:500;opacity:.75;line-height:1.6}
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1.1fr 1fr;flex-shrink:0}
+    .hero__img{background:#EBF5F0;overflow:hidden;max-height:260px}
+    .hero__img img{width:100%;height:260px;object-fit:cover}
+    .hero__info{padding:22px 24px 18px;display:flex;flex-direction:column;gap:9px;
+        border-left:4px solid #5BA87A}
+    .badge{display:inline-flex;align-items:center;gap:5px;
+        background:${isPremium?'#4a3580':'#1B4D3E'};
+        color:#fff;font-size:.6rem;font-weight:700;padding:3px 12px;
+        border-radius:100px;width:fit-content;letter-spacing:.04em}
+    .prod-code{font-size:.68rem;font-weight:700;color:#aaa;letter-spacing:.1em;text-transform:uppercase}
+    .prod-name{font-family:'Raleway',sans-serif;font-size:1.55rem;font-weight:900;
+        color:#1B4D3E;line-height:1.2}
+    .prod-desc{font-size:.73rem;color:#555;line-height:1.65;flex:1}
+    .specs{display:flex;flex-wrap:wrap;gap:4px}
+    .spec{background:#EBF5F0;border:1px solid #C2DED3;border-radius:100px;
+        padding:3px 10px;font-size:.62rem;color:#1B4D3E;font-weight:600}
+    /* DIVIDER */
+    .div-bar{height:3px;background:linear-gradient(90deg,#1B4D3E,#5BA87A,#EBF5F0);flex-shrink:0}
+    /* PRICES */
+    .prices-sec{padding:20px 28px 10px;flex-shrink:0}
+    .sec-title{font-size:.66rem;font-weight:700;color:#999;text-transform:uppercase;
+        letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+    .sec-title::after{content:'';flex:1;height:1px;background:#EBF5F0}
+    table{width:100%;border-collapse:collapse;font-size:.78rem}
+    thead th{background:#1B4D3E;color:#fff;font-weight:700;padding:8px 14px;
+        text-align:left;font-size:.7rem;letter-spacing:.03em}
+    tbody td{padding:8px 14px;border-bottom:1px solid #EBF5F0}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:nth-child(even) td{background:#f6fbf8}
+    .price-cell{font-weight:800;color:#1B4D3E;font-size:.84rem}
+    .iva-note{font-size:.62rem;color:#bbb;font-style:italic;margin-top:7px;text-align:right}
+    /* GALLERY */
+    .gal-sec{padding:10px 28px 16px;flex-shrink:0}
+    .gal-strip{display:flex;gap:7px;flex-wrap:wrap}
+    .gal-strip img{width:78px;height:62px;object-fit:cover;border-radius:7px;
+        border:1.5px solid #C2DED3}
+    /* FOOTER */
+    .ft{margin-top:auto;background:#0F0C0C;color:rgba(255,255,255,.45);
+        padding:11px 28px;display:flex;justify-content:space-between;align-items:center;
+        font-size:.62rem;flex-shrink:0}
+    .ft strong{color:#5BA87A}
+    .ft__date{opacity:.5}
+    /* PRINT */
+    @media print{
+      body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      @page{margin:0;size:A4 portrait}
+      .no-print{display:none}
+    }
+    /* SCREEN: acción */
+    .print-bar{background:#EBF5F0;border-bottom:2px solid #C2DED3;
+        padding:10px 28px;display:flex;align-items:center;gap:12px}
+    .print-bar p{font-size:.76rem;color:#555;flex:1}
+    .btn-print{background:#1B4D3E;color:#fff;border:none;border-radius:100px;
+        padding:8px 22px;font-size:.78rem;font-weight:700;cursor:pointer;
+        font-family:'Poppins',sans-serif}
+    .btn-print:hover{background:#2E7D5A}
+    .btn-close{background:transparent;color:#aaa;border:1.5px solid #ddd;
+        border-radius:100px;padding:7px 18px;font-size:.76rem;cursor:pointer;
+        font-family:'Poppins',sans-serif}
+    @media screen{.no-screen{display:none}}
+  </style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  <p>Vista previa de la ficha técnica — <strong>${esc(prod.nombre)}</strong></p>
+  <button class="btn-print" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+  <button class="btn-close" onclick="window.close()">Cerrar</button>
+</div>
+
+<header class="hd">
+  <span class="hd__brand">AMIN</span>
+  <div class="hd__right">
+    Andina de Materiales Industriales S.A.S<br>
+    Catálogo Genérico 2026 · Lista Referidos · amin.com.co
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero__img">
+    <img src="${base}/${prod.gallery[0]}" alt="${esc(prod.nombre)}"
+         onerror="this.style.background='#EBF5F0';this.src=''"/>
+  </div>
+  <div class="hero__info">
+    <span class="badge">${isPremium?'⭐':''} Línea ${esc(prod.linea)}</span>
+    ${prod.badge && BADGES[prod.badge] ? `<span style="display:inline-flex;align-items:center;gap:5px;padding:3px 12px;border-radius:100px;font-size:.62rem;font-weight:800;letter-spacing:.04em;background:${{'mas-vendido':'#E65100','recomendado':'#1B4D3E','nuevo':'#0277BD','exclusivo':'#4a3580'}[prod.badge]};color:#fff">${BADGES[prod.badge].ico} ${BADGES[prod.badge].label}</span>` : ''}
+    <span class="prod-code">REF. ${esc(prod.codigo)}</span>
+    <h1 class="prod-name">${esc(prod.nombre)}</h1>
+    <p class="prod-desc">${esc(prod.descripcion)}</p>
+    <div class="specs">
+      <span class="spec">⚙ ${esc(prod.tech)}</span>
+      <span class="spec">💪 ${esc(prod.firmeza)}</span>
+      ${prod.attrs.map(a=>`<span class="spec">${esc(a)}</span>`).join('')}
+    </div>
+  </div>
+</div>
+
+<div class="div-bar"></div>
+
+<div class="prices-sec">
+  <div class="sec-title">Tallas y Precios</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Tamaño</th>
+        <th>Medidas</th>
+        <th>Precio referido (antes de IVA)</th>
+      </tr>
+    </thead>
+    <tbody>${filasPrecios}</tbody>
+  </table>
+  <p class="iva-note">* Precios antes de IVA · Lista Referidos 2026 · Válido hasta nueva actualización</p>
+</div>
+
+<div class="gal-sec">
+  <div class="sec-title">Galería de imágenes</div>
+  <div class="gal-strip">${galeria}</div>
+</div>
+
+<footer class="ft">
+  <div><strong>Andina de Materiales Industriales S.A.S (AMIN)</strong> · amin.com.co · Intranet v2.1</div>
+  <div class="ft__date">Generado: ${fecha}</div>
+</footer>
+
+</body>
+</html>`;
+
+  const w = window.open('', '_blank', 'width=960,height=780,menubar=yes,toolbar=yes');
+  if (!w) { toast('⚠ Permite ventanas emergentes para ver la ficha'); return; }
+  w.document.write(html);
+  w.document.close();
+}
+function fmtN(n){ return '$'+Math.round(n).toLocaleString('es-CO'); }
+
+/* ── Helpers ──────────────────────────────────────────────── */
+function fmt(n){ return '$'+Math.round(n).toLocaleString('es-CO'); }
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tid); t._tid=setTimeout(()=>t.classList.remove('show'),2800);
+}
+async function logout(){ await fetch('/api/logout',{method:'POST'}); window.location.href='/login.html'; }
+</script>
+</body>
+</html>
